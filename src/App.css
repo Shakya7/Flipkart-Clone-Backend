@@ -18,3 +18,32 @@ input{
 .fashion:hover{
   cursor: pointer;
 }
+.container-cart-product{
+  padding:20px;
+  height:auto;
+}
+.qnt-bttn{
+  width:36px;
+  height:36px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(172, 161, 161);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.abc{
+  pointer-events: none;
+  cursor:default;
+  background-color:rgb(219, 214, 214);
+}
+.input-fields:focus{
+  border-color: rgb(182, 171, 171);
+  border-width: 1px;
+}
+.not-full{
+  width:70%
+}
+.full{
+  width:100%
+}
