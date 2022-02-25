@@ -12,7 +12,7 @@ export default function CartAmount(){
             <br/>
             <div style={{display:"flex",justifyContent:"space-between"}}>
                 <div>Price ({state.cart}) <span>{state.cart<=1?"item":"items"}</span></div>
-                <div>₹{state.cartProducts.reduce((acc,el)=>Number(el.price)+acc,0)}</div>
+                <div>₹{(state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0)).toFixed(2)}</div>
             </div> 
             <br/>
             <br/>
@@ -24,7 +24,7 @@ export default function CartAmount(){
             <br/>
             <div style={{display:"flex",justifyContent:"space-between"}}>
                 <div style={{fontWeight:"bold",fontSize:"1.5rem"}}>Total Amount</div>
-                <div>₹{(state.cartProducts.reduce((acc,el)=>Number(el.price)+acc,0))+(state.cart<=2?50:state.cart<=5?100:0)}</div>
+                <div>₹{((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?50:state.cart<=5?100:0)).toFixed(2)}</div>
             </div>
             <br/>
             <br/>
