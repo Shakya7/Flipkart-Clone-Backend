@@ -25,6 +25,11 @@ const ItemsPage=()=>{
         dispatch({type:"load-data-jewelery",payload:results.data.filter((el)=>el.category==="jewelery")});
         console.log("Jewelery");
     }
+    const func5=async()=>{
+        const results=await axios.get("https://fakestoreapi.com/products");
+        dispatch({type:"load-data-men",payload:results.data.filter((el)=>el.category==="men's clothing")});
+        console.log("Men's clothing");
+    }
 
     useLayoutEffect(()=>{
         if(state.category==="")
@@ -35,6 +40,8 @@ const ItemsPage=()=>{
             func3();
         else if(state.category==="jewelery")
             func4();
+        else if(state.category==="men's clothing")
+            func5();
         console.log("-->HOMESCREEN-->"); 
     },[state.category]);
     return(

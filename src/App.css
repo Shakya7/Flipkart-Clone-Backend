@@ -13,7 +13,8 @@ input{
 }
 .fashion{
   display:"flex";
-  flex-direction:"column"
+  flex-direction:"column";
+  position: relative;
 }
 .fashion:hover{
   cursor: pointer;
@@ -46,4 +47,12 @@ input{
 }
 .full{
   width:100%
+}
+
+.sub-list{
+  background-color:white;
+  padding:10px;
+}
+.sub-list:hover{
+  background-color: rgb(118, 231, 226);
 }
