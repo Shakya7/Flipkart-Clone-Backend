@@ -8,8 +8,8 @@ export const Card=(props)=>{
     const navigation=useNavigate();
     return(
 
-        <div onClick={()=>{
-    
+        <div className="product-scale" onClick={()=>{
+            
             navigation(`/${props.element.id}`,{state:props.element})    //passing the selected item to be received as useLocation
         }} style={{width:"20vmax", display:"flex",flexDirection:"column",height: "auto",backgroundColor:"white", padding:"20px",justifyContent:"center",alignItems:"center",boxShadow:"3px 3px 5px grey",borderRadius:"8px"}}>
             <div>

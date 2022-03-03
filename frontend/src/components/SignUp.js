@@ -73,6 +73,7 @@ function SignUp(props){
                                         const user=await signupFunction();
                                         console.log(user);
                                         dispatch({type:"login",payload:user})
+                                        dispatch({type:"connect-to-db"});
                                         navigation("/");
                                     }} style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer"}}>Sign Up</button>
                                 </div>

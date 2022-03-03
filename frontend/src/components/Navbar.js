@@ -18,9 +18,9 @@ export const Navbar=()=>{
     const [hoverLogin,setHover]=useState("none");
     const navigation=useNavigate();
     useEffect(()=>{
-        console.log("Added to cart!!!!!!");
-        console.log(state.cart);
-        console.log(state.userProfile)
+        //console.log("Added to cart!!!!!!");
+        //console.log(state.cart);
+        //console.log(state.userProfile)
     },[state.cart,hoverLogin,state.userProfile])
     return(
         <div>
@@ -37,7 +37,7 @@ export const Navbar=()=>{
                 </div>
                 <div style={{display:"flex",alignItems:"center"}}>
                     {
-                        !state.isLoggedIn?
+                        !state.userProfile?
                         <div onMouseOverCapture={()=>setHover("flex")} className="loggedin" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",color:"#2874f0", fontWeight:"bold",cursor:"pointer",width:"70px",backgroundColor:"white",padding:"5px",textAlign:"center",position:"relative",left:"10px",fontWeight:"normal"}}>
                             <p onClick={
                                 e=>navigation("/login")
@@ -74,7 +74,7 @@ export const Navbar=()=>{
                             </div>
                         </div>:
                         <div onMouseOverCapture={()=>setHover("flex")} className="loggedin" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",color:"#2874f0", fontWeight:"bold",cursor:"pointer",minwidth:"20vmin",maxWidth:"auto",backgroundColor:"white",padding:"5px",textAlign:"center",position:"relative",left:"10px",fontWeight:"normal"}}>
-                            <p style={{width:"auto", height:"auto",padding:"3px",fontWeight:"bold"}}>{state.userProfile.user.name.split(" ")[0].toUpperCase()}</p>
+                            <p style={{width:"auto", height:"auto",padding:"3px",fontWeight:"bold"}}>{state.userProfile?state.userProfile.name.split(" ")[0].toUpperCase():"LOGIN"}</p>
                             <div onMouseOutCapture={()=>setHover("none")} className="pointer" style={{width:"20%",height:"50%",backgroundColor:"white",position:"absolute",bottom:"-3.3vh",display:hoverLogin}}/>
                             <div onMouseOutCapture={()=>setHover("none")} style={{display:hoverLogin,position:"absolute", width:"40vmin",backgroundColor:"grey",top:"7vh",alignItems:"center",flexDirection:"column",boxShadow:"5px 0 5px -5px grey,0 5px 5px -5px grey, -5px 0 5px -5px grey"}}>
                                 <div className="login-dropdown">

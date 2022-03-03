@@ -6,7 +6,7 @@ function DropDown(props){
     const {state,dispatch}=useContext(GlobalContext);
     const navigation=useNavigate();
     useEffect(()=>{
-        console.log("lets see")
+        //DO something
     },[props.show])
     return(
         <div onMouseEnter={(e)=>props.pass("flex")} onMouseLeave={(e)=>props.pass("none")} style={{display:props.show,flexDirection:"column",position:"absolute",left:0, top:"112%",width:"15vmax", boxShadow:"5px 0 5px -5px grey,0 5px 5px -5px grey, -5px 0 5px -5px grey"}}>  

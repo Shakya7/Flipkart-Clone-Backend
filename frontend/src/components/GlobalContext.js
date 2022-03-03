@@ -1,4 +1,5 @@
-import { useReducer, createContext } from "react";
+import { useReducer, createContext, useEffect } from "react";
+import axios from "axios";
 
 
 const initialState={
@@ -7,14 +8,26 @@ const initialState={
     category:"",
     cartProducts:[],
     userProfile:null,
-    isLoggedIn:false
+    isLoggedIn:false,
+    connectionToDBNumber:0
 
 }
 
 const reducerF=(currState, action)=>{
     const helperFunc1=()=>currState.cart;
-    
     switch(action.type){
+        case "connect-to-db":
+            return{
+                ...currState,
+                connectionToDBNumber:currState.connectionToDBNumber+1
+            }
+
+        case "finally-update-data-from-db":
+            return{
+                ...currState,
+                userProfile:action.payload,
+                
+            }
         case "load-data-initial":
             return{
                 ...currState,
@@ -67,6 +80,7 @@ const reducerF=(currState, action)=>{
                 category:"jewelery"
             }
         }
+        
         case "add-to-cart":
             return{
                 ...currState,
@@ -128,6 +142,18 @@ export const GlobalContext=createContext();
 
 export const GlobalProvider=(props)=>{
     const [state,dispatch]=useReducer(reducerF,initialState);
+    useEffect(()=>{
+        const loadFromDB=async e=>{
+            const userData=await axios.get("http://localhost:4001/api/v1/users/load-data",{
+                withCredentials:true
+            });
+            console.log("Coming from LOAD-DATA-FROM-DB ->",userData.data.data.user);
+            console.log(state.connectionToDBNumber);
+            dispatch({type:"finally-update-data-from-db",payload:userData.data.data.user});
+        }
+        loadFromDB();
+
+    },[state.connectionToDBNumber])
     return(
         <GlobalContext.Provider value={{state,dispatch}}>
             {

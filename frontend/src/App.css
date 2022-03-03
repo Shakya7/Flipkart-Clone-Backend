@@ -15,9 +15,12 @@ input{
   display:"flex";
   flex-direction:"column";
   position: relative;
+  transition: transform 0.5s ease-in-out;
 }
 .fashion:hover{
   cursor: pointer;
+  transform:scale(1.2,1.2);
+  
 }
 .container-cart-product{
   padding:20px;
@@ -95,8 +98,10 @@ input{
   transform: rotate(45deg);
 
 }
-.drop-down-shadow{
-  -moz-box-shadow: 0px 3px 8px rgb(100, 100, 100);
-  -webkit-box-shadow: 0px 3px 8px rgb(100, 100, 100);
-  box-shadow: 0px 3px 8px rgb(100, 100, 100);
+.product-scale{
+  transition: transform 0.4s ease-in-out;
+}
+.product-scale:hover{
+  transform: scale(1.09,1.09);
+
 }

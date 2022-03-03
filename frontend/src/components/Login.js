@@ -21,7 +21,7 @@ function Login(props){
         const user= await axios.post("http://localhost:4001/api/v1/users/login",{
             email:inputState.email,
             password:inputState.password,
-        })
+        },{withCredentials:true})
         console.log(user.data.data);
         return user.data.data;
         }catch(err){
@@ -60,7 +60,9 @@ function Login(props){
                                 <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}} onClick={
                                     async e=>{
                                         const user=await loginFunction();
-                                        dispatch({type:"login",payload:user});
+                                        console.log("Coming from LOGIN ->",user.user);
+                                        dispatch({type:"connect-to-db"});
+                                        dispatch({type:"login",payload:user.user});
                                         navigation("/");
                                     }
                                 }>

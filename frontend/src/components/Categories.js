@@ -20,7 +20,7 @@ const Categories=()=>{
         <div style={{width:"100%",height:"auto",backgroundColor:"white"}}>
                 <div style={{display:"flex", justifyContent:"space-around",margin:"10px"}}>
                     <div className="fashion">
-                        <div onMouseOverCapture={(e)=>setCat1("flex")} onClick={(e)=>setCat1("none")} style={{display:"flex",flexDirection:"column", justifyContent:"space-between"}}>
+                        <div onMouseEnter={(e)=>setCat1("flex")} onClick={(e)=>setCat1("none")} style={{display:"flex",flexDirection:"column", justifyContent:"space-between"}}>
                             <div onClick={(e)=>{
                                 //dispatch({type:"women's clothing"});
                                 //navigation("/");

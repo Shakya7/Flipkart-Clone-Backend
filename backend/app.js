@@ -8,9 +8,14 @@ const cookieParser=require("cookie-parser");
 
 dotenv.config({path:"./config.env"});
 
+const corsOptions={
+    origin:"http://localhost:3000",
+    credentials:true
+}
+
 //MIDDLEWARE
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 
