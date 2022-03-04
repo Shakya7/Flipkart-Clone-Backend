@@ -27,7 +27,7 @@ export default function CartProducts(){
             <hr/>
             <div>
             {
-            state.cartProducts.map((el,i)=>{
+            state.cartProducts && state.cartProducts.map((el,i)=>{
             
                 return(
                 <div key={i}>
@@ -42,16 +42,20 @@ export default function CartProducts(){
                                     <div style={{display:"flex", justifyContent:"flex-start",alignItems:"center",gap:"10px"}}>
                                         <div className={el.quantity===1?"qnt-bttn abc":"qnt-bttn"} onClick={()=>{
                                             dispatch({type:"subtract-quantity",payload:el.id});
+                                            dispatch({type:"add-to-cart-DB"});
                                         }}>-</div>
                                         <input className="input-fields" style={{width:"30px",height:"36px",textAlign:"center"}} value={el.quantity} onChange={(e)=>{
                                             dispatch({type:"add-quantity-input",qty:e.target.value,payload:el.id});
+                                            dispatch({type:"add-to-cart-DB"});
                                         }}/>
                                         <div className="qnt-bttn" onClick={()=>{
                                             dispatch({type:"add-quantity",payload:el.id});
+                                            dispatch({type:"add-to-cart-DB"});
                                         }}>+</div>
                                     </div>
                                     <button style={{marginLeft:"50px",padding:"10px",backgroundColor:"#DD4A48", color:"white",border:"none", borderRadius:"5px", boxShadow:"3px 3px 5px grey"}} onClick={(e)=>{
-                                        dispatch({type:"remove-from-cart",payload:el})
+                                        dispatch({type:"remove-from-cart",payload:el});
+                                        dispatch({type:"add-to-cart-DB"});
                                     }}>REMOVE</button>
                                 </div>
                             </div>

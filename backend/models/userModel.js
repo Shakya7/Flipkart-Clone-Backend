@@ -79,6 +79,10 @@ const userSchema=new mongoose.Schema({
     addresses:{
         type:Array,
         default:[]
+    },
+    isLoggedIn:{
+        type:Boolean,
+        default:true
     }
 });
 

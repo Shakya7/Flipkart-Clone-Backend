@@ -15,6 +15,7 @@ const initialState={
 
 const reducerF=(currState, action)=>{
     const helperFunc1=()=>currState.cart;
+    
     switch(action.type){
         case "connect-to-db":
             return{
@@ -26,7 +27,8 @@ const reducerF=(currState, action)=>{
             return{
                 ...currState,
                 userProfile:action.payload,
-                
+                cartProducts:action.payload.cart,
+                cart:action.payload.cart.length,  
             }
         case "load-data-initial":
             return{
@@ -82,11 +84,23 @@ const reducerF=(currState, action)=>{
         }
         
         case "add-to-cart":
+            //const userDetails=await getValue();
+            //console.log(userDetails);
             return{
                 ...currState,
                 cart:helperFunc1()+1,
                 cartProducts:[...currState.cartProducts,{...action.payload,quantity: 1}]
             }
+        case "add-to-cart-DB":
+            console.log("checking ...",[...currState.cartProducts]);
+            axios.patch("http://localhost:4001/api/v1/users/add-to-cart",{cart:[...currState.cartProducts]},{withCredentials:true}).then(
+            (res)=>{
+                console.log(res)
+            }).catch((err)=>{
+                console.log(err.message)
+            })
+            return currState;
+            
         case "remove-from-cart":
             const number=currState.cartProducts.filter((el)=>el.id===action.payload.id).length;
             return{
@@ -148,6 +162,7 @@ export const GlobalProvider=(props)=>{
                 withCredentials:true
             });
             console.log("Coming from LOAD-DATA-FROM-DB ->",userData.data.data.user);
+            console.log(userData.data.data);
             console.log(state.connectionToDBNumber);
             dispatch({type:"finally-update-data-from-db",payload:userData.data.data.user});
         }

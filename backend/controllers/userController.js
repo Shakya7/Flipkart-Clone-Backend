@@ -1,4 +1,5 @@
 const User=require("../models/userModel");
+const jwt=require("jsonwebtoken");
 
 exports.testFunct=async (req,res)=>{
     try{
@@ -52,3 +53,33 @@ exports.getUser=async(req,res)=>{
         })
     }
 }
+exports.addToCart=async(req, res)=>{
+    try{
+        console.log(req.cookies);
+        console.log(req.cookies.jwt);
+        const id=res.user._id;
+        //const cart=res.user.cart;
+        //console.log(id);
+        const updatedUser=await User.findByIdAndUpdate(id,{
+            cart:req.body.cart
+        },{
+            new:true,
+            runValidators:true
+        });
+        if(!updatedUser)
+            throw "User not found...please login again"
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:updatedUser
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}
+

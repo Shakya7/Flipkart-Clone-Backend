@@ -29,6 +29,7 @@ export const SingleItemPage=(props)=>{
                     <div onClick={(e)=>{
                         //setAdded(true);
                         dispatch({type:"add-to-cart",payload:location.state});
+                        dispatch({type:"add-to-cart-DB"});
                         navigation("/cart");
                     }}
                     style={{width:"30%",height:"20%",display:"flex",justifyContent:"center", backgroundColor:"#F6830F", marginTop:"30px", cursor:"pointer", color:"white", borderRadius:"5px", boxShadow:"3px 3px 6px grey"}}>
