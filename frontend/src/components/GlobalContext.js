@@ -161,10 +161,14 @@ export const GlobalProvider=(props)=>{
             const userData=await axios.get("http://localhost:4001/api/v1/users/load-data",{
                 withCredentials:true
             });
-            console.log("Coming from LOAD-DATA-FROM-DB ->",userData.data.data.user);
-            console.log(userData.data.data);
-            console.log(state.connectionToDBNumber);
-            dispatch({type:"finally-update-data-from-db",payload:userData.data.data.user});
+            if(!userData.data.data.user)
+                dispatch({type:"load-data-initial"});
+            else{    
+                console.log("Coming from LOAD-DATA-FROM-DB ->",userData.data.data.user);
+                console.log(userData.data.data);
+                console.log(state.connectionToDBNumber);
+                dispatch({type:"finally-update-data-from-db",payload:userData.data.data.user});
+            }
         }
         loadFromDB();
 
