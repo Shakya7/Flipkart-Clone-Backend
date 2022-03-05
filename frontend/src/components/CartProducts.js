@@ -17,7 +17,7 @@ export default function CartProducts(){
         <div className={state.cart!==0?"not-full":"full"} style={{backgroundColor:"white", display:"flex",flexDirection:"column", height:"auto",boxShadow:"5px 5px 5px grey", borderColor:"grey", borderStyle:"solid", borderWidth:"1px"}}>
             <header style={{width:"100%",display:"flex",backgroundColor:"white", justifyContent:"space-between", height:"11vmin", padding:"10px", borderRadius:"4px"}}>
                 <div style={{width:"50%",fontWeight:"bolder", letterSpacing:".02em", fontSize:"1.4rem", alignSelf:"center", marginLeft:"10px"}}>
-                    My Cart ({state.cart})
+                    My Cart {state.isLoggedIn?<span>({state.cart})</span>:""}
                 </div>
                 {state.cart!==0?<div style={{width:"50%",maxHeight:"inherit",display:"flex",justifyItems:"flex-end", alignItems:"center"}}>
                     <span style={{fontWeight:"normal",fontSize:"1rem",color:"grey"}}>Deliver to</span>
@@ -71,14 +71,23 @@ export default function CartProducts(){
                 !state.cart &&
                 <div style={{height:"auto", display:"flex", alignItems:"center", justifyContent:"center",textAlign:"center",flexDirection:"column",padding:"20px"}}>
                     <img src={cart_empty} style={{marginBottom:"10px"}}/>
-                    <p>Your cart is empty!</p>
+                    {state.isLoggedIn?<p>Your cart is empty!</p>:<p>Missing Cart items?</p>}
                     <br/>
-                    <div style={{fontSize:"0.8rem"}}>Add items to it now</div>
+                    {state.isLoggedIn?<div style={{fontSize:"0.8rem"}}>Add items to it now</div>:<div style={{fontSize:"0.8rem"}}>Login to see the items you added previously</div>}
                     <br/>
-                    <div onClick={(e)=>{
+                    {state.isLoggedIn?<div onClick={(e)=>{
                         navigation("/");
                         dispatch({type:"initial"});
-                        }} style={{backgroundColor:"#0033C7", color:"white",width:"15%",height:"5vmin",display:"flex",justifyContent:"center",alignItems:"center", borderRadius:"5px", cursor:"pointer"}}>SHOP NOW</div>
+                        }} style={{backgroundColor:"#0033C7", color:"white",width:"15%",height:"5vmin",display:"flex",justifyContent:"center",alignItems:"center", borderRadius:"5px", cursor:"pointer"}}
+                        >
+                            SHOP NOW
+                    </div>:
+                    <div onClick={(e)=>{
+                        navigation("../login");
+                        }} style={{backgroundColor:"#fb7a1b", color:"white",width:"15%",height:"5vmin",display:"flex",justifyContent:"center",alignItems:"center", borderRadius:"5px", cursor:"pointer"}}>
+                        Login
+                    </div>
+                    }
                 </div>
             }
             </div>

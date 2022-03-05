@@ -21,11 +21,13 @@ export const Navbar=()=>{
         //console.log("Added to cart!!!!!!");
         //console.log(state.cart);
         //console.log(state.userProfile)
-    },[state.cart,hoverLogin,state.userProfile])
+
+    },[state.cart,hoverLogin,state.userProfile,state.showCart])
     return(
         <div>
             <div style={{backgroundColor:"#2874f0",width:"100%",height:"9vh", display:"flex",justifyContent:"space-around", position:"sticky",top:0,marginTop:0,zIndex:1}}>
                 <img onClick={(e)=>{
+                    dispatch({type:"show-cart-enable"});
                     dispatch({type:"initial"});
                     navigation("/");
                 }} style={{height:"6vmin",alignSelf:"center",position:"relative",left:"7%",cursor:"pointer"}} src={logo}/>
@@ -108,13 +110,15 @@ export const Navbar=()=>{
                             </div>
                         </div>
                     }
-                    <div onClick={(e)=>{
+                    {state.showCart?<div onClick={(e)=>{
                         navigation("/cart")
                     }} style={{color:"white", fontWeight:"bold", marginLeft:"10vw",display:"flex",position:"relative",cursor:"pointer"}}>
-                        <div style={{backgroundColor:"red",position:"absolute",top:"-5px",width:"20px",height:"20px",borderRadius:"50%",display:"flex",justifyContent:"center",alignItems:"center"}}>{state.cart}</div>
+                        {state.cart===0?"":<div style={{backgroundColor:"red",position:"absolute",top:"-5px",width:"20px",height:"20px",borderRadius:"50%",display:"flex",justifyContent:"center",alignItems:"center"}}>{state.cart}</div>}
                         <img src={cart_logo} style={{width:"30px"}}/>
                         <div style={{alignSelf:"center"}}>Cart</div>
-                    </div>
+                    </div>:
+                    <div style={{width:"15vmax",visibility:"hidden"}}/>
+                    }
                 </div>
                 
             </div>

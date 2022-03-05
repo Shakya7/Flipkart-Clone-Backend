@@ -9,7 +9,8 @@ const initialState={
     cartProducts:[],
     userProfile:null,
     isLoggedIn:false,
-    connectionToDBNumber:0
+    connectionToDBNumber:0,
+    showCart:true
 
 }
 
@@ -149,6 +150,16 @@ const reducerF=(currState, action)=>{
                 userProfile:null,
                 isLoggedIn:false
             }
+        case "show-cart-disable":
+            return{
+                ...currState,
+                showCart:false,
+            }
+        case "show-cart-enable":
+            return{
+                ...currState,
+                showCart:true,
+            }
     }
 }
 
@@ -161,8 +172,10 @@ export const GlobalProvider=(props)=>{
             const userData=await axios.get("http://localhost:4001/api/v1/users/load-data",{
                 withCredentials:true
             });
-            if(!userData.data.data.user)
+            if(!userData.data.data.user){
                 dispatch({type:"load-data-initial"});
+                dispatch({type:"logout"});
+            }
             else{    
                 console.log("Coming from LOAD-DATA-FROM-DB ->",userData.data.data.user);
                 console.log(userData.data.data);

@@ -13,6 +13,7 @@ function Login(props){
         password:"",
     });
     useEffect(()=>{
+        dispatch({type:"show-cart-enable"});
         console.log(inputState);
     },[inputState]);
     const navigation=useNavigate();

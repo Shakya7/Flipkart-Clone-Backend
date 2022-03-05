@@ -1,4 +1,4 @@
-import { useParams,useLocation, useNavigate } from "react-router-dom"
+import {useLocation, useNavigate } from "react-router-dom"
 import { GlobalContext } from "./GlobalContext";
 import { useContext, useEffect, useLayoutEffect,useState } from "react";
 import Categories from "./Categories";
@@ -9,7 +9,6 @@ import cart_logo from "../images/cart_logo.png";
 export const SingleItemPage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
     const navigation=useNavigate();
-    const {id}=useParams();
     const location=useLocation();
     console.log(location.state);
 
@@ -28,9 +27,14 @@ export const SingleItemPage=(props)=>{
                     </div>:
                     <div onClick={(e)=>{
                         //setAdded(true);
-                        dispatch({type:"add-to-cart",payload:location.state});
-                        dispatch({type:"add-to-cart-DB"});
-                        navigation("/cart");
+                        if(state.isLoggedIn){
+                            dispatch({type:"add-to-cart",payload:location.state});
+                            dispatch({type:"add-to-cart-DB"});
+                            navigation("/cart");
+                        }
+                        else{
+                            navigation("/login");
+                        }
                     }}
                     style={{width:"30%",height:"20%",display:"flex",justifyContent:"center", backgroundColor:"#F6830F", marginTop:"30px", cursor:"pointer", color:"white", borderRadius:"5px", boxShadow:"3px 3px 6px grey"}}>
                         <img src={cart_logo} style={{width:"30px"}}/>

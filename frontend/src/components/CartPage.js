@@ -5,7 +5,14 @@ import CartProducts from "./CartProducts";
 import { GlobalContext } from "./GlobalContext";
 
 const CartPage=()=>{
-    const {state}=useContext(GlobalContext);
+    const {state,dispatch}=useContext(GlobalContext);
+    useEffect(()=>{
+        if(!state.isLoggedIn){
+            dispatch({type:"show-cart-disable"});
+        }
+        else
+            dispatch({type:"show-cart-enable"});
+    },[state.showCart]);
     return(
         <div style={{backgroundColor:"#EEEEEE", display:"flex", height:"auto", padding:"20px", justifyContent:"space-between"}}>
             <CartProducts/>
