@@ -91,10 +91,13 @@ export const Navbar=()=>{
                                     </div>    
                                 </div>
                                 <hr/>
-                                <div className="login-dropdown" onClick={e=>{
+                                <div className="login-dropdown" onClick={async e=>{
                                     dispatch({type:"logout"});
-                                    
+                                    await axios.get("http://localhost:4001/api/v1/users/logout",{
+                                        withCredentials:true
+                                    });
                                     navigation("/");
+                                    window.location.reload();
                                 }}>
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={logout_logo}/>

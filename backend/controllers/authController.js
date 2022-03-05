@@ -34,7 +34,7 @@ exports.login=async(req,res)=>{
             expires:new Date(Date.now()+process.env.COOKIE_EXPIRES*24*60*60*1000),
             httpOnly:true
         }
-        await res.cookie("jwt",token,cookieOptions);
+        res.cookie("jwt",token,cookieOptions);
         res.status(200).json({
             status:"success",
             message:"You have logged in successfully",
@@ -46,7 +46,32 @@ exports.login=async(req,res)=>{
         console.log(err);
         res.status(400).json({
             status:"failed",
-            message: err
+            message: err.message
+        })
+    }
+}
+
+exports.logout=async(req,res)=>{
+    try{
+        const cookieOptions={
+            expires: new Date(Date.now()-10*1000),
+            httpOnly:true,
+            domain:"localhost",
+            path: '/',
+        };
+        console.log("Logging out");
+        //res.clearCookie('jwt');
+        res.cookie("jwt","null",cookieOptions);
+        console.log("Deleted");
+        res.status(200).json({
+            status:"success",
+            message:"Cookie has been deleted"
+        });
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message: err.message
         })
     }
 }
@@ -68,7 +93,7 @@ exports.protectRouteWithJWT=async(req,res,next)=>{
         console.log(err.message);
         res.status(400).json({
             status:"fail",
-            message:err
+            message:err.message
         })
     }
 }

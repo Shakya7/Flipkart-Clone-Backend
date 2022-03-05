@@ -9,6 +9,7 @@ router.route("/").get(authController.protectRouteWithJWT, userController.getAllU
 router.route("/getUserByEmail").get(userController.getUser);
 router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);
+router.route("/logout").get(authController.logout);
 router.route("/load-data").get(authController.getDataFromDB);
 router.route("/add-to-cart").patch(authController.protectRouteWithJWT,userController.addToCart);
 
