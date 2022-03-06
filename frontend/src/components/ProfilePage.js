@@ -26,14 +26,10 @@ const ProfilePage=()=>{
         mobile_edit:false
         
     });
-
-    useEffect(()=>{
-
-    },[])
     return(
         <div>
             <Categories/>
-            <div style={{width:"100%",height:"auto", backgroundColor:"#EEEEEE",display:"flex", gap:"2%",alignItems:"flex-start",justifyContent:"center",paddingTop:'20px'}}>
+            <div style={{width:"100%",height:"auto", backgroundColor:"#EEEEEE",display:"flex", gap:"2%",alignItems:"flex-start",justifyContent:"center",paddingTop:'20px',paddingBottom:'20px'}}>
                 <div style={{display:"flex",flexDirection:"column",minWidth:"22%",height:"50%",backgroundColor:"#EEEEEE", gap:"20px"}}>
                     <div style={{backgroundColor:"#21325E",width:"100%",height:"auto",boxShadow:"5px 5px 8px #476072",display:"flex",alignItems:"center",justifyContent:"flex-start",gap:"10px",padding:"10px",borderRadius:"5px"}}>
                         <div style={{width:"60px",height:"60px", display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -110,7 +106,7 @@ const ProfilePage=()=>{
                         </div>
                     </div>
                 </div>
-                <div style={{display:"flex",flexDirection:"column",width:"65%",height:"auto"}}>
+                <div style={{display:"flex",flexDirection:"column",width:"65%",height:"auto", boxShadow:"3px 3px 5px grey"}}>
                     <form style={{minWidth:"65%",height:"50%", backgroundColor:"white",display:"flex",padding:"4%",flexDirection:"column",gap:"80px"}}>
                         <div className="form-personal-info" syle={{display:"flex",flexDirection:"column",gap:"10px"}}> 
                             <div style={{display:"flex",gap:"5%"}}>

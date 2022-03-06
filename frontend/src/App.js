@@ -9,6 +9,7 @@ import { GlobalProvider } from './components/GlobalContext';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ProfilePage from './components/ProfilePage';
+import Orders from './components/Orders';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
               <Route path="signup" element={<SignUp/>}/>
               <Route path='cart' element={<CartPage/>}/>
               <Route path="profile" element={<ProfilePage/>}/>
+              <Route path="orders" element={<Orders/>}/>
+              <Route path="*" element={<div>Error</div>}/>
             </Route>
             <Route path="*" element={<div>Error</div>}/>
           </Routes>

@@ -1,4 +1,4 @@
-import {useLocation, useNavigate } from "react-router-dom"
+import {useLocation, useNavigate,useParams } from "react-router-dom"
 import { GlobalContext } from "./GlobalContext";
 import { useContext, useEffect, useLayoutEffect,useState } from "react";
 import Categories from "./Categories";
@@ -7,6 +7,7 @@ import cart_logo from "../images/cart_logo.png";
 
 
 export const SingleItemPage=(props)=>{
+    const {id}=useParams();
     const {state,dispatch}=useContext(GlobalContext);
     const navigation=useNavigate();
     const location=useLocation();
@@ -16,7 +17,13 @@ export const SingleItemPage=(props)=>{
         <div style={{display:"flex",flexDirection:"column",width:"100%",backgroundColor:"#EEEEEE",height:"auto"}}>
             <Categories/>
             <div style={{width:"100%", height:"2vh",backgroundColor:"#CDE8F6"}}/>
-            <div style={{display:"flex",width:"100%",justifyContent:"space-between",alignItems:"center",padding:"20px"}}>
+
+            {/* When entering any random value after "/", it'll trigger SingleItemPage.js to render which will accept the item data from Card.js in the form of location.state
+                On just by entering 2, 3, 4, etc after "/" will not set the item data(PAYLOAD) which it would have set as navigation(" ", PAYLOAD) in Card.js
+                Therefore, location.state._prop_name wont be accessible in this code if done that way, 
+                So we are simply rendering error page if location.state is not found
+             */}
+            {location.state?<div style={{display:"flex",width:"100%",justifyContent:"space-between",alignItems:"center",padding:"20px"}}>
                 <div style={{width:"45%",height:"60vmin", borderRadius:"5px", boxShadow:"4px 4px 5px grey",display:"flex",flexDirection:"column", justifyContent:"center",alignItems:"center",backgroundColor:"white", padding:"20px"}}>
                     <img style={{width:"80%",height:"80%", borderRadius:"5px"}} src={location.state.image}/>
                     {
@@ -56,10 +63,11 @@ export const SingleItemPage=(props)=>{
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>:
             <div>
-                
+                Error
             </div>
+            }
         </div>
     )
 }
