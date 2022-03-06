@@ -8,6 +8,7 @@ import { SingleItemPage } from './components/SingleItemPage';
 import { GlobalProvider } from './components/GlobalContext';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import ProfilePage from './components/ProfilePage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path="signup" element={<SignUp/>}/>
               <Route path='cart' element={<CartPage/>}/>
+              <Route path="profile" element={<ProfilePage/>}/>
             </Route>
             <Route path="*" element={<div>Error</div>}/>
           </Routes>

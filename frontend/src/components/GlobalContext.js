@@ -181,11 +181,12 @@ export const GlobalProvider=(props)=>{
                 console.log(userData.data.data);
                 console.log(state.connectionToDBNumber);
                 dispatch({type:"finally-update-data-from-db",payload:userData.data.data.user});
+                dispatch({type:"login",payload:userData.data.data.user});
             }
         }
         loadFromDB();
 
-    },[state.connectionToDBNumber])
+    },[state.connectionToDBNumber,state.showCart])
     return(
         <GlobalContext.Provider value={{state,dispatch}}>
             {

@@ -26,7 +26,6 @@ export const SingleItemPage=(props)=>{
                         <div style={{alignSelf:"center"}}>GO TO CART</div>
                     </div>:
                     <div onClick={(e)=>{
-                        //setAdded(true);
                         if(state.isLoggedIn){
                             dispatch({type:"add-to-cart",payload:location.state});
                             dispatch({type:"add-to-cart-DB"});

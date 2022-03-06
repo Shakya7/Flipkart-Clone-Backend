@@ -75,10 +75,19 @@ export const Navbar=()=>{
                                 </div>
                             </div>
                         </div>:
-                        <div onMouseOverCapture={()=>setHover("flex")} className="loggedin" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",color:"#2874f0", fontWeight:"bold",cursor:"pointer",minwidth:"20vmin",maxWidth:"auto",backgroundColor:"white",padding:"5px",textAlign:"center",position:"relative",left:"10px",fontWeight:"normal"}}>
+                        <div onMouseOverCapture={()=>setHover("flex")} className="loggedin" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",color:"#2874f0", fontWeight:"bold",cursor:"pointer",minwidth:"20vmin",maxWidth:"auto",backgroundColor:"white",padding:"5px",textAlign:"center",position:"relative",left:"10px",fontWeight:"normal",borderRadius:"7px"}}>
                             <p style={{width:"auto", height:"auto",padding:"3px",fontWeight:"bold"}}>{state.userProfile?state.userProfile.name.split(" ")[0].toUpperCase():"LOGIN"}</p>
                             <div onMouseOutCapture={()=>setHover("none")} className="pointer" style={{width:"20%",height:"50%",backgroundColor:"white",position:"absolute",bottom:"-3.3vh",display:hoverLogin}}/>
-                            <div onMouseOutCapture={()=>setHover("none")} style={{display:hoverLogin,position:"absolute", width:"40vmin",backgroundColor:"grey",top:"7vh",alignItems:"center",flexDirection:"column",boxShadow:"5px 0 5px -5px grey,0 5px 5px -5px grey, -5px 0 5px -5px grey"}}>
+                            <div onMouseOutCapture={()=>setHover("none")} style={{display:hoverLogin,position:"absolute", width:"40vmin",backgroundColor:"grey",top:"7vh",alignItems:"center",flexDirection:"column",boxShadow:"5px 0 5px -5px grey,0 5px 5px -5px grey, -5px 0 5px -5px grey",borderRadius:"4px 4px 4px 4px"}}>
+                                <div className="login-dropdown" onClick={(e)=>{
+                                    navigation("/profile");
+                                }}>
+                                    <div style={{display:"flex", justifyContent:"flex-start",marginLeft:"10px", alignItems:"center", textAlign:"center",position:"relative",top:"30%"}}>
+                                        <img style={{width:"20px"}} src={profile_logo}/>
+                                        <p style={{marginLeft:"20px"}}>My Profile</p>
+                                    </div>
+                                </div>
+                                <hr/>
                                 <div className="login-dropdown">
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={orders_logo}/>

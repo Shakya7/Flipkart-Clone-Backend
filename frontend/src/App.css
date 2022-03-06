@@ -6,6 +6,9 @@
 input{
   border-style: solid;
 }
+label{
+  font-size:1.2rem
+}
 .category_img{
   width:15vmin;
   height:10vmin;
@@ -68,9 +71,11 @@ input{
   justify-content: space-around;
   align-items: center;
   padding:"10px";
+  
 }
 .log-dropdown:hover{
   background-color: rgb(120, 198, 250);
+  
 }
 
 .login-dropdown{
@@ -80,6 +85,7 @@ input{
   color:black;
   justify-content: flex-start;
   padding:"10px";
+  
 }
 .login-dropdown:hover{
   background-color: rgb(120, 198, 250);
@@ -103,5 +109,41 @@ input{
 }
 .product-scale:hover{
   transform: scale(1.09,1.09);
+  color:"blue"
 
+}
+.account-sub-sections{
+  transition: font-weight 0.4s ease-out,transform 0.1s ease-in-out;
+}
+.account-sub-sections:hover{
+  font-weight: bold;
+  transform:scale(1.05,1);
+  cursor: pointer;
+}
+.form-personal-info input[type=text]{
+  width: 20vmax;
+  height: 3.6vmax;
+  padding-left: 2%;
+  border-radius: 5px;
+}
+.form-personal-info input[type=radio]{
+  margin-right: 10px;
+}
+.form-email-address input[type=text]{
+  width: 20vmax;
+  height: 3.6vmax;
+  padding-left: 2%;
+  border-radius: 5px;
+}
+.form-mobile input[type=text]{
+  width: 20vmax;
+  height: 3.6vmax;
+  padding-left: 2%;
+  border-radius: 5px;
+}
+.faq-sec{
+  margin-top:2%;
+}
+.faq-sec-1{
+  margin-top:3.5%;
 }
