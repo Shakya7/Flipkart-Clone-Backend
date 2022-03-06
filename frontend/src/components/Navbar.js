@@ -53,21 +53,21 @@ export const Navbar=()=>{
                                     } style={{color:"#2874f0"}}>Sign Up</p>
                                 </div>
                                 <hr/>
-                                <div className="login-dropdown">
+                                <div className="login-dropdown" onClick={e=>navigation("/login")}>
                                     <div style={{display:"flex", justifyContent:"flex-start",marginLeft:"10px", alignItems:"center", textAlign:"center",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={profile_logo}/>
                                         <p style={{marginLeft:"20px"}}>My Profile</p>
                                     </div>
                                 </div>
                                 <hr/>
-                                <div className="login-dropdown">
+                                <div className="login-dropdown" onClick={e=>navigation("/login")}>
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={orders_logo}/>
                                         <p style={{marginLeft:"20px"}}>Orders</p>
                                     </div>
                                 </div>
                                 <hr/>
-                                <div className="login-dropdown">
+                                <div className="login-dropdown" onClick={e=>navigation("/login")}>
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={wishlist_logo}/>
                                         <p style={{marginLeft:"20px"}}>Wishlist</p>
@@ -88,7 +88,7 @@ export const Navbar=()=>{
                                     </div>
                                 </div>
                                 <hr/>
-                                <div className="login-dropdown">
+                                <div className="login-dropdown" onClick={e=>navigation("/orders")}>
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={orders_logo}/>
                                         <p style={{marginLeft:"20px"}}>Orders</p>
