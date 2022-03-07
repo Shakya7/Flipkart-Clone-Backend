@@ -83,7 +83,7 @@ exports.addToCart=async(req, res)=>{
     }
 }
 
-exports.changeNme=async(req,res)=>{
+exports.changeName=async(req,res)=>{
     try{
         //let token;
         //if(res.cookies.jwt)
@@ -95,7 +95,8 @@ exports.changeNme=async(req,res)=>{
         console.log(user);
 
         const upDatedNameOfUser=await User.findByIdAndUpdate(user._id,{
-            name:req.body.name
+            name:req.body.name,
+            gender:req.body.gender
         },{new:true,runValidators:true});
 
         const token=jwt.sign({id:user._id,name:upDatedNameOfUser.name},process.env.JWT_SECRET,{
@@ -112,7 +113,7 @@ exports.changeNme=async(req,res)=>{
         res.status(200).json({
             status:"success",
             data:{
-                user
+                user:upDatedNameOfUser
             }
         })
     }catch(err){
@@ -123,4 +124,64 @@ exports.changeNme=async(req,res)=>{
         })
     }
 }
+exports.changeEmail=async(req,res)=>{
+    try{
+        //let token;
+        //if(res.cookies.jwt)
+        //    token=res.cookies.jwt;
+        //if(!token)
+        //    return next("Request failed...please login again");
+        console.log(req.cookies.jwt);
+        const user=res.user;
+        console.log(user);
+
+        const upDatedEmailOfUser=await User.findByIdAndUpdate(user._id,{
+            email:req.body.email
+        },{new:true,runValidators:true});
+        /*const upDatedNameOfUser=await User.findByIdAndUpdate(user._id,{
+            name:req.body.name
+        },{new:true,runValidatorres.cookie("jwt",token,cookieOptions);s:true});*/
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:upDatedEmailOfUser
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}
+exports.changeMobile=async(req,res)=>{
+    try{
+        //let token;
+        //if(res.cookies.jwt)
+        //    token=res.cookies.jwt;
+        //if(!token)
+        //    return next("Request failed...please login again");
+        console.log(req.cookies.jwt);
+        const user=res.user;
+        console.log(user);
+
+        const upDatedMobileOfUser=await User.findByIdAndUpdate(user._id,{
+            mobile:req.body.mobile
+        },{new:true,runValidators:true});
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:upDatedMobileOfUser
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}
+
 

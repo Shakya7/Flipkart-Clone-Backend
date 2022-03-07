@@ -18,6 +18,7 @@ const ProfilePage=()=>{
     let lname=state.userProfile?state.userProfile.name.split(" ")[1]:"";
     let email=state.userProfile?state.userProfile.email:"";
     let mobile=state.userProfile?state.userProfile.mobile:"";
+    let gender=state.userProfile?state.userProfile.gender:"";
     const [profileDetails,setProfileDetails]=useState({
         profile_edit:false,
         profile_val_fname:state.userProfile?state.userProfile.name.split(" ")[0]:"",
@@ -25,6 +26,7 @@ const ProfilePage=()=>{
         //profile_val_name:profileDetails.profile_val_fname+" "+profileDetails.profile_val_fname,
         profile_val_email:email,
         profile_val_mobile:mobile,
+        gender_val:gender,
         email_edit:false,
         mobile_edit:false
         
@@ -138,7 +140,9 @@ const ProfilePage=()=>{
                                 {profileDetails.profile_edit?<div onClick={
                                     async e=>{
                                         const user=await axios.patch("http://localhost:4001/api/v1/users/update-name",{
-                                            name:profileDetails.profile_val_fname+" "+profileDetails.profile_val_lname
+                                            name:profileDetails.profile_val_fname+" "+profileDetails.profile_val_lname,
+                                            gender:profileDetails.gender_val
+                                            
                                         },{ withCredentials:true});
                                         console.log(user);
                                         //dispatch({type:"change-name",payload:user.data})
@@ -148,17 +152,27 @@ const ProfilePage=()=>{
                                         });
                                         window.location.reload(true);
                                     }
-                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px"}}>SAVE</div>:""}
+                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>SAVE</div>:""}
                             </div>
                             <div style={{display:"flex", flexDirection:"column",marginTop:"3%"}}>
                                 <p>Your Gender</p>
                                 <div style={{display:"flex",marginTop:"2%"}}>
                                     <div>
-                                        <input type="radio" name="gender" value={""}/>
+                                        <input checked={profileDetails.gender_val==="Male"?true:false} disabled={profileDetails.profile_edit?false:true} type="radio" name="gender" value="Male" onChange={e=>{
+                                            setProfileDetails({
+                                                ...profileDetails,
+                                                gender_val:e.target.value
+                                            })
+                                        }}/>
                                         <label>Male</label>
                                     </div>
                                     <div style={{marginLeft:"3%"}}>
-                                        <input type="radio" name="gender"/>
+                                        <input checked={profileDetails.gender_val==="Female"?true:false} disabled={profileDetails.profile_edit?false:true} type="radio" name="gender" value="Female" onChange={e=>{
+                                            setProfileDetails({
+                                                ...profileDetails,
+                                                gender_val:e.target.value
+                                            })
+                                        }}/>
                                         <label>Female</label>
                                     </div>
                                 </div>
@@ -175,8 +189,28 @@ const ProfilePage=()=>{
                                 }} style={{color:"blue",cursor:"pointer"}}>{profileDetails.email_edit?<p>Cancel</p>:<p>Edit</p>}</div>
                             </div>
                             <div style={{display:"flex",marginTop:"3%",gap:"2%"}}>
-                                <input type="text" disabled={profileDetails.email_edit?false:true} placeholder="Email address..."/>
-                                {profileDetails.email_edit?<div style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px"}}>SAVE</div>:""}
+                                <input onChange={
+                                    e=>{
+                                        setProfileDetails({
+                                            ...profileDetails,
+                                            profile_val_email:e.target.value
+                                        })
+                                    }
+                                } type="text" disabled={profileDetails.email_edit?false:true} placeholder="Email address..."/>
+                                {profileDetails.email_edit?<div onClick={
+                                    async e=>{
+                                        const user=await axios.patch("http://localhost:4001/api/v1/users/update-email",{
+                                            email:profileDetails.profile_val_email
+                                        },{ withCredentials:true});
+                                        console.log(user);
+                                        //dispatch({type:"change-name",payload:user.data})
+                                        setProfileDetails({
+                                            ...profileDetails,
+                                            email_edit:!profileDetails.email_edit,
+                                        });
+                                        window.location.reload(true);
+                                    }
+                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>SAVE</div>:""}
                             </div>
                         </div>
                         <div className="form-mobile">
@@ -187,11 +221,31 @@ const ProfilePage=()=>{
                                         ...profileDetails,
                                         mobile_edit:!profileDetails.mobile_edit
                                     })
-                                }} style={{colCancelor:"blue",cursor:"pointer"}}><p>Edit</p></div>
+                                }} style={{colCancelor:"blue",cursor:"pointer"}}><p style={{color:"blue"}}>Edit</p></div>
                             </div>
                             <div style={{display:"flex",marginTop:"3%",gap:"2%"}}>
-                                <input defaultValue={profileDetails.profile_val_mobile} type="text" placeholder="Mobile Number..." disabled={profileDetails.mobile_edit?false:true} />
-                                {profileDetails.mobile_edit?<div style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px"}}>SAVE</div>:""}
+                                <input onChange={
+                                    e=>{
+                                        setProfileDetails({
+                                            ...profileDetails,
+                                            profile_val_mobile:e.target.value
+                                        })
+                                    }
+                                } defaultValue={profileDetails.profile_val_mobile} type="text" placeholder="Mobile Number..." disabled={profileDetails.mobile_edit?false:true} />
+                                {profileDetails.mobile_edit?<div onClick={
+                                    async e=>{
+                                        const user=await axios.patch("http://localhost:4001/api/v1/users/update-mobile",{
+                                            mobile:profileDetails.profile_val_mobile
+                                        },{ withCredentials:true});
+                                        console.log(user);
+                                        //dispatch({type:"change-name",payload:user.data})
+                                        setProfileDetails({
+                                            ...profileDetails,
+                                            mobile_edit:!profileDetails.mobile_edit,
+                                        });
+                                        window.location.reload(true);
+                                    }
+                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>SAVE</div>:""}
                             </div>
                         </div>
                         <div style={{width:"",display:"flex",flexDirection:"column",}}>
