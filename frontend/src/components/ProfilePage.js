@@ -2,6 +2,7 @@ import Categories from "./Categories";
 import profile_avatar from "../images/profile_avatar_logo.png"
 import cart_logo from "../images/cart_logo.png"
 import { GlobalContext } from "./GlobalContext";
+import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect} from "react";
 import next_button from "../images/next_button.png";
 import user_profile from "../images/user_profile.png";
@@ -9,6 +10,7 @@ import user_payments from "../images/user_payments.png";
 import logout_logo from "../images/logout_logo.png";
 import my_stuff_logo from "../images/my_stuff_logo.png";
 import account_btm_banner from "../images/account_bottom_banner.png";
+import axios from "axios";
 
 const ProfilePage=()=>{
     const {state,dispatch}=useContext(GlobalContext);
@@ -18,14 +20,20 @@ const ProfilePage=()=>{
     let mobile=state.userProfile?state.userProfile.mobile:"";
     const [profileDetails,setProfileDetails]=useState({
         profile_edit:false,
-        profile_val_fname:fname,
-        profile_val_lname:lname,
+        profile_val_fname:state.userProfile?state.userProfile.name.split(" ")[0]:"",
+        profile_val_lname:state.userProfile?state.userProfile.name.split(" ")[1]:"",
+        //profile_val_name:profileDetails.profile_val_fname+" "+profileDetails.profile_val_fname,
         profile_val_email:email,
         profile_val_mobile:mobile,
         email_edit:false,
         mobile_edit:false
         
     });
+    useEffect(()=>{
+        console.log(profileDetails);
+        console.log("STATE",state);
+    },[profileDetails])
+    const navigation=useNavigate();
     return(
         <div>
             <Categories/>
@@ -41,7 +49,7 @@ const ProfilePage=()=>{
                         </div>     
                     </div>
                     <div style={{backgroundColor:"#21325E",width:"100%",height:"auto",boxShadow:"5px 5px 8px #476072",borderRadius:"5px"}}>
-                        <div className="account-sub-sections" style={{display:"flex",justifyContent:"space-between",width:"100%",height:"50px"}}>
+                        <div onClick={e=>navigation("/orders")} className="account-sub-sections" style={{display:"flex",justifyContent:"space-between",width:"100%",height:"50px"}}>
                             <div style={{display:"flex",justifyContent:"flex-start",color:"white",fontWeight:"lighter",alignItems:"center",gap:"10px",paddingLeft:"25px"}}>
                                 <div><img style={{width:"30px"}} src={cart_logo}/></div>
                                 <div>MY ORDERS</div>
@@ -119,9 +127,28 @@ const ProfilePage=()=>{
                                 }} style={{color:"blue",cursor:"pointer"}}>{profileDetails.profile_edit?<p>Cancel</p>:<p>Edit</p>}</div>
                             </div>
                             <div style={{display:"flex",marginTop:"3%",gap:"2%"}}>
-                                <input type="text" placeholder={profileDetails.profile_val_fname}/>
-                                <input type="text" placeholder={profileDetails.profile_val_lname}/>
-                                {profileDetails.profile_edit?<div style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px"}}>SAVE</div>:""}
+                                <input defaultValue={profileDetails.profile_val_fname} type="text" disabled={profileDetails.profile_edit?false:true} onChange={e=>setProfileDetails({
+                                    ...profileDetails,
+                                    profile_val_fname:e.target.value
+                                })} placeholder="First name..."/>
+                                <input type="text" defaultValue={profileDetails.profile_val_lname} disabled={profileDetails.profile_edit?false:true} onChange={e=>setProfileDetails({
+                                    ...profileDetails,
+                                    profile_val_lname:e.target.value
+                                })} placeholder="Last name..."/>
+                                {profileDetails.profile_edit?<div onClick={
+                                    async e=>{
+                                        const user=await axios.patch("http://localhost:4001/api/v1/users/update-name",{
+                                            name:profileDetails.profile_val_fname+" "+profileDetails.profile_val_lname
+                                        },{ withCredentials:true});
+                                        console.log(user);
+                                        //dispatch({type:"change-name",payload:user.data})
+                                        setProfileDetails({
+                                            ...profileDetails,
+                                            profile_edit:!profileDetails.profile_edit,
+                                        });
+                                        window.location.reload(true);
+                                    }
+                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px"}}>SAVE</div>:""}
                             </div>
                             <div style={{display:"flex", flexDirection:"column",marginTop:"3%"}}>
                                 <p>Your Gender</p>
@@ -148,7 +175,7 @@ const ProfilePage=()=>{
                                 }} style={{color:"blue",cursor:"pointer"}}>{profileDetails.email_edit?<p>Cancel</p>:<p>Edit</p>}</div>
                             </div>
                             <div style={{display:"flex",marginTop:"3%",gap:"2%"}}>
-                                <input type="text"/>
+                                <input type="text" disabled={profileDetails.email_edit?false:true} placeholder="Email address..."/>
                                 {profileDetails.email_edit?<div style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px"}}>SAVE</div>:""}
                             </div>
                         </div>
@@ -160,10 +187,10 @@ const ProfilePage=()=>{
                                         ...profileDetails,
                                         mobile_edit:!profileDetails.mobile_edit
                                     })
-                                }} style={{color:"blue",cursor:"pointer"}}><p>Edit</p></div>
+                                }} style={{colCancelor:"blue",cursor:"pointer"}}><p>Edit</p></div>
                             </div>
                             <div style={{display:"flex",marginTop:"3%",gap:"2%"}}>
-                                <input type="text" placeholder={profileDetails.profile_val_mobile}/>
+                                <input defaultValue={profileDetails.profile_val_mobile} type="text" placeholder="Mobile Number..." disabled={profileDetails.mobile_edit?false:true} />
                                 {profileDetails.mobile_edit?<div style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px"}}>SAVE</div>:""}
                             </div>
                         </div>

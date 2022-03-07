@@ -1,13 +1,13 @@
 
 import { Rating } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 
 
 export const Card=(props)=>{
     const navigation=useNavigate();
+    
     return(
-
         <div className="product-scale" onClick={()=>{
             
             navigation(`/${props.element.id}`,{state:props.element})    //passing the selected item to be received as useLocation

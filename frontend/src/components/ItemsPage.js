@@ -31,7 +31,7 @@ const ItemsPage=()=>{
         console.log("Men's clothing");
     }
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
         if(state.category==="")
             func1();
         else if(state.category==="women's clothing")

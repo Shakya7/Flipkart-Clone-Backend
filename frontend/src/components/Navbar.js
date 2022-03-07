@@ -21,6 +21,7 @@ export const Navbar=()=>{
         //console.log("Added to cart!!!!!!");
         //console.log(state.cart);
         //console.log(state.userProfile)
+        console.log("NAVBAR ", state);
 
     },[state.cart,hoverLogin,state.userProfile,state.showCart])
     return(

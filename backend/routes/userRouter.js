@@ -12,5 +12,6 @@ router.route("/login").post(authController.login);
 router.route("/logout").get(authController.logout);
 router.route("/load-data").get(authController.getDataFromDB);
 router.route("/add-to-cart").patch(authController.protectRouteWithJWT,userController.addToCart);
+router.route("/update-name").patch(authController.protectRouteWithJWT, userController.changeNme);
 
 module.exports=router;
