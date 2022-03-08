@@ -183,5 +183,24 @@ exports.changeMobile=async(req,res)=>{
         })
     }
 }
-
+exports.addAddress=async (req,res)=>{
+    try{
+        const user=res.user;
+        const addressUpdatedUser=await User.findByIdAndUpdate(user._id,{
+            addresses:req.body.addresses
+        },{new:true,runValidators:true});
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:addressUpdatedUser
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}
 

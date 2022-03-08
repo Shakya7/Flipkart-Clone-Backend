@@ -23,7 +23,9 @@ function App() {
               <Route path="login" element={<Login/>}/>
               <Route path="signup" element={<SignUp/>}/>
               <Route path='cart' element={<CartPage/>}/>
-              <Route path="profile" element={<ProfilePage/>}/>
+              <Route path="profile" element={<ProfilePage/>}>
+                <Route path="addresses" element={<ProfilePage addr="address"/>}/>
+              </Route>
               <Route path="orders" element={<Orders/>}/>
               <Route path="*" element={<div>Error</div>}/>
             </Route>

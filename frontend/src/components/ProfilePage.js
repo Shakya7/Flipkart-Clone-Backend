@@ -12,7 +12,8 @@ import my_stuff_logo from "../images/my_stuff_logo.png";
 import account_btm_banner from "../images/account_bottom_banner.png";
 import axios from "axios";
 
-const ProfilePage=()=>{
+const ProfilePage=(props)=>{
+    //console.log("ADDRESS-to",props.addr);
     const {state,dispatch}=useContext(GlobalContext);
     let fname=state.userProfile?state.userProfile.name.split(" ")[0]:"";
     let lname=state.userProfile?state.userProfile.name.split(" ")[1]:"";
@@ -31,11 +32,28 @@ const ProfilePage=()=>{
         mobile_edit:false
         
     });
+    const [accountPage,setAccountPage]=useState("profile-info");
+    const [addAddressBttn, setAddAddressBttn]=useState(true);
+    const [newAddress,setNewAddress]=useState("");
+    
     useEffect(()=>{
         console.log(profileDetails);
         console.log("STATE",state);
-    },[profileDetails])
+        console.log(newAddress);
+    },[profileDetails,accountPage,newAddress,state.addresses])
     const navigation=useNavigate();
+
+    /*const addAddress=async ()=>{
+        try{
+            const user= await axios.post("http://localhost:4001/api/v1/users/add-address",{
+                address:newAddress
+            },{withCredentials:true})
+            console.log(user.data.data);
+            return user.data.data;
+        }catch(err){
+            console.log(err);
+        }
+    }*/
     return(
         <div>
             <Categories/>
@@ -70,10 +88,16 @@ const ProfilePage=()=>{
                                 <img width={"30px"} src={next_button}/>
                             </div>
                         </div>
-                        <div className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px", color:"white"}}>
+                        <div onClick={()=>{
+                            setAccountPage("profile-info");
+                            navigation("/profile");
+                        }} className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px", color:"white",backgroundColor:`${accountPage==="profile-info"?"#344CB7":"inherit"}`}}>
                             Profile Information
                         </div>
-                        <div className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px",color:"white"}}>
+                        <div onClick={()=>{
+                            setAccountPage("addresses-info");
+                            navigation("/profile/addresses");
+                            }} className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px",color:"white",backgroundColor:`${accountPage==="addresses-info"?"#344CB7":"inherit"}`}}>
                             Manage Addresses
                         </div>
                         <div style={{width:"100%",height:"1px", backgroundColor:"grey"}}/>
@@ -117,7 +141,8 @@ const ProfilePage=()=>{
                     </div>
                 </div>
                 <div style={{display:"flex",flexDirection:"column",width:"65%",height:"auto", boxShadow:"3px 3px 5px grey"}}>
-                    <form style={{minWidth:"65%",height:"50%", backgroundColor:"white",display:"flex",padding:"4%",flexDirection:"column",gap:"80px"}}>
+                    {accountPage==="profile-info"?
+                    <form style={{minWidth:"65%",height:"auto", backgroundColor:"white",display:"flex",padding:"4%",flexDirection:"column",gap:"80px"}}>
                         <div className="form-personal-info" syle={{display:"flex",flexDirection:"column",gap:"10px"}}> 
                             <div style={{display:"flex",gap:"5%"}}>
                                 <div style={{fontSize:"1.3rem",fontWeight:"bold"}}>Personal Information</div>
@@ -263,11 +288,51 @@ const ProfilePage=()=>{
                         <div style={{color:"#2874f0"}} className="deactivate">
                             Deactivate Account
                         </div>
-                    </form>
+                    </form>:
+                    accountPage==="addresses-info"?
+                    <div >
+                        <form style={{minWidth:"65%",height:"auto", backgroundColor:"white",display:"flex",padding:"4%",flexDirection:"column",gap:"20px"}}>
+                            <div style={{fontSize:"1.3rem", fontWeight:"bold"}}>Manage Addresses</div>
+                            {addAddressBttn?<div onClick={e=>setAddAddressBttn((prev)=>!prev)} style={{display:"flex",justifyContent:"flex-start",alignItems:"center", color:"blue", borderWidth:"1px" ,borderColor:"grey", borderStyle:"solid", padding:"2%", fontSize:"1rem", cursor:"pointer"}}>
+                                <div style={{marginRight:"3%",fontSize:"1.2rem"}}>+</div>
+                                <div>ADD A NEW ADDRESS</div>
+                            </div>:
+                            <div /*onClick={e=>setAddAddressBttn((prev)=>!prev)}*/>
+                                <textarea style={{width:"100%",height:"5vmax", padding:"2%"}} onChange={e=>setNewAddress(e.target.value)} />
+                                <div style={{display:"flex", justifyContent:"flex-start",gap:"2%",color:"white"}}>
+                                    <div onClick={
+                                        async e=>{
+                                            //const user=await addAddress();
+                                            dispatch({type:"add-address",payload:newAddress});
+                                            dispatch({type:"add-address-to-DB"});
+                                            window.location.reload(true);
+                                            navigation("/profile");
+                                        }
+                                    } style={{width:"9vmax", padding:"2%", backgroundColor:"#2874f0",textAlign:"center",cursor:"pointer"}}>SAVE</div>
+                                    <div onClick={e=>setAddAddressBttn((prev)=>!prev)} style={{width:"9vmax", padding:"2%",backgroundColor:"#fb7a1b",textAlign:"center",cursor:"pointer"}}>CANCEL</div>
+                                </div>    
+                            </div>
+                            }   
+                            {
+                            state.userProfile.addresses?
+                            <div>
+                            {state.userProfile.addresses.map((el,i)=><div key={i} style={{width:"100%",height:"6vmax",padding:"2%", borderStyle:"solid",borderColor:"#D1D1D1",borderWidth:"1px"}}>{el}</div>)}
+                            </div>
+                            :
+                            <div>
+                                Sorry, there are no addresses saved for you
+                            </div>
+                            }
+                        </form>
+                    </div>:
+                    <div>
+                        Last case
+                    </div>
+                    }
                     <div style={{width:"100%"}}>
                         <img style={{width:"inherit"}} src={account_btm_banner}/>
                     </div>
-                </div>
+                </div>   
             </div>
         </div>
     )

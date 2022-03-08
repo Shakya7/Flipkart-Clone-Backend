@@ -113,12 +113,13 @@ label{
 
 }
 .account-sub-sections{
-  transition: font-weight 0.4s ease-out,transform 0.1s ease-in-out;
+  transition: font-weight 0.4s ease-out,transform 0.1s ease-in-out,background-color 0.2s ease-in-out;
 }
 .account-sub-sections:hover{
   font-weight: bold;
   transform:scale(1.05,1);
   cursor: pointer;
+  background-color: #344CB7 !important;
 }
 .form-personal-info input[type=text]{
   width: 20vmax;

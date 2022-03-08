@@ -10,7 +10,8 @@ const initialState={
     userProfile:null,
     isLoggedIn:false,
     connectionToDBNumber:0,
-    showCart:true
+    showCart:true,
+    addresses:[]
 
 }
 
@@ -30,6 +31,7 @@ const reducerF=(currState, action)=>{
                 userProfile:action.payload,
                 cartProducts:action.payload.cart,
                 cart:action.payload.cart.length,  
+                addresses:action.payload.addresses
             }
         case "load-data-initial":
             return{
@@ -160,6 +162,21 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 showCart:true,
             }
+        case "add-address":
+            return{
+               ...currState,
+               addresses:[...currState.addresses,action.payload]
+            }
+
+        case "add-address-to-DB":
+            axios.patch("http://localhost:4001/api/v1/users/add-address",
+            {addresses:[...currState.addresses]},{withCredentials:true}).then(
+            (res)=>{
+                console.log(res)
+            }).catch((err)=>{
+                console.log(err.message)
+            })
+            return currState;   
     }
 }
 
