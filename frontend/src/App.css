@@ -148,3 +148,16 @@ label{
 .faq-sec-1{
   margin-top:3.5%;
 }
+.edit{
+  width:5vmax;
+  min-height:10vmin;
+  padding:4px;
+  cursor:pointer;
+  box-shadow: 3px 3px 5px grey;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.edit > div:hover{
+  color:blue;
+}

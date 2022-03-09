@@ -3,7 +3,7 @@ import profile_avatar from "../images/profile_avatar_logo.png"
 import cart_logo from "../images/cart_logo.png"
 import { GlobalContext } from "./GlobalContext";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect} from "react";
+import { useContext, useState, useEffect, createContext} from "react";
 import next_button from "../images/next_button.png";
 import user_profile from "../images/user_profile.png";
 import user_payments from "../images/user_payments.png";
@@ -11,6 +11,9 @@ import logout_logo from "../images/logout_logo.png";
 import my_stuff_logo from "../images/my_stuff_logo.png";
 import account_btm_banner from "../images/account_bottom_banner.png";
 import axios from "axios";
+import Addresses from "./Addresses";
+
+export const ProfileContext=createContext();
 
 const ProfilePage=(props)=>{
     //console.log("ADDRESS-to",props.addr);
@@ -303,10 +306,10 @@ const ProfilePage=(props)=>{
                                     <div onClick={
                                         async e=>{
                                             //const user=await addAddress();
-                                            dispatch({type:"add-address",payload:newAddress});
-                                            dispatch({type:"add-address-to-DB"});
-                                            window.location.reload(true);
+                                            await dispatch({type:"add-address",payload:newAddress});
+                                            await dispatch({type:"add-address-to-DB"});
                                             navigation("/profile");
+                                            window.location.reload(true);
                                         }
                                     } style={{width:"9vmax", padding:"2%", backgroundColor:"#2874f0",textAlign:"center",cursor:"pointer"}}>SAVE</div>
                                     <div onClick={e=>setAddAddressBttn((prev)=>!prev)} style={{width:"9vmax", padding:"2%",backgroundColor:"#fb7a1b",textAlign:"center",cursor:"pointer"}}>CANCEL</div>
@@ -316,7 +319,11 @@ const ProfilePage=(props)=>{
                             {
                             state.userProfile.addresses?
                             <div>
-                            {state.userProfile.addresses.map((el,i)=><div key={i} style={{width:"100%",height:"6vmax",padding:"2%", borderStyle:"solid",borderColor:"#D1D1D1",borderWidth:"1px"}}>{el}</div>)}
+                                <ProfileContext.Provider value={{newAddress,setAddAddressBttn}}>
+                                    {state.userProfile.addresses.map((el,i)=>
+                                        <Addresses key={i} element={el}/>
+                                    )}
+                                </ProfileContext.Provider>
                             </div>
                             :
                             <div>

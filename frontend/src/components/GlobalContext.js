@@ -177,6 +177,11 @@ const reducerF=(currState, action)=>{
                 console.log(err.message)
             })
             return currState;   
+        case "delete-address":
+            return{
+                ...currState,
+                addresses:[...currState.addresses.filter((el)=>el!==action.payload)]
+            }
     }
 }
 
