@@ -7,6 +7,7 @@ import { ProfileContext } from "./ProfilePage";
 function Addresses(props){
     const [editBttnShow,setEditBttnShow]=useState(true);
     const [editFieldShow, setEditFieldShow]=useState(false);
+    const [updateAddres,setUpdateAddress]=useState(props.element);
     const {element}=props
     const {state,dispatch}=useContext(GlobalContext);
     //const {newAddress, setAddAddressBttn}=useContext(ProfileContext);
@@ -14,7 +15,9 @@ function Addresses(props){
 
     useEffect(()=>{
         //console.log(newAddress);
-    },[]);
+        console.log("Updated element",updateAddres);
+        console.log("Actual element",element);
+    },[updateAddres]);
 
     return(
         <div style={{width:"100%",minHeight:"6vmax",padding:"2%", borderStyle:"solid",borderColor:"#D1D1D1",borderWidth:"1px"}}>
@@ -39,12 +42,12 @@ function Addresses(props){
             </div>
             {editFieldShow? 
             <div /*onClick={e=>setAddAddressBttn((prev)=>!prev)}*/>
-                <textarea style={{width:"100%",height:"5vmax", padding:"2%"}} value={element} onChange={e=>console.log(e.target.value)} />
+                <textarea style={{width:"100%",height:"5vmax", padding:"2%"}} defaultValue={element} onChange={e=>setUpdateAddress(e.target.value)} />
                 <div style={{display:"flex", justifyContent:"flex-start",gap:"2%",color:"white"}}>
                     <div onClick={
                         async e=>{
                             //const user=await addAddress();
-                            await dispatch({type:"add-address",payload:element});
+                            await dispatch({type:"update-address",payload:updateAddres,actualValue:element});
                             await dispatch({type:"add-address-to-DB"});
                             navigation("/profile");
                             window.location.reload(true);
