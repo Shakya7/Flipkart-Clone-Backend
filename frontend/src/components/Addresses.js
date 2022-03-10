@@ -2,7 +2,7 @@ import { useState, useContext,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import hamburger_dots from "../images/hamburger_three_dots.png";
 import { GlobalContext } from "./GlobalContext";
-import { ProfileContext } from "./ProfilePage";
+
 
 function Addresses(props){
     const [editBttnShow,setEditBttnShow]=useState(true);
@@ -41,7 +41,7 @@ function Addresses(props){
                 }
             </div>
             {editFieldShow? 
-            <div /*onClick={e=>setAddAddressBttn((prev)=>!prev)}*/>
+            <div>
                 <textarea style={{width:"100%",height:"5vmax", padding:"2%"}} defaultValue={element} onChange={e=>setUpdateAddress(e.target.value)} />
                 <div style={{display:"flex", justifyContent:"flex-start",gap:"2%",color:"white"}}>
                     <div onClick={

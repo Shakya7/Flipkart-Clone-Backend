@@ -2,7 +2,7 @@ import Categories from "./Categories";
 import profile_avatar from "../images/profile_avatar_logo.png"
 import cart_logo from "../images/cart_logo.png"
 import { GlobalContext } from "./GlobalContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useContext, useState, useEffect, createContext} from "react";
 import next_button from "../images/next_button.png";
 import user_profile from "../images/user_profile.png";
@@ -13,13 +13,12 @@ import account_btm_banner from "../images/account_bottom_banner.png";
 import axios from "axios";
 import Addresses from "./Addresses";
 
-export const ProfileContext=createContext();
 
 const ProfilePage=(props)=>{
     //console.log("ADDRESS-to",props.addr);
     const {state,dispatch}=useContext(GlobalContext);
-    let fname=state.userProfile?state.userProfile.name.split(" ")[0]:"";
-    let lname=state.userProfile?state.userProfile.name.split(" ")[1]:"";
+    const location=useLocation();
+    //console.log("URL",location.pathname);
     let email=state.userProfile?state.userProfile.email:"";
     let mobile=state.userProfile?state.userProfile.mobile:"";
     let gender=state.userProfile?state.userProfile.gender:"";
@@ -33,9 +32,8 @@ const ProfilePage=(props)=>{
         gender_val:gender,
         email_edit:false,
         mobile_edit:false
-        
     });
-    const [accountPage,setAccountPage]=useState("profile-info");
+    const [accountPage,setAccountPage]=useState(location.pathname==="/profile"?"profile-info":location.pathname==="/profile/addresses"?"addresses-info":"profile-info");
     const [addAddressBttn, setAddAddressBttn]=useState(true);
     const [newAddress,setNewAddress]=useState("");
     
@@ -300,7 +298,7 @@ const ProfilePage=(props)=>{
                                 <div style={{marginRight:"3%",fontSize:"1.2rem"}}>+</div>
                                 <div>ADD A NEW ADDRESS</div>
                             </div>:
-                            <div /*onClick={e=>setAddAddressBttn((prev)=>!prev)}*/>
+                            <div>
                                 <textarea style={{width:"100%",height:"5vmax", padding:"2%"}} onChange={e=>setNewAddress(e.target.value)} />
                                 <div style={{display:"flex", justifyContent:"flex-start",gap:"2%",color:"white"}}>
                                     <div onClick={
@@ -317,13 +315,11 @@ const ProfilePage=(props)=>{
                             </div>
                             }   
                             {
-                            state.userProfile.addresses?
+                            state.userProfile && state.userProfile.addresses?
                             <div>
-                                <ProfileContext.Provider value={{newAddress,setAddAddressBttn}}>
-                                    {state.userProfile.addresses.map((el,i)=>
-                                        <Addresses key={i} element={el}/>
-                                    )}
-                                </ProfileContext.Provider>
+                                {state.userProfile.addresses.map((el,i)=>
+                                    <Addresses key={i} element={el}/>
+                                )}
                             </div>
                             :
                             <div>

@@ -1,15 +1,20 @@
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "./GlobalContext";
+import { CartContext } from "./CartPage";
 import { useNavigate } from "react-router-dom";
 import cart_empty from "../images/cart_empty_pic.png";
 
 export default function CartProducts(){
     const {state,dispatch}=useContext(GlobalContext);
+    const [addressToDeliver,setAddressToDeliver]=useContext(CartContext);
     const navigation=useNavigate();
 
     useEffect((e)=>{
-        console.log("HMMM");
-    },[state.cartProducts])
+        console.log(state.addresses);
+        console.log(addressToDeliver);
+        if(addressToDeliver==="+ Add Address")
+            navigation("/profile/addresses");
+    },[state.cartProducts,addressToDeliver])
 
     console.log(state.cartProducts);
     
@@ -21,7 +26,12 @@ export default function CartProducts(){
                 </div>
                 {state.cart!==0?<div style={{width:"50%",maxHeight:"inherit",display:"flex",justifyItems:"flex-end", alignItems:"center"}}>
                     <span style={{fontWeight:"normal",fontSize:"1rem",color:"grey"}}>Deliver to</span>
-                    <input style={{height:"70%", paddingLeft:"7px",  width:"70%", position:"relative",left:"20px",margnRight:"10px",flexShrink:"2px",borderColor:"#D1D1D1"}} type="text"></input>
+                    <select style={{height:"70%", paddingLeft:"7px",  width:"70%", position:"relative",left:"20px",margnRight:"10px",flexShrink:"2px",borderColor:"#D1D1D1"}} value={addressToDeliver} onChange={e=>setAddressToDeliver(e.target.value)}>
+                    {
+                        [...state.addresses,"+ Add Address"].map((el,i)=><option value={el} key={i}>{el}</option>)
+                        
+                    }
+                    </select>
                 </div>:""}
             </header>
             <hr/>

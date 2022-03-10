@@ -1,9 +1,13 @@
-import { useContext} from "react"
-import { GlobalContext } from "./GlobalContext"
+import { useContext, useEffect} from "react"
+import { GlobalContext } from "./GlobalContext";
+import { CartContext } from "./CartPage";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 export default function CartAmount(){
     const {state}=useContext(GlobalContext);
+    const [addressToDeliver,setAddressToDeliver]=useContext(CartContext);
+    const navigation=useNavigate();
 
     const checkBackend=async()=>{
         try{
@@ -15,6 +19,10 @@ export default function CartAmount(){
             console.log(err);
         }
     }
+    useEffect(()=>{
+        
+
+    },[])
 
     return(
         <div style={{backgroundColor:"white",width:"27%", display:"flex",flexDirection:"column", height:"67vh",boxShadow:"5px 5px 5px grey", borderColor:"grey", borderStyle:"solid", borderWidth:"1px",padding:"20px"}}>

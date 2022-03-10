@@ -185,7 +185,7 @@ const reducerF=(currState, action)=>{
         case "update-address":
             const index4=currState.addresses.findIndex(el=>el===action.actualValue);
             currState.addresses.splice(index4,1,action.payload);
-            console.log(currState.addresses);
+            //console.log(currState.addresses);
             return currState;
     }
 }
