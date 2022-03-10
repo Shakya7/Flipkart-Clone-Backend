@@ -161,3 +161,11 @@ label{
 .edit > div:hover{
   color:blue;
 }
+.wishlist-img{
+  width: 12%
+}
+.delete-icon{
+  width:3%;
+  height:3%;
+  cursor: pointer;
+}

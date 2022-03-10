@@ -10,11 +10,13 @@ import orders_logo from "../images/orders_logo.png";
 import logout_logo from "../images/logout_logo.png";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
+import { ProfileContext } from "./GlobalContext";
 
 
 
 export const Navbar=()=>{
     const {state, dispatch}=useContext(GlobalContext);
+    const [accountPage,setAccountPage]=useContext(ProfileContext)
     const [hoverLogin,setHover]=useState("none");
     const navigation=useNavigate();
     useEffect(()=>{
@@ -81,6 +83,7 @@ export const Navbar=()=>{
                             <div onMouseOutCapture={()=>setHover("none")} className="pointer" style={{width:"20%",height:"50%",backgroundColor:"white",position:"absolute",bottom:"-3.3vh",display:hoverLogin}}/>
                             <div onMouseOutCapture={()=>setHover("none")} style={{display:hoverLogin,position:"absolute", width:"40vmin",backgroundColor:"grey",top:"7vh",alignItems:"center",flexDirection:"column",boxShadow:"5px 0 5px -5px grey,0 5px 5px -5px grey, -5px 0 5px -5px grey",borderRadius:"4px 4px 4px 4px"}}>
                                 <div className="login-dropdown" onClick={(e)=>{
+                                    setAccountPage("profile-info");
                                     navigation("/profile");
                                 }}>
                                     <div style={{display:"flex", justifyContent:"flex-start",marginLeft:"10px", alignItems:"center", textAlign:"center",position:"relative",top:"30%"}}>
@@ -89,14 +92,19 @@ export const Navbar=()=>{
                                     </div>
                                 </div>
                                 <hr/>
-                                <div className="login-dropdown" onClick={e=>navigation("/orders")}>
+                                <div className="login-dropdown" onClick={e=>{
+                                    navigation("/orders")
+                                }}>
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={orders_logo}/>
                                         <p style={{marginLeft:"20px"}}>Orders</p>
                                     </div>
                                 </div>
                                 <hr/>
-                                <div className="login-dropdown">
+                                <div className="login-dropdown" onClick={e=>{
+                                    setAccountPage("wishlist-info");
+                                    navigation("/profile/wishlist")
+                                }}>
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={wishlist_logo}/>
                                         <p style={{marginLeft:"20px"}}>Wishlist</p>

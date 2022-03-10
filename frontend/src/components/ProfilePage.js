@@ -12,11 +12,13 @@ import my_stuff_logo from "../images/my_stuff_logo.png";
 import account_btm_banner from "../images/account_bottom_banner.png";
 import axios from "axios";
 import Addresses from "./Addresses";
-
+import Wishlist from "./Wishlist";
+import { ProfileContext } from "./GlobalContext";
 
 const ProfilePage=(props)=>{
     //console.log("ADDRESS-to",props.addr);
     const {state,dispatch}=useContext(GlobalContext);
+    const [accountPage,setAccountPage]=useContext(ProfileContext)
     const location=useLocation();
     //console.log("URL",location.pathname);
     let email=state.userProfile?state.userProfile.email:"";
@@ -33,7 +35,6 @@ const ProfilePage=(props)=>{
         email_edit:false,
         mobile_edit:false
     });
-    const [accountPage,setAccountPage]=useState(location.pathname==="/profile"?"profile-info":location.pathname==="/profile/addresses"?"addresses-info":"profile-info");
     const [addAddressBttn, setAddAddressBttn]=useState(true);
     const [newAddress,setNewAddress]=useState("");
     
@@ -41,6 +42,7 @@ const ProfilePage=(props)=>{
         console.log(profileDetails);
         console.log("STATE",state);
         console.log(newAddress);
+        console.log("WISHLIST",state.wishlist);
     },[profileDetails,accountPage,newAddress,state.addresses])
     const navigation=useNavigate();
 
@@ -126,7 +128,10 @@ const ProfilePage=(props)=>{
                         <div className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px",color:"white"}}>
                             All Notifications
                         </div>
-                        <div className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px",color:"white"}}>
+                        <div onClick={e=>{
+                            setAccountPage("wishlist-info");
+                            navigation("wishlist");
+                            }} className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px",color:"white"}}>
                             My Wishlist
                         </div>
                         <div style={{width:"100%",height:"1px", backgroundColor:"grey"}}/>
@@ -289,7 +294,7 @@ const ProfilePage=(props)=>{
                         <div style={{color:"#2874f0"}} className="deactivate">
                             Deactivate Account
                         </div>
-                    </form>:
+                    </form>:(
                     accountPage==="addresses-info"?
                     <div >
                         <form style={{minWidth:"65%",height:"auto", backgroundColor:"white",display:"flex",padding:"4%",flexDirection:"column",gap:"20px"}}>
@@ -328,10 +333,27 @@ const ProfilePage=(props)=>{
                             }
                         </form>
                     </div>:
+                    accountPage==="wishlist-info"?
+                    <div>
+                        <div style={{backgroundColor:"white",padding:"4%"}}>
+                            <p style={{fontSize:"1.3rem", fontWeight:"bold"}}>My Wishlist</p>
+                            {
+                            state.wishlist.length?
+                                <div style={{display:"flex",flexDirection:"column"}}>
+                                {
+                                    state.wishlist.map((el,i)=><Wishlist item={el} key={i}/>)
+                                }    
+                                </div>:
+                                <div><p>Sorry, you dont have any items added to wishlist</p></div>
+                                
+
+                            }
+                        </div>
+                    </div>:
                     <div>
                         Last case
                     </div>
-                    }
+                    )}
                     <div style={{width:"100%"}}>
                         <img style={{width:"inherit"}} src={account_btm_banner}/>
                     </div>

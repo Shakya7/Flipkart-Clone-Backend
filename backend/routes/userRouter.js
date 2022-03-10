@@ -16,5 +16,6 @@ router.route("/update-name").patch(authController.protectRouteWithJWT, userContr
 router.route("/update-email").patch(authController.protectRouteWithJWT, userController.changeEmail);
 router.route("/update-mobile").patch(authController.protectRouteWithJWT, userController.changeMobile);
 router.route("/add-address").patch(authController.protectRouteWithJWT,userController.addAddress);
+router.route("/add-wishlist").patch(authController.protectRouteWithJWT,userController.addWishlist);
 
 module.exports=router;

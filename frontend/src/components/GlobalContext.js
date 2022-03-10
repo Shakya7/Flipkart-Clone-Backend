@@ -1,4 +1,5 @@
-import { useReducer, createContext, useEffect } from "react";
+import { useReducer, createContext, useEffect,useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 
@@ -11,7 +12,8 @@ const initialState={
     isLoggedIn:false,
     connectionToDBNumber:0,
     showCart:true,
-    addresses:[]
+    addresses:[],
+    wishlist:[]
 
 }
 
@@ -31,7 +33,8 @@ const reducerF=(currState, action)=>{
                 userProfile:action.payload,
                 cartProducts:action.payload.cart,
                 cart:action.payload.cart.length,  
-                addresses:action.payload.addresses
+                addresses:action.payload.addresses,
+                wishlist:action.payload.wishlist
             }
         case "load-data-initial":
             return{
@@ -187,12 +190,37 @@ const reducerF=(currState, action)=>{
             currState.addresses.splice(index4,1,action.payload);
             //console.log(currState.addresses);
             return currState;
+        case "add-to-wishlist":
+            return{
+                ...currState,
+                wishlist:[...currState.wishlist,action.payload]
+            }
+
+        case "remove-from-wishlist":
+            //const num=currState.wishlist.filter((el)=>el.id===action.payload.id).length;
+            return{
+                ...currState,
+                wishlist:[...currState.wishlist.filter((el)=>el.id!==action.payload.id)]
+            }
+
+        case "add-wishlist-to-DB":
+            axios.patch("http://localhost:4001/api/v1/users/add-wishlist",
+            {wishlist:[...currState.wishlist]},{withCredentials:true}).then(
+            (res)=>{
+                console.log(res)
+            }).catch((err)=>{
+                console.log(err.message)
+            })
+            return currState;
+
     }
 }
-
+export const ProfileContext=createContext();
 export const GlobalContext=createContext();
 
 export const GlobalProvider=(props)=>{
+    const location=useLocation();
+    const [accountPage,setAccountPage]=useState(location.pathname==="/profile"?"profile-info":location.pathname==="/profile/addresses"?"addresses-info":location.pathname==="/profile/wishlist"?"wishlist-info":"");
     const [state,dispatch]=useReducer(reducerF,initialState);
     useEffect(()=>{
         const loadFromDB=async e=>{
@@ -216,9 +244,12 @@ export const GlobalProvider=(props)=>{
     },[state.connectionToDBNumber,state.showCart])
     return(
         <GlobalContext.Provider value={{state,dispatch}}>
+            <ProfileContext.Provider value={[accountPage,setAccountPage]}>
             {
                 props.children
             }
+            </ProfileContext.Provider>
+            
         </GlobalContext.Provider>
     )
 }

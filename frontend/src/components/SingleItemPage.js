@@ -4,6 +4,8 @@ import { useContext, useEffect, useLayoutEffect,useState } from "react";
 import Categories from "./Categories";
 import { Rating } from "@mui/material";
 import cart_logo from "../images/cart_logo.png";
+import love_disabled from "../images/wishlist_icon_disabled.png"
+import love_enabled from "../images/wishlist_icon_enabled.png"
 
 
 export const SingleItemPage=(props)=>{
@@ -12,6 +14,11 @@ export const SingleItemPage=(props)=>{
     const navigation=useNavigate();
     const location=useLocation();
     console.log(location.state);
+
+    useEffect(()=>{
+        console.log("WISHLIST",state.wishlist);
+        console.log("STATE",state);
+    },[state.wishlist])
 
     return(
         <div style={{display:"flex",flexDirection:"column",width:"100%",backgroundColor:"#EEEEEE",height:"auto"}}>
@@ -24,7 +31,23 @@ export const SingleItemPage=(props)=>{
                 So we are simply rendering error page if location.state is not found
              */}
             {location.state?<div style={{display:"flex",width:"100%",justifyContent:"space-between",alignItems:"center",padding:"20px"}}>
-                <div style={{width:"45%",height:"60vmin", borderRadius:"5px", boxShadow:"4px 4px 5px grey",display:"flex",flexDirection:"column", justifyContent:"center",alignItems:"center",backgroundColor:"white", padding:"20px"}}>
+                <div style={{width:"45%",height:"60vmin", borderRadius:"5px", boxShadow:"4px 4px 5px grey",display:"flex",flexDirection:"column", justifyContent:"center",alignItems:"center",backgroundColor:"white", padding:"20px",position:"relative"}}>
+                    <div style={{cursor:"pointer",width:"50px",height:"50px",position:"absolute",top:"10px",right:"10px",borderRadius:"50%",display:"flex",justifyContent:"center",alignItems:"center",boxShadow:"3px 3px 5px grey"}}>
+                        {state.userProfile && state.wishlist.find(el=>el.title===location.state.title)?
+                        <img width={30} onClick={async e=>{
+                            await dispatch({type:"remove-from-wishlist",payload:location.state});
+                            await dispatch({type:"add-wishlist-to-DB"});
+                        }} src={love_enabled}/>:
+                        <img onClick={async e=>{
+                            if(state.isLoggedIn){
+                                await dispatch({type:"add-to-wishlist",payload:location.state});
+                                await dispatch({type:"add-wishlist-to-DB"});
+                            }
+                            else{
+                                navigation("/login");
+                            }
+                        }} width={30} src={love_disabled}/>}
+                    </div>
                     <img style={{width:"80%",height:"80%", borderRadius:"5px"}} src={location.state.image}/>
                     {
                     state.cartProducts.find(el=>el.title===location.state.title)?
