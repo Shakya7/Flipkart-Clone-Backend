@@ -1,5 +1,7 @@
 const User=require("../models/userModel");
 const jwt=require("jsonwebtoken");
+const emailSend=require("../utils/email");
+const crypto=require("crypto");
 
 exports.signup=async(req,res)=>{
     try{
@@ -130,5 +132,86 @@ exports.getDataFromDB=async(req,res,next)=>{
                 user:null
             }
         })
+    }
+}
+exports.forgotPass=async(req,res,next)=>{
+    const user=await User.findOne({email:req.body.email});
+    if(!user)
+        return next("Email is not registered. Please enter valid registered email");
+    const resetToken=await user.getResetToken();
+    await user.save({validateBeforeSave:false});
+    const resetURL=`${req.protocol}://${req.get("host")}/resetPassword/${resetToken}`;
+    const message=`Forgot your password? Go to ${resetURL} and change the password`;
+    try{
+        await emailSend({
+            email:user.email,
+            subject:"Your Reset Token",
+            message
+        });
+        res.status(200).json({
+            status:"success",
+            message:"Token sent to email, please check..."
+        });
+    }
+    catch(err){
+        this.passwordResetToken=undefined;
+        this.passwordResetExpires=undefined;
+        await user.save({validateBeforeSave:false});
+        res.status(400).json({
+            status:"fail",
+            message:err.message,
+            data:{
+                user:null
+            }
+        })
+    }
+}
+exports.resetPassword=async(req,res,next)=>{
+    try{
+    const hashedToken=crypto.createHash("sha256").update(req.params.token).digest("hex");
+    //console.log(hashedToken);
+    const user=await User.findOne({passwordResetToken:hashedToken,passwordResetTokenExpiry:{$gte:Date.now()}});
+    console.log(user);
+    if(!user)
+        return next("Token expired or invalid token provided");
+    user.password=req.body.password;
+    user.confirmPassword=req.body.confirmPassword;
+    user.passwordResetToken=undefined;
+    user.passwordResetTokenExpiry=undefined;
+    await user.save(); 
+    
+    const token= jwt.sign({id:user._id,name:user.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});     
+    res.status(200).json({
+        status:"success",
+        token,
+        message:"Password has been reset"
+    })
+    }catch(err){
+        res.status(400).json({
+            status:"fail",
+            message: err.message
+        });
+    }
+}
+exports.updatePassword=async(req,res,next)=>{
+    try{
+    const user=await User.findById(res.user._id).select("+password");
+    if(!await user.compareNormalPwithHashedP(req.body.currentPassword,user.password))
+        return next("Invalid password");
+    user.password=req.body.password;
+    user.confirmPassword=req.body.confirmPassword;  
+    await user.save();
+    const token= jwt.sign({id:user._id,name:user.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});
+    res.status(200).json({
+        status:"success",
+        message:"password has been updated",
+        user,
+        token
+    });
+    }catch(err){
+        res.status(400).json({
+            status:"fail",
+            message: err.message
+        });
     }
 }
