@@ -135,7 +135,16 @@ const ProfilePage=(props)=>{
                             My Wishlist
                         </div>
                         <div style={{width:"100%",height:"1px", backgroundColor:"grey"}}/>
-                        <div className="account-sub-sections" style={{display:"flex",justifyContent:"space-between",width:"100%",height:"50px"}}>
+                        <div onClick={
+                            async e=>{
+                                dispatch({type:"logout"});
+                                await axios.get("http://localhost:4001/api/v1/users/logout",{
+                                    withCredentials:true
+                                });
+                                navigation("/");
+                                window.location.reload();
+                            }
+                        } className="account-sub-sections" style={{display:"flex",justifyContent:"space-between",width:"100%",height:"50px"}}>
                             <div style={{display:"flex",justifyContent:"flex-start",color:"white",fontWeight:"normal",alignItems:"center",gap:"10px",paddingLeft:"25px"}}>
                                 <div><img style={{width:"30px"}} src={logout_logo}/></div>
                                 <div>Logout</div>
