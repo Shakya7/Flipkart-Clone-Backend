@@ -14,6 +14,7 @@ import axios from "axios";
 import Addresses from "./Addresses";
 import Wishlist from "./Wishlist";
 import { ProfileContext } from "./GlobalContext";
+import { ChangePassModal } from "./ChangepassModal";
 
 const ProfilePage=(props)=>{
     //console.log("ADDRESS-to",props.addr);
@@ -37,13 +38,19 @@ const ProfilePage=(props)=>{
     });
     const [addAddressBttn, setAddAddressBttn]=useState(true);
     const [newAddress,setNewAddress]=useState("");
+    const [showModal,setShowModal]=useState(false);
+    const body=document.querySelector("body");
     
     useEffect(()=>{
         console.log(profileDetails);
         console.log("STATE",state);
         console.log(newAddress);
         console.log("WISHLIST",state.wishlist);
-    },[profileDetails,accountPage,newAddress,state.addresses])
+        if(showModal)
+            body.style.overflow="hidden";
+        else    
+            body.style.overflow="auto";
+    },[profileDetails,accountPage,newAddress,state.addresses,showModal])
     const navigation=useNavigate();
 
     /*const addAddress=async ()=>{
@@ -58,7 +65,7 @@ const ProfilePage=(props)=>{
         }
     }*/
     return(
-        <div>
+        <div style={{position:"relative"}}>
             <Categories/>
             <div style={{width:"100%",height:"auto", backgroundColor:"#EEEEEE",display:"flex", gap:"2%",alignItems:"flex-start",justifyContent:"center",paddingTop:'20px',paddingBottom:'20px'}}>
                 <div style={{display:"flex",flexDirection:"column",minWidth:"22%",height:"50%",backgroundColor:"#EEEEEE", gap:"20px"}}>
@@ -221,12 +228,23 @@ const ProfilePage=(props)=>{
                         <div className="form-email-address" style={{display:"flex",flexDirection:"column"}}>
                             <div style={{display:"flex",gap:"5%"}}>
                                 <div style={{fontSize:"1.3rem",fontWeight:"bold"}}>Email Address</div>
-                                <div onClick={e=>{
-                                    setProfileDetails({
+                                <div style={{color:"blue",cursor:"pointer",display:"flex",gap:"15px"}}>{profileDetails.email_edit?
+                                    <div>
+                                        <p onClick={e=>{
+                                        setProfileDetails({
                                         ...profileDetails,
                                         email_edit:!profileDetails.email_edit
+                                        })
+                                        }}>Cancel</p>
+                                    </div>:
+                                    <p onClick={e=>{
+                                    setProfileDetails({
+                                    ...profileDetails,
+                                    email_edit:!profileDetails.email_edit
                                     })
-                                }} style={{color:"blue",cursor:"pointer"}}>{profileDetails.email_edit?<p>Cancel</p>:<p>Edit</p>}</div>
+                                    }}>Edit</p>}
+                                    <p onClick={e=>setShowModal(true)}>Change password</p>
+                                </div>
                             </div>
                             <div style={{display:"flex",marginTop:"3%",gap:"2%"}}>
                                 <input onChange={
@@ -368,6 +386,7 @@ const ProfilePage=(props)=>{
                     </div>
                 </div>   
             </div>
+            {showModal && <ChangePassModal closeModal={setShowModal}/>}
         </div>
     )
 }
