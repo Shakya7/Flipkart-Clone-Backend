@@ -12,15 +12,17 @@ export function ResetPass(){
         newPassword:"",
         confirmNewPassword:""
     })
+    const [showError,setShowError]=useState(false);
     console.log(token);
     const checkToken=()=>{
         axios.post("http://localhost:4001/api/v1/users/checkResetToken",{
             passwordResetToken:token
         },{withCredentials:true}).then(res=>setShowResultPForm(true)).catch(err=>setShowResultPForm(false));
+        console.log(showError);
     }
     useLayoutEffect(()=>{
         checkToken();
-    },[showResetPForm])
+    },[showResetPForm,showError])
     return(
         <div style={{width:"100%",height:"auto"}}>
             {
@@ -36,16 +38,21 @@ export function ResetPass(){
                     <p>Confirm New Password</p>
                     <input placeholder="Re-type your new password to confirm" type="password" className="reset-pw-inp" onChange={e=>setResetPOptions({...resetPOptions,confirmNewPassword:e.target.value})}/>
                 </div>
+                {showError && <p style={{color:"red"}}>Password change not successful. Make sure you are entering the same passwords in both fields.</p>}
                 <div onClick={async e=>{
-                    const user=await axios.patch(`http://localhost:4001/api/v1/users/resetPassword/${token}`,{
-                        password:resetPOptions.newPassword,
-                        confirmPassword:resetPOptions.confirmNewPassword
-                    },{withCredentials:true});
-                    console.log(user.status);
-                    if(user.status===200){
+                    if(resetPOptions.newPassword===resetPOptions.confirmNewPassword){
+                        setShowError(false);
+                        const user=await axios.patch(`http://localhost:4001/api/v1/users/resetPassword/${token}`,{
+                            password:resetPOptions.newPassword,
+                            confirmPassword:resetPOptions.confirmNewPassword
+                        },{withCredentials:true});
                         navigation("/login");
                         window.location.reload(true);
                     }
+                    else{
+                        setShowError(true);
+                    }
+                    
                 }} style={{width:"25vmax",height:"7vmin", backgroundColor:"#2874f0",display:"flex",alignItems:"center",justifyContent:"center",color:"white",fontWeight:"bold",cursor:"pointer"}}>
                     CHANGE PASSWORD
                 </div>

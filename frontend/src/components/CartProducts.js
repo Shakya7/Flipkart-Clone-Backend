@@ -3,18 +3,22 @@ import { GlobalContext } from "./GlobalContext";
 import { CartContext } from "./CartPage";
 import { useNavigate } from "react-router-dom";
 import cart_empty from "../images/cart_empty_pic.png";
+import { ProfileContext } from "./GlobalContext";
 
 export default function CartProducts(){
     const {state,dispatch}=useContext(GlobalContext);
     const [addressToDeliver,setAddressToDeliver]=useContext(CartContext);
+    const [accountPage,setAccountPage]=useContext(ProfileContext)
     const navigation=useNavigate();
 
     useEffect((e)=>{
         console.log(state.addresses);
         console.log(addressToDeliver);
-        if(addressToDeliver==="+ Add Address")
+        if(addressToDeliver==="+ Add Address"){
+            setAccountPage("addresses-info");
             navigation("/profile/addresses");
-    },[state.cartProducts,addressToDeliver])
+        }    
+    },[state.cartProducts,addressToDeliver,state.addresses.length])
 
     console.log(state.cartProducts);
     
@@ -24,14 +28,20 @@ export default function CartProducts(){
                 <div style={{width:"50%",fontWeight:"bolder", letterSpacing:".02em", fontSize:"1.4rem", alignSelf:"center", marginLeft:"10px"}}>
                     My Cart {state.isLoggedIn?<span>({state.cart})</span>:""}
                 </div>
-                {state.cart!==0?<div style={{width:"50%",maxHeight:"inherit",display:"flex",justifyItems:"flex-end", alignItems:"center"}}>
-                    <span style={{fontWeight:"normal",fontSize:"1rem",color:"grey"}}>Deliver to</span>
+                {state.cart!==0?
+                <div style={{width:"50%",maxHeight:"inherit",display:"flex",justifyItems:"flex-end", alignItems:"center"}}>
+                    <span style={{fontWeight:"normal",fontSize:"1rem",color:"grey"}}>Deliver to:</span>
+                    {state.addresses.length!==0?
                     <select style={{height:"70%", paddingLeft:"7px",  width:"70%", position:"relative",left:"20px",margnRight:"10px",flexShrink:"2px",borderColor:"#D1D1D1"}} value={addressToDeliver} onChange={e=>setAddressToDeliver(e.target.value)}>
                     {
-                        [...state.addresses,"+ Add Address"].map((el,i)=><option value={el} key={i}>{el}</option>)
-                        
+                        [...state.addresses,"+ Add Address"].map((el,i)=><option value={el} key={i}>{el}</option>) 
                     }
-                    </select>
+                    </select>:
+                    <div onClick={e=>{
+                        setAccountPage("addresses-info");
+                        navigation("/profile/addresses")
+                    }} style={{marginLeft:"10px",backgroundColor:"#fb641b", padding:"10px",borderRadius:"5px",cursor:"pointer"}}>No address added. Please add one first</div>
+                    }
                 </div>:""}
             </header>
             <hr/>

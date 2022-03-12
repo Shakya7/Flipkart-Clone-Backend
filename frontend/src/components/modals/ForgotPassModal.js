@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import forgotp_email from "../../images/forgotpass_email_img.svg";
 import email_sent from "../../images/email_sent.svg";
 
 export function ForgotPassModal(props){
+    const navigation=useNavigate();
     const [forgotPOptins,setForgotPOptions]=useState({
         email:""
     })
@@ -30,7 +32,10 @@ export function ForgotPassModal(props){
                 <div onClick={e=>props.closeModal(false)} style={{position:"absolute", top:20,right:20, fontSize:"1.5rem",cursor:"pointer"}}>X</div>
                 <h2>Forgot your password?</h2>
                 <p>No worries, we got you covered! Enter your registered email below, we'll send you a link there through which you can change your password easily.</p>
-                <p style={{color:"#2874f0",cursor:"pointer"}}>Oh you remember? Great! Lets log in.</p>
+                <p onClick={e=>{
+                    props.closeModal(false);
+                    navigation("/login");
+                    }} style={{color:"#2874f0",cursor:"pointer"}}>Oh you remember? Great! Lets log in.</p>
                 <div style={{display:"flex",justifyContent:"space-between", alignItems:"center"}}>
                     <div>
                         <img style={{width:"20vmax",height:"40vmin"}} src={forgotp_email}/>
