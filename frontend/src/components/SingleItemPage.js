@@ -6,6 +6,7 @@ import { Rating } from "@mui/material";
 import cart_logo from "../images/cart_logo.png";
 import love_disabled from "../images/wishlist_icon_disabled.png"
 import love_enabled from "../images/wishlist_icon_enabled.png"
+import { _500ServerError } from "./error-UI/_500ServerError";
 
 
 export const SingleItemPage=(props)=>{
@@ -21,8 +22,8 @@ export const SingleItemPage=(props)=>{
     },[state.wishlist])
 
     return(
-        <div style={{display:"flex",flexDirection:"column",width:"100%",backgroundColor:"#EEEEEE",height:"auto"}}>
-            <Categories/>
+        <div style={{display:"flex",flexDirection:"column",width:"100%",backgroundColor:`${location.state?"#EEEEEE":"white"}`,height:"auto",justifyContent:"center",alignItems:"center",margin:0}}>
+            {location.state?<Categories/>:""}
             <div style={{width:"100%", height:"2vh",backgroundColor:"#CDE8F6"}}/>
 
             {/* When entering any random value after "/", it'll trigger SingleItemPage.js to render which will accept the item data from Card.js in the form of location.state
@@ -87,9 +88,7 @@ export const SingleItemPage=(props)=>{
                     </div>
                 </div>
             </div>:
-            <div>
-                Error
-            </div>
+            <_500ServerError/>
             }
         </div>
     )

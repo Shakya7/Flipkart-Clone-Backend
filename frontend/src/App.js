@@ -1,4 +1,3 @@
-
 import './App.css';
 import { Navbar } from './components/Navbar';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
@@ -11,6 +10,8 @@ import SignUp from './components/SignUp';
 import ProfilePage from './components/ProfilePage';
 import Orders from './components/Orders';
 import { ResetPass } from './components/ResetPassword';
+import { PageNotFoundError } from './components/error-UI/PageNotFoundError';
+import { _500ServerError } from './components/error-UI/_500ServerError';
 
 function App() {
   return (
@@ -30,9 +31,9 @@ function App() {
                 <Route path="wishlist" element={<ProfilePage/>}/>
               </Route>
               <Route path="orders" element={<Orders/>}/>
-              <Route path="*" element={<div>Error</div>}/>
+              <Route path="*" element={<PageNotFoundError/>}/>
             </Route>
-            <Route path="*" element={<div>Error</div>}/>
+            <Route path="*" element={<_500ServerError/>} />
           </Routes>
         </div>
       </GlobalProvider>

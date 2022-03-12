@@ -88,7 +88,7 @@ function Login(props){
                     </div>
                 </div>
             </div>
-            {forgotPModal && <ForgotPassModal closeModal={setForgotPModal}/>}
+            {forgotPModal && <ForgotPassModal val={forgotPModal} closeModal={setForgotPModal}/>}
         </div>
     )
 }

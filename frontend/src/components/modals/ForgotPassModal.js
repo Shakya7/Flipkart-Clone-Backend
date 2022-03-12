@@ -5,6 +5,7 @@ import forgotp_email from "../../images/forgotpass_email_img.svg";
 import email_sent from "../../images/email_sent.svg";
 
 export function ForgotPassModal(props){
+    const body=document.querySelector("body");
     const navigation=useNavigate();
     const [forgotPOptins,setForgotPOptions]=useState({
         email:""
@@ -12,7 +13,11 @@ export function ForgotPassModal(props){
     const [sendEmail,setSendEmail]=useState(false);
     useEffect(()=>{
         console.log(forgotPOptins)
-    },[sendEmail]);
+        if(props.val)
+            body.style.overflow="hidden";
+        else    
+            body.style.overflow="auto";
+    },[sendEmail,props.val]);
     return(
         <div className="modalBackground">
             {sendEmail?
