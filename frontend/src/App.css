@@ -233,3 +233,13 @@ input[type="password"]:focus{
   outline:none;
   border-color:#2874f0;
 }
+.ip-highlight{
+  width: 25vmax;
+  height:10vmin;
+  border-color:#D1D1D1;
+  border-width: 1px;
+  padding-left: 10px;
+}
+.ip-highlight:focus{
+  background-color: #FFF89A !important;
+}

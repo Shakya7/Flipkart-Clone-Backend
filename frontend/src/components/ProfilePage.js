@@ -14,7 +14,7 @@ import axios from "axios";
 import Addresses from "./Addresses";
 import Wishlist from "./Wishlist";
 import { ProfileContext } from "./GlobalContext";
-import { ChangePassModal } from "./ChangepassModal";
+import { ChangePassModal } from "./modals/ChangepassModal";
 
 const ProfilePage=(props)=>{
     //console.log("ADDRESS-to",props.addr);

@@ -215,3 +215,22 @@ exports.updatePassword=async(req,res,next)=>{
         });
     }
 }
+exports.checkResetToken=async(req,res)=>{
+    try{
+        const hashedToken=crypto.createHash("sha256").update(req.body.passwordResetToken).digest("hex");
+        const user=await User.findOne({passwordResetToken:hashedToken,passwordResetTokenExpiry:{$gte:Date.now()}});
+        if(!user)
+            throw "The link is not correct. Please enter correct link";
+        res.status(200).json({
+            status:"success",
+            message:"Reset token found!",
+            user
+        })
+    }catch(err){
+        res.status(401).json({
+            status:"fail",
+            message:"Reset token not found",
+            user:null
+        })
+    }
+}

@@ -20,5 +20,6 @@ router.route("/add-wishlist").patch(authController.protectRouteWithJWT,userContr
 router.route("/forgotPassword").post(authController.forgotPass);
 router.route("/resetPassword/:token").patch(authController.resetPassword);
 router.route("/updatePassword").patch(authController.protectRouteWithJWT,authController.updatePassword);
+router.route("/checkResetToken").post(authController.checkResetToken);
 
 module.exports=router;

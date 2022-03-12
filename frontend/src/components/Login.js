@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import Categories from "./Categories";
 import axios from "axios";
+import { ForgotPassModal } from "./modals/ForgotPassModal";
 
 
 //	https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png
@@ -12,10 +13,17 @@ function Login(props){
         email:"",
         password:"",
     });
+    const [forgotPModal,setForgotPModal]=useState(false);
+    const body=document.querySelector("body");
+    
     useEffect(()=>{
+        if(forgotPModal)
+            body.style.overflow="hidden";
+        else    
+            body.style.overflow="auto";
         dispatch({type:"show-cart-enable"});
         console.log(inputState);
-    },[inputState]);
+    },[inputState,forgotPModal]);
     const navigation=useNavigate();
     const loginFunction=async()=>{
         try{
@@ -69,8 +77,8 @@ function Login(props){
                                 }>
                                     <div style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer"}}>Login</div>
                                 </div>
+                                <p onClick={e=>setForgotPModal(true)} style={{textAlign:"center",cursor:"pointer",color:"#2874f0"}}>Forgot your password?</p>
                             </div>
-                            <br/>
                             <div onClick={
                                 e=>navigation("/signup")
                             } style={{display:"flex",justifyContent:"center",alignItems:"center", color:"#2874f0",marginTop:"50px",cursor:"pointer"}}>
@@ -80,6 +88,7 @@ function Login(props){
                     </div>
                 </div>
             </div>
+            {forgotPModal && <ForgotPassModal closeModal={setForgotPModal}/>}
         </div>
     )
 }

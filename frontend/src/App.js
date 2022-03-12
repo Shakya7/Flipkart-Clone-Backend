@@ -10,6 +10,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ProfilePage from './components/ProfilePage';
 import Orders from './components/Orders';
+import { ResetPass } from './components/ResetPassword';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route index element={<ItemsPage/>}/>
               <Route path=":id" element={<SingleItemPage/>}/>
               <Route path="login" element={<Login/>}/>
+              <Route path="resetPassword/:token" element={<ResetPass/>}/>
               <Route path="signup" element={<SignUp/>}/>
               <Route path='cart' element={<CartPage/>}/>
               <Route path="profile" element={<ProfilePage/>}>
