@@ -1,26 +1,35 @@
-import { useContext, useEffect } from "react";
-import { GlobalContext } from "./GlobalContext";
-import { CartContext } from "./CartPage";
+import { useContext, useEffect, useLayoutEffect } from "react";
+import { GlobalContext} from "./GlobalContext";
 import { useNavigate } from "react-router-dom";
 import cart_empty from "../images/cart_empty_pic.png";
 import { ProfileContext } from "./GlobalContext";
+import axios from "axios";
 
 export default function CartProducts(){
     const {state,dispatch}=useContext(GlobalContext);
-    const [addressToDeliver,setAddressToDeliver]=useContext(CartContext);
     const [accountPage,setAccountPage]=useContext(ProfileContext)
     const navigation=useNavigate();
+    console.log("CARTPRODUCTS---> STATE IS :",state);
+
+    const getAddress=async ()=>{
+        const address=await axios.get("http://localhost:4001/api/v1/users/getFirstAddress",{withCredentials:true});
+        console.log("FIRST ADDRESS FROM API",address.data.data.addresses);
+        dispatch({type:"address-selected",payload:address.data.data.addresses});
+    }
+    useLayoutEffect(()=>{
+        if(!state.billingAddress)
+            getAddress();
+        else
+            console.log("Test passed through CartProducts UI render");
+    },[])
 
     useEffect((e)=>{
-        console.log(state.addresses);
-        console.log(addressToDeliver);
-        if(addressToDeliver==="+ Add Address"){
+        if(state.billingAddress==="+ Add Address"){
             setAccountPage("addresses-info");
             navigation("/profile/addresses");
-        }    
-    },[state.cartProducts,addressToDeliver,state.addresses.length])
-
-    console.log(state.cartProducts);
+        }
+        state.billingProducts=[...state.cartProducts];
+    },[state.cartProducts,state.addresses.length,state.billingAddress])
     
     return(
         <div className={state.cart!==0?"not-full":"full"} style={{backgroundColor:"white", display:"flex",flexDirection:"column", height:"auto",boxShadow:"5px 5px 5px grey", borderColor:"grey", borderStyle:"solid", borderWidth:"1px"}}>
@@ -32,7 +41,9 @@ export default function CartProducts(){
                 <div style={{width:"50%",maxHeight:"inherit",display:"flex",justifyItems:"flex-end", alignItems:"center"}}>
                     <span style={{fontWeight:"normal",fontSize:"1rem",color:"grey"}}>Deliver to:</span>
                     {state.addresses.length!==0?
-                    <select style={{height:"70%", paddingLeft:"7px",  width:"70%", position:"relative",left:"20px",margnRight:"10px",flexShrink:"2px",borderColor:"#D1D1D1"}} value={addressToDeliver} onChange={e=>setAddressToDeliver(e.target.value)}>
+                    <select className="address-dropdown" style={{height:"70%", paddingLeft:"7px",  width:"70%", position:"relative",left:"20px",margnRight:"10px",flexShrink:"2px",borderColor:"#D1D1D1"}} onChange={e=>{
+                        dispatch({type:"address-selected",payload:e.target.value});
+                    }} value={state.billingAddress}>
                     {
                         [...state.addresses,"+ Add Address"].map((el,i)=><option value={el} key={i}>{el}</option>) 
                     }

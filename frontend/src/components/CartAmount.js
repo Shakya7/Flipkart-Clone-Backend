@@ -1,28 +1,10 @@
-import { useContext, useEffect} from "react"
+import { useContext} from "react"
 import { GlobalContext } from "./GlobalContext";
-import { CartContext } from "./CartPage";
-import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
-export default function CartAmount(){
+export default function CartAmount(props){
     const {state}=useContext(GlobalContext);
-    const [addressToDeliver,setAddressToDeliver]=useContext(CartContext);
     const navigation=useNavigate();
-
-    const checkBackend=async()=>{
-        try{
-            const a=await axios.post("/test",{
-                test1:state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0).toFixed(2)
-            });
-            console.log(a);
-        }catch(err){
-            console.log(err);
-        }
-    }
-    useEffect(()=>{
-        
-
-    },[])
 
     return(
         <div style={{backgroundColor:"white",width:"27%", display:"flex",flexDirection:"column", height:"67vh",boxShadow:"5px 5px 5px grey", borderColor:"grey", borderStyle:"solid", borderWidth:"1px",padding:"20px"}}>
@@ -48,12 +30,10 @@ export default function CartAmount(){
             </div>
             <br/>
             <br/>
-            <div onClick={e=>checkBackend()} 
-                style={{width:"70%",padding:"20px",backgroundColor:"#FFEEAD",alignSelf:"center",textAlign:"center",borderRadius:"5px"}}>
+            <div onClick={e=>props.handleP()} 
+                style={{width:"70%",padding:"20px",backgroundColor:"#FFEEAD",alignSelf:"center",textAlign:"center",borderRadius:"5px",cursor:"pointer"}}>
                 PLACE ORDER
             </div>
-
-            
         </div>
     )
 }

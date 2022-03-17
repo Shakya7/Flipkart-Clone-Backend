@@ -1,28 +1,23 @@
-
-import { useEffect, useState,useContext,createContext } from "react";
+import { useEffect,useContext } from "react";
 import CartAmount from "./CartAmount";
 import CartProducts from "./CartProducts";
 import { GlobalContext } from "./GlobalContext";
 
-export const CartContext=createContext();
-const CartPage=()=>{
+ 
+const CartPage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
-    const [addressToDeliver,setAddressToDeliver]=useState(state.addresses?state.addresses[0]:"");
-
+    console.log("CARTPAGE---> STATE IS :",state);
     useEffect(()=>{
         if(!state.isLoggedIn){
             dispatch({type:"show-cart-disable"});
         }
         else
             dispatch({type:"show-cart-enable"});
-    },[state.showCart]);
+    },[state.showCart,state.isLoggedIn]);
     return(
         <div style={{backgroundColor:"#EEEEEE", display:"flex", height:"auto", padding:"20px", justifyContent:"space-between"}}>
-            <CartContext.Provider value={[addressToDeliver,setAddressToDeliver]}>
-                <CartProducts/>
-                {state.cart!==0?<CartAmount/>:""}
-            </CartContext.Provider>
-            
+            <CartProducts/>
+            {state.cart!==0?<CartAmount handleP={props.paymentHandler}/>:""}
         </div>
         
     )

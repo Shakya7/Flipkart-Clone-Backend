@@ -13,7 +13,9 @@ const initialState={
     connectionToDBNumber:0,
     showCart:true,
     addresses:[],
-    wishlist:[]
+    wishlist:[],
+    billingAddress:"",
+    billingProducts:[]
 
 }
 
@@ -90,8 +92,6 @@ const reducerF=(currState, action)=>{
         }
         
         case "add-to-cart":
-            //const userDetails=await getValue();
-            //console.log(userDetails);
             return{
                 ...currState,
                 cart:helperFunc1()+1,
@@ -213,41 +213,57 @@ const reducerF=(currState, action)=>{
             })
             return currState;
 
+        case "place-order":
+            return{
+                
+            }
+        
+        case "address-selected":
+            return{
+                ...currState,
+                billingAddress:action.payload
+            }
     }
 }
 export const ProfileContext=createContext();
 export const GlobalContext=createContext();
 
 export const GlobalProvider=(props)=>{
-    const location=useLocation();
-    const [accountPage,setAccountPage]=useState(location.pathname==="/profile"?"profile-info":location.pathname==="/profile/addresses"?"addresses-info":location.pathname==="/profile/wishlist"?"wishlist-info":"");
     const [state,dispatch]=useReducer(reducerF,initialState);
-    useEffect(()=>{
-        const loadFromDB=async e=>{
-            const userData=await axios.get("http://localhost:4001/api/v1/users/load-data",{
-                withCredentials:true
-            });
-            if(!userData.data.data.user){
-                dispatch({type:"load-data-initial"});
-                dispatch({type:"logout"});
-            }
-            else{    
-                console.log("Coming from LOAD-DATA-FROM-DB ->",userData.data.data.user);
-                console.log(userData.data.data);
-                console.log(state.connectionToDBNumber);
-                dispatch({type:"finally-update-data-from-db",payload:userData.data.data.user});
-                dispatch({type:"login",payload:userData.data.data.user});
-            }
+    const location=useLocation();
+    const [accountPage,setAccountPage]=useState(location.pathname==="/profile"?"profile-info":location.pathname==="/profile/addresses"?"addresses-info":location.pathname==="/profile/wishlist"?"wishlist-info":location.pathname==="/cart"?"cart-view":"");
+
+    const loadFromDB=async e=>{
+        const userData=await axios.get("http://localhost:4001/api/v1/users/load-data",{
+            withCredentials:true
+        });
+        if(!userData.data.data.user){
+            dispatch({type:"load-data-initial"});
+            dispatch({type:"logout"});
         }
+        else{    
+            console.log("State",state);
+            console.log("Coming from LOAD-DATA-FROM-DB ->",userData.data.data.user);
+            //console.log(userData.data.data);
+            //console.log(state.connectionToDBNumber);
+            dispatch({type:"finally-update-data-from-db",payload:userData.data.data.user});
+            dispatch({type:"login",payload:userData.data.data.user});
+        }
+    }
+
+
+
+    useEffect(()=>{
         loadFromDB();
 
-    },[state.connectionToDBNumber,state.showCart])
+    },[state.connectionToDBNumber,state.showCart,accountPage]);
     return(
         <GlobalContext.Provider value={{state,dispatch}}>
             <ProfileContext.Provider value={[accountPage,setAccountPage]}>
-            {
-                props.children
-            }
+            
+                {
+                    props.children
+                }
             </ProfileContext.Provider>
             
         </GlobalContext.Provider>

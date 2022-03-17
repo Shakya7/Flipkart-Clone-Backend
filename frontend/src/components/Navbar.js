@@ -129,7 +129,9 @@ export const Navbar=()=>{
                         </div>
                     }
                     {state.showCart?<div onClick={(e)=>{
-                        navigation("/cart")
+                        navigation("/cart");
+                        if(accountPage==="addresses-info")
+                            window.location.reload(true); 
                     }} style={{color:"white", fontWeight:"bold", marginLeft:"10vw",display:"flex",position:"relative",cursor:"pointer"}}>
                         {state.cart===0?"":<div style={{backgroundColor:"red",position:"absolute",top:"-5px",width:"20px",height:"20px",borderRadius:"50%",display:"flex",justifyContent:"center",alignItems:"center"}}>{state.cart}</div>}
                         <img src={cart_logo} style={{width:"30px"}}/>

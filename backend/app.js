@@ -4,6 +4,7 @@ const cors=require("cors");
 const userRouter=require("./routes/userRouter")
 const dotenv=require("dotenv");
 const cookieParser=require("cookie-parser");
+const paymentRouter=require("./routes/paymentRouter");
 
 
 dotenv.config({path:"./config.env"});
@@ -21,5 +22,6 @@ app.use(cookieParser());
 
 
 app.use("/api/v1/users",userRouter);
+app.use("/api/v1/payment",paymentRouter);
 
 module.exports=app;

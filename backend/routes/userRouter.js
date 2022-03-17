@@ -1,6 +1,7 @@
 const express=require("express");
 const userController=require("../controllers/userController");
 const authController=require("../controllers/authController");
+const getFirstAddressController=require("../controllers/client-side-utils/getfirstAddress");
 
 const router=express.Router();
 
@@ -21,5 +22,6 @@ router.route("/forgotPassword").post(authController.forgotPass);
 router.route("/resetPassword/:token").patch(authController.resetPassword);
 router.route("/updatePassword").patch(authController.protectRouteWithJWT,authController.updatePassword);
 router.route("/checkResetToken").post(authController.checkResetToken);
+router.route("/getFirstAddress").get(authController.protectRouteWithJWT,getFirstAddressController.getFirstAddress)
 
 module.exports=router;
