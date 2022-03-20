@@ -38,9 +38,9 @@ exports.payFinally= async (req, res) => {
 			.digest("hex");
 
 		if (razorpay_signature === expectedSign) {
-			return res.status(200).json({ message: "Payment verified successfully" });
+			return res.status(200).json({status: "success", message: "Payment verified successfully" });
 		} else {
-			return res.status(400).json({ message: "Invalid signature sent!" });
+			return res.status(400).json({status: "fail", message: "Invalid signature sent!" });
 		}
 	} catch (error) {
 		res.status(500).json({ message: "Internal Server Error!" });

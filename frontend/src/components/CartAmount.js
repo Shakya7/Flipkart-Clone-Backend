@@ -1,10 +1,15 @@
-import { useContext} from "react"
+import { useContext, useEffect} from "react"
 import { GlobalContext } from "./GlobalContext";
 import { useNavigate } from "react-router-dom";
 
 export default function CartAmount(props){
-    const {state}=useContext(GlobalContext);
+    const {state,dispatch}=useContext(GlobalContext);
     const navigation=useNavigate();
+
+    useEffect(()=>{
+        dispatch({type:"final-money",payload:((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?50:state.cart<=5?100:0)).toFixed(2)})
+        console.log("Price is",state.finalPrice);
+    },[]);
 
     return(
         <div style={{backgroundColor:"white",width:"27%", display:"flex",flexDirection:"column", height:"67vh",boxShadow:"5px 5px 5px grey", borderColor:"grey", borderStyle:"solid", borderWidth:"1px",padding:"20px"}}>
@@ -30,8 +35,10 @@ export default function CartAmount(props){
             </div>
             <br/>
             <br/>
-            <div onClick={e=>props.handleP()} 
-                style={{width:"70%",padding:"20px",backgroundColor:"#FFEEAD",alignSelf:"center",textAlign:"center",borderRadius:"5px",cursor:"pointer"}}>
+            <div onClick={e=>{
+                props.handleP(((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?50:state.cart<=5?100:0)).toFixed(2));
+            
+            }} style={{width:"70%",padding:"20px",backgroundColor:"#FFEEAD",alignSelf:"center",textAlign:"center",borderRadius:"5px",cursor:"pointer"}}>
                 PLACE ORDER
             </div>
         </div>

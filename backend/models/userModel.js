@@ -106,7 +106,7 @@ userSchema.methods.getResetToken=async function(){
 
 //pre-middleware for encrypting the password with bcrypt
 userSchema.pre("save",async function(next){
-    if(!this.isModified("password") || this.isNew)     //if password is not changed, simply return
+    if(!this.isModified("password") || !this.isNew)     //if password is not changed, simply return
         return next();
     this.password=await bcrypt.hash(this.password,12);
     this.confirmPassword=undefined;

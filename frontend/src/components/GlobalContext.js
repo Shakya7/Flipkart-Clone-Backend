@@ -10,13 +10,13 @@ const initialState={
     cartProducts:[],
     userProfile:null,
     isLoggedIn:false,
-    connectionToDBNumber:0,
     showCart:true,
     addresses:[],
     wishlist:[],
     billingAddress:"",
-    billingProducts:[]
-
+    billingProducts:[],
+    finalPrice:1,
+    random:""
 }
 
 const reducerF=(currState, action)=>{
@@ -24,10 +24,8 @@ const reducerF=(currState, action)=>{
     
     switch(action.type){
         case "connect-to-db":
-            return{
-                ...currState,
-                connectionToDBNumber:currState.connectionToDBNumber+1
-            }
+            return currState
+
 
         case "finally-update-data-from-db":
             return{
@@ -143,6 +141,13 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 cartProducts:updatedProducts2
             }
+
+        case "signup":
+            return{
+                ...currState,
+                userProfile:action.payload,
+                isLoggedIn:true
+            }
         case "login":
             return{
                 ...currState,
@@ -155,6 +160,7 @@ const reducerF=(currState, action)=>{
                 userProfile:null,
                 isLoggedIn:false
             }
+
         case "show-cart-disable":
             return{
                 ...currState,
@@ -217,12 +223,19 @@ const reducerF=(currState, action)=>{
             return{
                 
             }
+        case "final-money":
+            return{
+                ...currState,
+                finalPrice:action.payload
+            }
         
         case "address-selected":
             return{
                 ...currState,
                 billingAddress:action.payload
             }
+        
+
     }
 }
 export const ProfileContext=createContext();

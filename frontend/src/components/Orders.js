@@ -19,8 +19,8 @@ function Orders(){
                             <p>Search orders</p>
                         </div>
                     </div>
-                    <div style={{width:"100%",height:"80px", backgroundColor:"white"}}>Hello</div>
-                    <div style={{width:"100%",height:"80px",backgroundColor:"white"}}>Hi</div>
+                    <div style={{width:"100%",height:"80px", backgroundColor:"white"}}>Order 1</div>
+                    <div style={{width:"100%",height:"80px",backgroundColor:"white"}}>Order 2</div>
                 </div>
             </div>
         </div>
