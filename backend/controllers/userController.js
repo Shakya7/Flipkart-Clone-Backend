@@ -223,3 +223,24 @@ exports.addWishlist=async (req,res)=>{
         })
     }
 }
+
+exports.deleteOrders=async (req,res)=>{
+    try{
+        const user=res.user;
+        const updatedUserWithWishlist=await User.findByIdAndUpdate(user._id,{
+            orders:[]
+        },{new:true,runValidators:true});
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:updatedUserWithWishlist
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}

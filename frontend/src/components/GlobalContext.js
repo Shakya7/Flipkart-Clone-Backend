@@ -16,7 +16,6 @@ const initialState={
     billingAddress:"",
     billingProducts:[],
     finalPrice:1,
-    random:""
 }
 
 const reducerF=(currState, action)=>{

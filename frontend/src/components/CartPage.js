@@ -8,10 +8,11 @@ import PaymentDoneModal from "./modals/PaymentDoneModal";
 const CartPage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
     const [paymentSt,setPaymentSt]=useState(false);
+
     const initPayment = (data) => {
 		const options = {
 			key: "rzp_test_qUJmI8cKYQn0s3",
-			amount: data.price,
+			amount: Number(data.price),
 			currency: data.currency,
 			name: "Total Amount",
 			description: "Subtotal amount",
@@ -32,6 +33,14 @@ const CartPage=(props)=>{
 						</GlobalContext.Consumer>*/
                         //await dispatch({type:"random",payload:"Random text"});
                         setPaymentSt(true);
+                        const user=await axios.patch("http://localhost:4001/api/v1/payment/success",{
+                            orders:state.billingProducts,
+                            address:state.billingAddress,
+                            price:state.finalPrice
+                        },{ withCredentials:true});
+                        //console.log(user.data.data.user);
+                        await dispatch({type:"finally-update-data-from-db",payload:user.data.data.user});
+                        
 					})
 					.catch(function (err){
 						console.log(err.message);
@@ -57,7 +66,7 @@ const CartPage=(props)=>{
 		try {
 			console.log("TOTAL PRICE -->",val);
 			const orderUrl = "http://localhost:4001/api/v1/payment/orders";
-			const { data } = await axios.post(orderUrl, { amount: val*1 },{withCredentials:true});
+			const { data } = await axios.post(orderUrl, { amount: Number(val) },{withCredentials:true});
 			//console.log("First console",data);
 			initPayment(data.data);
 		} catch (error) {
@@ -68,12 +77,13 @@ const CartPage=(props)=>{
 
     useEffect(()=>{
         console.log("CARTPAGE---> STATE IS :",state);
+
         if(!state.isLoggedIn){
             dispatch({type:"show-cart-disable"});
         }
         else
             dispatch({type:"show-cart-enable"});
-    },[state.showCart,state.isLoggedIn,state.random]);
+    },[state.showCart,state.isLoggedIn,paymentSt]);
     return(
         <div style={{backgroundColor:"#EEEEEE", display:"flex", height:"auto", padding:"20px", justifyContent:"space-between"}}>
             <CartProducts/>

@@ -22,6 +22,7 @@ router.route("/forgotPassword").post(authController.forgotPass);
 router.route("/resetPassword/:token").patch(authController.resetPassword);
 router.route("/updatePassword").patch(authController.protectRouteWithJWT,authController.updatePassword);
 router.route("/checkResetToken").post(authController.checkResetToken);
-router.route("/getFirstAddress").get(authController.protectRouteWithJWT,getFirstAddressController.getFirstAddress)
+router.route("/getFirstAddress").get(authController.protectRouteWithJWT,getFirstAddressController.getFirstAddress);
+router.route("/deleteAllOrders").patch(authController.protectRouteWithJWT,userController.deleteOrders);
 
 module.exports=router;
