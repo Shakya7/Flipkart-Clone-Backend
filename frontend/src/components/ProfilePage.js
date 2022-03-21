@@ -3,7 +3,7 @@ import profile_avatar from "../images/profile_avatar_logo.png"
 import cart_logo from "../images/cart_logo.png"
 import { GlobalContext } from "./GlobalContext";
 import { useNavigate,useLocation } from "react-router-dom";
-import { useContext, useState, useEffect, createContext} from "react";
+import { useContext, useState, useEffect, createContext, useLayoutEffect} from "react";
 import next_button from "../images/next_button.png";
 import user_profile from "../images/user_profile.png";
 import user_payments from "../images/user_payments.png";
@@ -17,7 +17,6 @@ import { ProfileContext } from "./GlobalContext";
 import { ChangePassModal } from "./modals/ChangepassModal";
 
 const ProfilePage=(props)=>{
-    //console.log("ADDRESS-to",props.addr);
     const {state,dispatch}=useContext(GlobalContext);
     const [accountPage,setAccountPage]=useContext(ProfileContext)
     const location=useLocation();
@@ -25,11 +24,18 @@ const ProfilePage=(props)=>{
     let email=state.userProfile?state.userProfile.email:"";
     let mobile=state.userProfile?state.userProfile.mobile:"";
     let gender=state.userProfile?state.userProfile.gender:"";
+
+    const getProfileDetails=async()=>{
+        const user=await axios.get("http://localhost:4001/api/v1/getUserDetails",{
+            withCredentials:true
+        });
+        return user;
+    }
+
     const [profileDetails,setProfileDetails]=useState({
         profile_edit:false,
         profile_val_fname:state.userProfile?state.userProfile.name.split(" ")[0]:"",
         profile_val_lname:state.userProfile?state.userProfile.name.split(" ")[1]:"",
-        //profile_val_name:profileDetails.profile_val_fname+" "+profileDetails.profile_val_fname,
         profile_val_email:email,
         profile_val_mobile:mobile,
         gender_val:gender,
@@ -40,16 +46,32 @@ const ProfilePage=(props)=>{
     const [newAddress,setNewAddress]=useState("");
     const [showModal,setShowModal]=useState(false);
     const body=document.querySelector("body");
+
+    useLayoutEffect(()=>{
+        const func1=async()=>{
+            const val=await getProfileDetails()
+            setProfileDetails({
+                ...profileDetails,
+                profile_val_fname:val.data.data.user.name.split(" ")[0],
+                profile_val_lname:val.data.data.user.name.split(" ")[1],
+                profile_val_mobile:val.data.data.user.mobile,
+                gender_val:val.data.data.user.gender
+            })
+        }
+        func1();
+    },[])
     
     useEffect(()=>{
-        console.log(profileDetails);
-        console.log("STATE",state);
-        console.log(newAddress);
-        console.log("WISHLIST",state.wishlist);
+        //console.log(profileDetails);
+        //console.log("STATE",state);
+        //console.log(newAddress);
+        //console.log("WISHLIST",state.wishlist);
+
         if(showModal)
             body.style.overflow="hidden";
-        else    
+        else{    
             body.style.overflow="auto";
+        }    
     },[profileDetails,accountPage,newAddress,state.addresses,showModal])
     const navigation=useNavigate();
 
@@ -138,7 +160,7 @@ const ProfilePage=(props)=>{
                         <div onClick={e=>{
                             setAccountPage("wishlist-info");
                             navigation("wishlist");
-                            }} className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px",color:"white"}}>
+                            }} className="account-sub-sections" style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"50px",color:"white",backgroundColor:`${accountPage==="wishlist-info"?"#344CB7":"inherit"}`}}>
                             My Wishlist
                         </div>
                         <div style={{width:"100%",height:"1px", backgroundColor:"grey"}}/>
@@ -192,7 +214,6 @@ const ProfilePage=(props)=>{
                                             
                                         },{ withCredentials:true});
                                         console.log(user);
-                                        //dispatch({type:"change-name",payload:user.data})
                                         setProfileDetails({
                                             ...profileDetails,
                                             profile_edit:!profileDetails.profile_edit,
@@ -261,7 +282,6 @@ const ProfilePage=(props)=>{
                                             email:profileDetails.profile_val_email
                                         },{ withCredentials:true});
                                         console.log(user);
-                                        //dispatch({type:"change-name",payload:user.data})
                                         setProfileDetails({
                                             ...profileDetails,
                                             email_edit:!profileDetails.email_edit,
@@ -296,7 +316,6 @@ const ProfilePage=(props)=>{
                                             mobile:profileDetails.profile_val_mobile
                                         },{ withCredentials:true});
                                         console.log(user);
-                                        //dispatch({type:"change-name",payload:user.data})
                                         setProfileDetails({
                                             ...profileDetails,
                                             mobile_edit:!profileDetails.mobile_edit,
@@ -335,14 +354,13 @@ const ProfilePage=(props)=>{
                                 <div style={{display:"flex", justifyContent:"flex-start",gap:"2%",color:"white"}}>
                                     <div onClick={
                                         async e=>{
-                                            //const user=await addAddress();
                                             await dispatch({type:"add-address",payload:newAddress});
                                             await dispatch({type:"add-address-to-DB"});
                                             navigation("/profile");
                                             window.location.reload(true);
                                         }
-                                    } style={{width:"9vmax", padding:"2%", backgroundColor:"#2874f0",textAlign:"center",cursor:"pointer"}}>SAVE</div>
-                                    <div onClick={e=>setAddAddressBttn((prev)=>!prev)} style={{width:"9vmax", padding:"2%",backgroundColor:"#fb7a1b",textAlign:"center",cursor:"pointer"}}>CANCEL</div>
+                                    } style={{width:"9vmax", padding:"2%", backgroundColor:"#2874f0",textAlign:"center",cursor:"pointer",borderRadius:"4px"}}>SAVE</div>
+                                    <div onClick={e=>setAddAddressBttn((prev)=>!prev)} style={{width:"9vmax", padding:"2%",backgroundColor:"#fb7a1b",textAlign:"center",cursor:"pointer",borderRadius:"4px"}}>CANCEL</div>
                                 </div>    
                             </div>
                             }   

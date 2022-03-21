@@ -244,3 +244,22 @@ exports.deleteOrders=async (req,res)=>{
         })
     }
 }
+
+exports.getUserDetails=async(req,res)=>{
+    try{
+        const user=res.user;
+        const updatedUser=await User.findById(user._id);
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:updatedUser
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}

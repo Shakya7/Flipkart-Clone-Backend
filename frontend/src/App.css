@@ -146,6 +146,10 @@ label{
   padding-left: 2%;
   border-radius: 5px;
 }
+
+.deactivate:hover{
+  cursor:pointer;
+}
 .faq-sec{
   margin-top:2%;
 }

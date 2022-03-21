@@ -26,9 +26,10 @@ function OrdersPage(){
                             <p>Search orders</p>
                         </div>
                     </div>
+                    {/*<div>Hello</div>*/}
                     {
                     state.userProfile
-                    ?state.userProfile.orders.map((el,i)=><OrderBlocks style={{cursor:"pointer"}} item={el} key={i}/>)
+                    ?state.userProfile.orders.map((el,i)=><OrderBlocks item={el} key={i}/>)
                     :"There are no orders placed yet..."
                     }
                 </div>

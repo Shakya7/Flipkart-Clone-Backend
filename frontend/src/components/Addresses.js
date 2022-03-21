@@ -52,8 +52,8 @@ function Addresses(props){
                             navigation("/profile");
                             window.location.reload(true);
                         }
-                    } style={{width:"9vmax", padding:"2%", backgroundColor:"#2874f0",textAlign:"center",cursor:"pointer"}}>SAVE</div>
-                    <div onClick={e=>setEditFieldShow((prev)=>!prev)} style={{width:"9vmax", padding:"2%",backgroundColor:"#fb7a1b",textAlign:"center",cursor:"pointer"}}>CANCEL</div>
+                    } style={{width:"9vmax", padding:"2%", backgroundColor:"#2874f0",textAlign:"center",cursor:"pointer",borderRadius:"4px"}}>SAVE</div>
+                    <div onClick={e=>setEditFieldShow((prev)=>!prev)} style={{width:"9vmax", padding:"2%",backgroundColor:"#fb7a1b",textAlign:"center",cursor:"pointer",borderRadius:"4px"}}>CANCEL</div>
                 </div>    
             </div>
             :""}
