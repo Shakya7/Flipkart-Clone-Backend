@@ -8,7 +8,7 @@ import { GlobalProvider } from './components/GlobalContext';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ProfilePage from './components/ProfilePage';
-import Orders from './components/Orders';
+import OrdersPage from './components/OrdersPage';
 import { ResetPass } from './components/ResetPassword';
 import { PageNotFoundError } from './components/error-UI/PageNotFoundError';
 import { _500ServerError } from './components/error-UI/_500ServerError';
@@ -30,7 +30,7 @@ function App() {
                 <Route path="addresses" element={<ProfilePage/>}/>
                 <Route path="wishlist" element={<ProfilePage/>}/>
               </Route>
-              <Route path="orders" element={<Orders/>}/>
+              <Route path="orders" element={<OrdersPage/>}/>
               <Route path="*" element={<PageNotFoundError/>}/>
             </Route>
             <Route path="*" element={<_500ServerError/>} />

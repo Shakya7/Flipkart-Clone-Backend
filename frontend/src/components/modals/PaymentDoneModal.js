@@ -8,7 +8,6 @@ function PaymentDoneModal(props){
             <div className="modalContainer">
                 <div onClick={e=>{
                     props.closeModal(false);
-                    //window.location.reload(true);
                     navigation("/");
                 }} style={{position:"absolute", top:20,right:20, fontSize:"1.5rem",cursor:"pointer"}}>X</div>
                 Hello

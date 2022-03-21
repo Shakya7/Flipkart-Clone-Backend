@@ -218,10 +218,6 @@ const reducerF=(currState, action)=>{
             })
             return currState;
 
-        case "place-order":
-            return{
-                
-            }
         case "final-money":
             return{
                 ...currState,
@@ -233,10 +229,9 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 billingAddress:action.payload
             }
-        
-
     }
 }
+
 export const ProfileContext=createContext();
 export const GlobalContext=createContext();
 
@@ -263,16 +258,14 @@ export const GlobalProvider=(props)=>{
         }
     }
 
-
-
     useEffect(()=>{
         loadFromDB();
 
-    },[state.connectionToDBNumber,state.showCart,accountPage]);
+    },[state.showCart,accountPage]);
+
     return(
         <GlobalContext.Provider value={{state,dispatch}}>
             <ProfileContext.Provider value={[accountPage,setAccountPage]}>
-            
                 {
                     props.children
                 }
