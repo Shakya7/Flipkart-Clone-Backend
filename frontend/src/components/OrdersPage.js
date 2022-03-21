@@ -15,7 +15,7 @@ function OrdersPage(){
         <div>
             <Categories/>
             <div style={{width:"100%",minHeight:"auto", backgroundColor:"#EEEEEE",display:"flex", gap:"2%",alignItems:"flex-start",justifyContent:"center",paddingTop:'20px',paddingBottom:'20px'}}>
-                <div style={{minWidth:"20%", backgroundColor:"#21325E",height:"200px", color:"white"}}>
+                <div style={{minWidth:"20%", backgroundColor:"#21325E",height:"200px", color:"white",borderRadius:"4px", boxShadow:"5px 5px 8px #476072"}}>
                     Filter section
                 </div>
                 <div style={{width:"65%", backgroundColor:"#EEEEEE",minHeight:"200px",display:"flex",flexDirection:"column",gap:"20px"}}>
@@ -28,7 +28,7 @@ function OrdersPage(){
                     </div>
                     {
                     state.userProfile
-                    ?state.userProfile.orders.map((el,i)=><OrderBlocks item={el} key={i}/>)
+                    ?state.userProfile.orders.map((el,i)=><OrderBlocks style={{cursor:"pointer"}} item={el} key={i}/>)
                     :"There are no orders placed yet..."
                     }
                 </div>

@@ -243,3 +243,13 @@ input[type="password"]:focus{
 .ip-highlight:focus{
   background-color: #FFF89A !important;
 }
+.orders-img{
+  width:60px
+}
+.order-block{
+  transition: transform 0.4s ease-in-out;
+}
+.order-block:hover{
+  transform:scale(1.05,1.05);
+  cursor:"pointer";
+}
