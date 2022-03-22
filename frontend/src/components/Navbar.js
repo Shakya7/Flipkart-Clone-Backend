@@ -18,15 +18,16 @@ export const Navbar=()=>{
     const {state, dispatch}=useContext(GlobalContext);
     const [accountPage,setAccountPage]=useContext(ProfileContext)
     const [hoverLogin,setHover]=useState("none");
+    const [searchTerm,setSearchTerm]=useState("");
     const navigation=useNavigate();
     useEffect(()=>{
         //console.log("Added to cart!!!!!!");
         //console.log(state.cart);
         //console.log(state.userProfile)
         console.log("NAVBAR ", state);
-        console.log(state.userProfile)
+        console.log(state.userProfile);
 
-    },[state.cart,hoverLogin,state.userProfile,state.showCart])
+    },[state.cart,hoverLogin,state.userProfile,state.showCart]);
     return(
         <div>
             <div style={{backgroundColor:"#2874f0",width:"100%",height:"9vh", display:"flex",justifyContent:"space-around", position:"sticky",top:0,marginTop:0,zIndex:1}}>
@@ -36,8 +37,16 @@ export const Navbar=()=>{
                     navigation("/");
                 }} style={{height:"6vmin",alignSelf:"center",position:"relative",left:"7%",cursor:"pointer"}} src={logo}/>
                 <div style={{display:"flex",alignItems:"center",width:"60vmax",height:"6vh",alignSelf:"center",position:"relative",left:"50px"}}>
-                    <input style={{width:"75%",height:"6vh", alignSelf:"center", borderColor:"white", paddingLeft:"20px"}} type="text" placeholder="Search for products, brands and more"/>
-                    <div style={{width:"5%",height:"6vh",display:"flex",justifyContent:"center",alignItems:"center", backgroundColor:"white",borderColor:"white"}}>
+                    <input className="srch" onChange={e=>setSearchTerm(e.target.value)} style={{width:"75%",height:"6vh", alignSelf:"center", borderColor:"white", paddingLeft:"20px"}} type="text" placeholder="Search for products..."/>
+                    <div onClick={
+                        async e=>{
+                            console.log(searchTerm);
+                            dispatch({type:"search"});
+                            dispatch({type:"search-term",payload:searchTerm});
+                            document.querySelector(".srch").value="";
+                            navigation("/");
+                        }
+                    } style={{width:"5%",height:"6vh",display:"flex",justifyContent:"center",alignItems:"center", backgroundColor:"white",borderColor:"white",cursor:"pointer"}}>
                         <img style={{width:"25px"}} src={search_icon}/>
                     </div>
                 </div>

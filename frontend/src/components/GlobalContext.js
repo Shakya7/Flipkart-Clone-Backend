@@ -6,7 +6,7 @@ import axios from "axios";
 const initialState={
     results:null,
     cart:0,
-    category:"",
+    category:"init",
     cartProducts:[],
     userProfile:null,
     isLoggedIn:false,
@@ -16,6 +16,7 @@ const initialState={
     billingAddress:"",
     billingProducts:[],
     finalPrice:1,
+    searchTerm:"",
 }
 
 const reducerF=(currState, action)=>{
@@ -25,7 +26,11 @@ const reducerF=(currState, action)=>{
         case "connect-to-db":
             return currState
 
-
+        case "null-category":
+            return{
+                ...currState,
+                category:null
+            }
         case "finally-update-data-from-db":
             return{
                 ...currState,
@@ -60,10 +65,23 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 results:action.payload
             }
+        case "load-search-data":
+            return{
+                ...currState,
+                results:action.payload
+            }
+
+
         case "initial":
             return{
                 ...currState,
-                category:""
+                category:"init"
+            }
+
+        case "search":
+            return{
+                ...currState,
+                category:"search"
             }
 
         case "women's clothing":
@@ -85,6 +103,13 @@ const reducerF=(currState, action)=>{
             return{
                 ...currState,
                 category:"jewelery"
+            }
+        }
+
+        case "search-term":{
+            return{
+                ...currState,
+                searchTerm:action.payload
             }
         }
         
