@@ -3,6 +3,7 @@ import { useEffect,useContext,useLayoutEffect, useCallback} from "react";
 import axios from "axios";
 import { GlobalContext } from "./GlobalContext";
 import Categories from "./Categories";
+import FilterBar from "./FilterBar";
 
 const ItemsPage=()=>{
     const {state,dispatch}=useContext(GlobalContext);
@@ -45,6 +46,14 @@ const ItemsPage=()=>{
         console.log("Search --->",state);
         dispatch({type:"null-category"});
     },[state.results]);
+    const funcPriceAsc=(()=>{
+        //console.log(state.results);
+        dispatch({type:"sort-asc",payload:state.results.sort((a,b)=>parseFloat(a.price)-parseFloat(b.price))})
+    });
+    const funcPriceDesc=(()=>{
+        //console.log(state.results);
+        dispatch({type:"sort-desc",payload:state.results.sort((a,b)=>parseFloat(b.price)-parseFloat(a.price))})
+    });
 
     useEffect(useCallback(()=>{
         if(state.category==="init")
@@ -59,6 +68,11 @@ const ItemsPage=()=>{
             func5();
         else if(state.category==="search")
             func6();
+        else if(state.category==="price-asc")
+            funcPriceAsc();
+        else if(state.category==="price-desc")
+            funcPriceDesc();
+
         console.log("-->HOMESCREEN-->"); 
     },[state.results,state.category]),[state.results,state.category]);
     return(
@@ -67,7 +81,7 @@ const ItemsPage=()=>{
             <div style={{width:"100%", height:"2vh",backgroundColor:"#CDE8F6"}}/>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                 <div style={{width:"20%",height:"80vmin",backgroundColor:"#21325E",alignSelf:"flex-start",marginLeft:"3%", marginTop:"10px", borderRadius:"4px", boxShadow:"5px 5px 8px #476072"}}>
-                    
+                    <FilterBar/>
                 </div>
                 <div style={{display:"grid", gridTemplateColumns:"1fr 1fr 1fr",gridGap:"15px", marginRight:"3%", marginTop:"10px"}}>
                 {   state.results &&

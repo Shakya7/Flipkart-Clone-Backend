@@ -257,3 +257,28 @@ input[type="password"]:focus{
   transform:scale(1.05,1.05);
   cursor:"pointer";
 }
+
+.hr-line{
+  height:1px;
+  background-color: rgb(179, 176, 173);
+}
+
+.filter-header{
+  padding:20px;
+  font-size: larger;
+  color:white;
+}
+
+.filter-price{
+  padding:20px;
+  color:white;
+}
+
+.filter-rating{
+  padding:20px;
+  color:white;
+}
+.heading-sub-filter{
+  font-size: 1.4rem;
+  font-weight: bold;
+}

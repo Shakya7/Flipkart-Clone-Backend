@@ -77,6 +77,16 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 category:"init"
             }
+        case "price-asc":
+            return{
+                ...currState,
+                category:"price-asc"
+            }
+        case "price-desc":
+            return{
+                ...currState,
+                category:"price-desc"
+            }
 
         case "search":
             return{
@@ -253,6 +263,17 @@ const reducerF=(currState, action)=>{
             return{
                 ...currState,
                 billingAddress:action.payload
+            }
+
+        case "sort-asc":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "sort-desc":
+            return{
+                ...currState,
+                results:action.payload
             }
     }
 }
