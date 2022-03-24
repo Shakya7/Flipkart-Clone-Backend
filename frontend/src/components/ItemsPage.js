@@ -7,10 +7,12 @@ import FilterBar from "./FilterBar";
 
 const ItemsPage=()=>{
     const {state,dispatch}=useContext(GlobalContext);
+    
     const func1=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
         dispatch({type:"load-data-initial",payload:results.data});
         console.log("Home ALL -->",state);
+        dispatch({type:"null-category"});
     },[state.results]);
     const func2=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
@@ -55,10 +57,12 @@ const ItemsPage=()=>{
         dispatch({type:"sort-desc",payload:state.results.sort((a,b)=>parseFloat(b.price)-parseFloat(a.price))})
     });
     useEffect(()=>{
-        func1();
+
     },[])
 
     useEffect(useCallback(()=>{
+        if(state.category==="init")
+            func1();
         if(state.category==="women's clothing")
             func2();
         if(state.category==="electronics")
@@ -74,7 +78,8 @@ const ItemsPage=()=>{
         if(state.category==="price-desc")
             funcPriceDesc();
 
-        console.log("-->HOMESCREEN-->"); 
+        console.log("-->HOMESCREEN-->");
+        console.log("TEST -->",state.filterCat) 
     },[state.results,state.category]),[state.results,state.category]);
     return(
         <div style={{display:"flex",flexDirection:"column",width:"100%",backgroundColor:"#EEEEEE"}}>
