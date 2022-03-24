@@ -7,7 +7,7 @@ import FilterBar from "./FilterBar";
 
 const ItemsPage=()=>{
     const {state,dispatch}=useContext(GlobalContext);
-    
+
     const func1=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
         dispatch({type:"load-data-initial",payload:results.data});
@@ -44,7 +44,7 @@ const ItemsPage=()=>{
     },[state.results]);
     const func6=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
-        dispatch({type:"load-search-data",payload:results.data.filter((el)=>el.title.includes(state.searchTerm))});
+        dispatch({type:"load-search-data",payload:results.data.filter((el)=>el.title.toLowerCase().includes(state.searchTerm.toLowerCase()))});
         console.log("Search --->",state);
         dispatch({type:"null-category"});
     },[state.results]);

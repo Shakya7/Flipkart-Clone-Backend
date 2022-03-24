@@ -44,6 +44,7 @@ export const Navbar=()=>{
                         async e=>{
                             console.log(searchTerm);
                             dispatch({type:"search"});
+                            dispatch({type:"no-star"});
                             dispatch({type:"search-term",payload:searchTerm});
                             document.querySelector(".srch").value="";
                             navigation("/");
