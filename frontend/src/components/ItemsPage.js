@@ -54,23 +54,24 @@ const ItemsPage=()=>{
         //console.log(state.results);
         dispatch({type:"sort-desc",payload:state.results.sort((a,b)=>parseFloat(b.price)-parseFloat(a.price))})
     });
+    useEffect(()=>{
+        func1();
+    },[])
 
     useEffect(useCallback(()=>{
-        if(state.category==="init")
-            func1();
-        else if(state.category==="women's clothing")
+        if(state.category==="women's clothing")
             func2();
-        else if(state.category==="electronics")
+        if(state.category==="electronics")
             func3();
-        else if(state.category==="jewelery")
+        if(state.category==="jewelery")
             func4();
-        else if(state.category==="men's clothing")
+        if(state.category==="men's clothing")
             func5();
-        else if(state.category==="search")
+        if(state.category==="search")
             func6();
-        else if(state.category==="price-asc")
+        if(state.category==="price-asc")
             funcPriceAsc();
-        else if(state.category==="price-desc")
+        if(state.category==="price-desc")
             funcPriceDesc();
 
         console.log("-->HOMESCREEN-->"); 
