@@ -120,7 +120,7 @@ export const Navbar=()=>{
                                 }}>
                                     <div style={{display:"flex", marginLeft:"10px",position:"relative",top:"30%"}}>
                                         <img style={{width:"20px"}} src={wishlist_logo}/>
-                                        <p style={{marginLeft:"20px"}}>Wishlist</p>
+                                        <p style={{marginLeft:"20px"}}>Wishlist {state.wishlist.length?`(${state.wishlist.length})`:""}</p>
                                     </div>    
                                 </div>
                                 <hr/>
