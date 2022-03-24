@@ -17,6 +17,7 @@ const initialState={
     billingProducts:[],
     finalPrice:1,
     searchTerm:"",
+    filterCat:""
 }
 
 const reducerF=(currState, action)=>{
@@ -99,15 +100,30 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 category:"women's clothing"
             }
+        case "wc":
+            return{
+                ...currState,
+                filterCat:"women's clothing"
+            }
         case "men's clothing":
             return{
                 ...currState,
                 category:"men's clothing"
             }
+        case "mc":
+            return{
+                ...currState,
+                filterCat:"men's clothing"
+            }
         case "electronics":
             return{
                 ...currState,
                 category:"electronics"
+            }
+        case "elect":
+            return{
+                ...currState,
+                filterCat:"electronics"
             }
         case "jewelery":{
             return{
@@ -115,6 +131,11 @@ const reducerF=(currState, action)=>{
                 category:"jewelery"
             }
         }
+        case "jewel":
+            return{
+                ...currState,
+                filterCat:"jewelery"
+            }
 
         case "search-term":{
             return{
@@ -306,7 +327,7 @@ export const GlobalProvider=(props)=>{
 
     useEffect(()=>{
         loadFromDB();
-
+        //console.log("TEST PURPOSE -->",state.filterCat);
     },[state.showCart,accountPage]);
 
     return(

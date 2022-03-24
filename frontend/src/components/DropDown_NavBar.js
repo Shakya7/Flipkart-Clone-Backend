@@ -16,10 +16,12 @@ function DropDown(props){
                     <div key={i} className="sub-list" onClick={e=>{
                         if(el==="Women's clothing")
                         {
+                            dispatch({type:"wc"});
                             dispatch({type:"women's clothing"});
                             navigation("/");
                         }
                         else if(el==="Men's clothing"){
+                            dispatch({type:"mc"})
                             dispatch({type:"men's clothing"});
                             navigation("/");
                         }

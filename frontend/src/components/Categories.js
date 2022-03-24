@@ -33,6 +33,7 @@ const Categories=()=>{
                         </div>    
                     </div>
                     <div className="fashion" onClick={(e)=>{
+                        dispatch({type:"elect"});
                         dispatch({type:"electronics"});
                         navigation("/");
                     }}>
@@ -40,6 +41,7 @@ const Categories=()=>{
                         <p style={{textAlign:"center"}}>{categories[1]}</p>
                     </div>
                     <div className="fashion" onClick={(e)=>{
+                        dispatch({type:"jewel"});
                         dispatch({type:"jewelery"});                      
                         navigation("/");
                     }}>
