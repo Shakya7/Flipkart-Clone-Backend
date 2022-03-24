@@ -17,34 +17,34 @@ const ItemsPage=()=>{
         dispatch({type:"load-data-women",payload:results.data.filter((el)=>el.category==="women's clothing")});
         console.log("Women's clothings");
         console.log("Women--->",state);
-        dispatch({type:"null-category"});
+        //dispatch({type:"null-category"});
     },[state.results]);
     const func3=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
         dispatch({type:"load-data-electronics",payload:results.data.filter((el)=>el.category==="electronics")});
         console.log("Electronics");
         console.log("Electronics--->",state);
-        dispatch({type:"null-category"});
+        //dispatch({type:"null-category"});
     },[state.results]);
     const func4=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
         dispatch({type:"load-data-jewelery",payload:results.data.filter((el)=>el.category==="jewelery")});
         console.log("Jewelery");
         console.log("Jewelery--->",state);
-        dispatch({type:"null-category"});
+        //dispatch({type:"null-category"});
     },[state.results]);
     const func5=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
         dispatch({type:"load-data-men",payload:results.data.filter((el)=>el.category==="men's clothing")});
         console.log("Men's clothing");
         console.log("Men--->",state);
-        dispatch({type:"null-category"});
+        //dispatch({type:"null-category"});
     },[state.results]);
     const func6=useCallback(async()=>{
         const results=await axios.get("https://fakestoreapi.com/products");
         dispatch({type:"load-search-data",payload:results.data.filter((el)=>el.title.includes(state.searchTerm))});
         console.log("Search --->",state);
-        dispatch({type:"null-category"});
+        //dispatch({type:"null-category"});
     },[state.results]);
     const funcPriceAsc=(()=>{
         //console.log(state.results);

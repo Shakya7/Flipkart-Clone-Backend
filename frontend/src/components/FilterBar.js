@@ -3,7 +3,6 @@ import { GlobalContext } from "./GlobalContext";
 
 function FilterBar(){
     const {state,dispatch}=useContext(GlobalContext);
-    const [filterSelected,setFilterSelected]=useState(false);
     return(
         <div style={{display:"flex",flexDirection:"column"}}>
             <div className="filter-header">Filters</div>
@@ -16,14 +15,14 @@ function FilterBar(){
                         <div>   
                             <input onChange={e=>{
                                 dispatch({type:e.target.value});
-                                setFilterSelected(true);
+                                
                             }} type="radio" value="price-asc" checked={state.category==="price-asc"} name="price-sort"/>
                             <label style={{fontSize:"1rem",margin:"10px"}}>Low to High</label>
                         </div>
                         <div>
                             <input onChange={e=>{
                                 dispatch({type:e.target.value});
-                                setFilterSelected(true);
+                                
                             }} type="radio" value="price-desc" checked={state.category==="price-desc"} name="price-sort"/>
                             <label style={{fontSize:"1rem",margin:"10px"}}>High to Low</label>
                         </div>
