@@ -367,6 +367,11 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 results:action.payload
             }
+        case "clear-filter":
+            return{
+                ...currState,
+                results:action.payload
+            }
     }
 }
 

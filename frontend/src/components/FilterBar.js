@@ -6,7 +6,33 @@ function FilterBar(){
     const {state,dispatch}=useContext(GlobalContext);
     return(
         <div style={{display:"flex",flexDirection:"column"}}>
-            <div className="filter-header">Filters</div>
+            <div className="filter-header">
+                <p>Filters</p>
+                <div onClick={async e=>{
+                    dispatch({type:"no-star"});
+                    dispatch({type:"null-category"});
+                    if(state.filterCat===""){
+                        const results=await axios.get("https://fakestoreapi.com/products");
+                        dispatch({type:"clear-filter",payload:results.data})
+                    }
+                    if(state.filterCat==="electronics"){
+                        const results=await axios.get("https://fakestoreapi.com/products");
+                        dispatch({type:"clear-filter",payload:results.data.filter((el)=>el.category==="electronics")})
+                    }
+                    if(state.filterCat==="jewelery"){
+                        const results=await axios.get("https://fakestoreapi.com/products");
+                        dispatch({type:"clear-filter",payload:results.data.filter((el)=>el.category==="jewelery")})
+                    }
+                    if(state.filterCat==="women's clothing"){
+                        const results=await axios.get("https://fakestoreapi.com/products");
+                        dispatch({type:"clear-filter",payload:results.data.filter((el)=>el.category==="women's clothing")})
+                    }
+                    if(state.filterCat==="men's clothing"){
+                        const results=await axios.get("https://fakestoreapi.com/products");
+                        dispatch({type:"clear-filter",payload:results.data.filter((el)=>el.category==="men's clothing")})
+                    }  
+                }} className="clear-filter">Clear all</div>
+            </div>
             <div className="hr-line"/>
             <div className="filter-price">
                 <p className="heading-sub-filter">PRICE</p>
