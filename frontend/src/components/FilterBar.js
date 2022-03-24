@@ -37,7 +37,9 @@ function FilterBar(){
                 <p className="heading-sub-filter">RATINGS</p>
                 <div style={{marginTop:"10px"}}>
                     <div>
-                        <input type="radio" name="rating"/>
+                        <input type="radio" name="rating" onChange={e=>{
+                            
+                        }}/>
                         <label style={{fontSize:"1rem",margin:"10px"}}>4★ & above</label>
                     </div>
                     <div>

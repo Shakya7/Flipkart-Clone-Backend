@@ -33,6 +33,7 @@ export const Navbar=()=>{
             <div style={{backgroundColor:"#2874f0",width:"100%",height:"9vh", display:"flex",justifyContent:"space-around", position:"sticky",top:0,marginTop:0,zIndex:1}}>
                 <img onClick={(e)=>{
                     dispatch({type:"show-cart-enable"});
+                    dispatch({type:"no-cat"});
                     dispatch({type:"initial"});
                     navigation("/");
                 }} style={{height:"6vmin",alignSelf:"center",position:"relative",left:"7%",cursor:"pointer"}} src={logo}/>

@@ -100,6 +100,11 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 category:"women's clothing"
             }
+        case "no-cat":
+            return{
+                ...currState,
+                filterCat:""
+            }    
         case "wc":
             return{
                 ...currState,
