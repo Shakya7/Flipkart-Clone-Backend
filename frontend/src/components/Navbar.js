@@ -35,6 +35,7 @@ export const Navbar=()=>{
                     dispatch({type:"show-cart-enable"});
                     dispatch({type:"no-cat"});
                     dispatch({type:"initial"});
+                    dispatch({type:"no-star"});
                     navigation("/");
                 }} style={{height:"6vmin",alignSelf:"center",position:"relative",left:"7%",cursor:"pointer"}} src={logo}/>
                 <div style={{display:"flex",alignItems:"center",width:"60vmax",height:"6vh",alignSelf:"center",position:"relative",left:"50px"}}>

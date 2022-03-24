@@ -17,7 +17,8 @@ const initialState={
     billingProducts:[],
     finalPrice:1,
     searchTerm:"",
-    filterCat:""
+    filterCat:"",
+    filterChecked:""
 }
 
 const reducerF=(currState, action)=>{
@@ -297,6 +298,71 @@ const reducerF=(currState, action)=>{
                 results:action.payload
             }
         case "sort-desc":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "4-star":
+            return{
+                ...currState,
+                filterChecked:"4-star"
+            }  
+        case "3-star":
+            return{
+                ...currState,
+                filterChecked:"3-star"
+            }
+        case "2-star":
+            return{
+                ...currState,
+                filterChecked:"2-star"
+            }  
+        case "no-star":
+            return{
+                ...currState,
+                filterChecked:""
+            } 
+        case "1-star":
+            return{
+                ...currState,
+                filterChecked:"1-star"
+            }     
+        case "no-cat-above-4":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "cat-above-4":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "no-cat-above-3":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "cat-above-3":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "no-cat-above-2":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "cat-above-2":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "no-cat-above-1":
+            return{
+                ...currState,
+                results:action.payload
+            }
+        case "cat-above-1":
             return{
                 ...currState,
                 results:action.payload

@@ -34,6 +34,7 @@ const Categories=()=>{
                     </div>
                     <div className="fashion" onClick={(e)=>{
                         dispatch({type:"elect"});
+                        dispatch({type:"no-star"});
                         dispatch({type:"electronics"});
                         navigation("/");
                     }}>
@@ -42,6 +43,7 @@ const Categories=()=>{
                     </div>
                     <div className="fashion" onClick={(e)=>{
                         dispatch({type:"jewel"});
+                        dispatch({type:"no-star"});
                         dispatch({type:"jewelery"});                      
                         navigation("/");
                     }}>

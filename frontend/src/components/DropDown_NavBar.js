@@ -17,11 +17,13 @@ function DropDown(props){
                         if(el==="Women's clothing")
                         {
                             dispatch({type:"wc"});
+                            dispatch({type:"no-star"});
                             dispatch({type:"women's clothing"});
                             navigation("/");
                         }
                         else if(el==="Men's clothing"){
-                            dispatch({type:"mc"})
+                            dispatch({type:"mc"});
+                            dispatch({type:"no-star"});
                             dispatch({type:"men's clothing"});
                             navigation("/");
                         }
