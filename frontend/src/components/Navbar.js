@@ -30,7 +30,7 @@ export const Navbar=()=>{
     },[state.cart,hoverLogin,state.userProfile,state.showCart]);
     return(
         <div>
-            <div style={{backgroundColor:"#2874f0",width:"100%",height:"9vh", display:"flex",justifyContent:"space-around", position:"sticky",top:0,marginTop:0,zIndex:1}}>
+            <div style={{backgroundColor:"#2874f0",width:"100%",height:"9vh", display:"flex",justifyContent:"space-around", position:"sticky",top:0,marginTop:0,zIndex:99}}>
                 <img onClick={(e)=>{
                     dispatch({type:"show-cart-enable"});
                     dispatch({type:"no-cat"});

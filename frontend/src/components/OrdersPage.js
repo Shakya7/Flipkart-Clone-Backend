@@ -3,6 +3,7 @@ import { GlobalContext } from "./GlobalContext";
 import { useContext,useEffect } from "react";
 import search_icon from "../images/search_icon.png";
 import OrderBlocks from "./OrderBlocks";
+import Footer from "./Footer";
 
 function OrdersPage(){
     const {state,dispatch}=useContext(GlobalContext);
@@ -34,6 +35,7 @@ function OrdersPage(){
                     }
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

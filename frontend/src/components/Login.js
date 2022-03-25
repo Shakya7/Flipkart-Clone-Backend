@@ -4,6 +4,7 @@ import { GlobalContext } from "./GlobalContext";
 import Categories from "./Categories";
 import axios from "axios";
 import { ForgotPassModal } from "./modals/ForgotPassModal";
+import Footer from "./Footer";
 
 
 //	https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png
@@ -88,6 +89,7 @@ function Login(props){
                     </div>
                 </div>
             </div>
+            <Footer/>
             {forgotPModal && <ForgotPassModal val={forgotPModal} closeModal={setForgotPModal}/>}
         </div>
     )

@@ -15,6 +15,7 @@ import Addresses from "./Addresses";
 import Wishlist from "./Wishlist";
 import { ProfileContext } from "./GlobalContext";
 import { ChangePassModal } from "./modals/ChangepassModal";
+import Footer from "./Footer";
 
 const ProfilePage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
@@ -404,6 +405,7 @@ const ProfilePage=(props)=>{
                     </div>
                 </div>   
             </div>
+            <Footer/>
             {showModal && <ChangePassModal closeModal={setShowModal}/>}
         </div>
     )

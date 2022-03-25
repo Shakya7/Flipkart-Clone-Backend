@@ -4,6 +4,7 @@ import CartProducts from "./CartProducts";
 import { GlobalContext } from "./GlobalContext";
 import axios from "axios";
 import PaymentDoneModal from "./modals/PaymentDoneModal";
+import Footer from "./Footer";
  
 const CartPage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
@@ -85,13 +86,16 @@ const CartPage=(props)=>{
             dispatch({type:"show-cart-enable"});
     },[state.showCart,state.isLoggedIn,paymentSt]);
     return(
-        <div style={{backgroundColor:"#EEEEEE", display:"flex", height:"auto", padding:"20px", justifyContent:"space-between"}}>
-            <CartProducts/>
-            {state.cart!==0?<CartAmount handleP={handlePayment}/>:""}
-            {
-            paymentSt?<PaymentDoneModal val={paymentSt} closeModal={setPaymentSt}/>:""
-            }
-        </div>
+		<div>
+			<div style={{backgroundColor:"#EEEEEE", display:"flex", height:"auto", padding:"20px", justifyContent:"space-between"}}>
+				<CartProducts/>
+				{state.cart!==0?<CartAmount handleP={handlePayment}/>:""}
+				{
+				paymentSt?<PaymentDoneModal val={paymentSt} closeModal={setPaymentSt}/>:""
+				}
+        	</div>
+			<Footer/>
+		</div>
         
     )
 }

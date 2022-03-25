@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import Categories from "./Categories";
 import axios from "axios";
+import Footer from "./Footer";
 
 
 function SignUp(props){
@@ -89,6 +90,7 @@ function SignUp(props){
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

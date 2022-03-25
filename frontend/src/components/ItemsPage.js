@@ -4,6 +4,7 @@ import axios from "axios";
 import { GlobalContext } from "./GlobalContext";
 import Categories from "./Categories";
 import FilterBar from "./FilterBar";
+import Footer from "./Footer";
 
 const ItemsPage=()=>{
     const {state,dispatch}=useContext(GlobalContext);
@@ -85,7 +86,7 @@ const ItemsPage=()=>{
         <div style={{display:"flex",flexDirection:"column",width:"100%",backgroundColor:"#EEEEEE"}}>
             <Categories/>
             <div style={{width:"100%", height:"2vh",backgroundColor:"#CDE8F6"}}/>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"20px"}}>
                 <div style={{width:"20%",height:"80vmin",backgroundColor:"#21325E",alignSelf:"flex-start",marginLeft:"3%", marginTop:"10px", borderRadius:"4px", boxShadow:"5px 5px 8px #476072"}}>
                     <FilterBar/>
                 </div>
@@ -96,8 +97,9 @@ const ItemsPage=()=>{
                     })
                 }
                 </div> 
-        </div>
-    </div>   
+            </div>
+            <Footer/>
+        </div>   
     )
 }
 export default ItemsPage;
