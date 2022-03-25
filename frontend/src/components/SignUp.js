@@ -76,6 +76,7 @@ function SignUp(props){
                                         await dispatch({type:"signup",payload:user.user});
                                         await dispatch({type:"connect-to-db"});
                                         navigation("/");
+                                        window.location.reload(true);
                                     }} style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer",border:"none"}}>Sign Up</button>
                                 </div>
                             </div>

@@ -319,3 +319,11 @@ input[type="password"]:focus{
   box-shadow: 3px 3px 7px #05014a;
   border-radius:60% ;
 }
+.nav-ft{
+  transition: font-size 0.4s ease-out;
+}
+.nav-ft:hover{
+  font-size: 1.2rem;
+  cursor: pointer;
+  color:black;
+}

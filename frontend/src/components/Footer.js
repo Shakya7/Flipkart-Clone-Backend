@@ -9,11 +9,11 @@ function Footer(){
     return(
         <div className="footer">
             <footer style={{display:'flex',flexDirection:"column",justifyContent:"center",alignItems:"center", gap:"30px"}}>
-                <div style={{display:"flex",gap:"30px"}}>
-                    <div>What we do</div>
-                    <div>About</div>
-                    <div>Help Center</div>
-                    <div>Contact</div>
+                <div className="nav-footer" style={{display:"flex",gap:"30px"}}>
+                    <div className="nav-ft">What we do</div>
+                    <div className="nav-ft">About</div>
+                    <div className="nav-ft">Help Center</div>
+                    <div className="nav-ft">Contact</div>
                 </div>
                 <div className="img-footer">
                     <img src={fb_footer}/>

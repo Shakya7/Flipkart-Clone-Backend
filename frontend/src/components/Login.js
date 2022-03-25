@@ -74,6 +74,7 @@ function Login(props){
                                         dispatch({type:"connect-to-db"});
                                         dispatch({type:"login",payload:user.user});
                                         navigation("/");
+                                        window.location.reload(true);
                                     }
                                 }>
                                     <div style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer"}}>Login</div>

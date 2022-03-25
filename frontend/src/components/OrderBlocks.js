@@ -24,8 +24,11 @@ function OrderBlocks(props){
                 }
                 </div>
                 <div style={{display:"flex",flexDirection:"column",gap:"20px"}}>
-                    <p><b>Delivered to:</b> {props.item.address}</p>    
-                    <p><b>Payment done on:</b> <span style={{backgroundColor:"green",padding:"2%",borderRadius:"15px",color:"white"}}>{props.item.paymentDate}</span></p>
+                    <p><b>Delivered to:</b> {props.item.address}</p>  
+                    <div>
+                        <p><b>Payment done on:</b></p>
+                        <div style={{backgroundColor:"green",padding:"2%",borderRadius:"15px",color:"white",textAlign:"center"}}>{props.item.paymentDate}</div>
+                    </div>  
                 </div> 
                 <div style={{justifySelf:"flex-end"}}>
                     <b>₹{props.item.price}</b>

@@ -25,18 +25,18 @@ export default function CartAmount(props){
             <br/>
             <div style={{display:"flex",justifyContent:"space-between"}}>
                 <div>Delivery Charges</div>
-                <div>₹{state.cart<=2?50:state.cart<=5?100:"Free"}</div>
+                <div>{state.cart<=2?"₹100":state.cart<=5?"₹50":"Free Delivery"}</div>
             </div> 
             <br/>  
             <br/>
             <div style={{display:"flex",justifyContent:"space-between"}}>
                 <div style={{fontWeight:"bold",fontSize:"1.5rem"}}>Total Amount</div>
-                <div>₹{((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?50:state.cart<=5?100:0)).toFixed(2)}</div>
+                <div>₹{((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?100:state.cart<=5?50:0)).toFixed(2)}</div>
             </div>
             <br/>
             <br/>
             <div onClick={e=>{
-                props.handleP(((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?50:state.cart<=5?100:0)).toFixed(2));
+                props.handleP(((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?100:state.cart<=5?50:0)).toFixed(2));
             
             }} style={{width:"70%",padding:"20px",backgroundColor:"#FFEEAD",alignSelf:"center",textAlign:"center",borderRadius:"5px",cursor:"pointer"}}>
                 PLACE ORDER

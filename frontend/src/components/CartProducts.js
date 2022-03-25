@@ -84,7 +84,7 @@ export default function CartProducts(){
                                             dispatch({type:"add-to-cart-DB"});
                                         }}>+</div>
                                     </div>
-                                    <button style={{marginLeft:"50px",padding:"10px",backgroundColor:"#DD4A48", color:"white",border:"none", borderRadius:"5px", boxShadow:"3px 3px 5px grey"}} onClick={(e)=>{
+                                    <button style={{marginLeft:"50px",padding:"10px",backgroundColor:"#DD4A48", color:"white",border:"none", borderRadius:"5px", boxShadow:"3px 3px 5px grey",cursor:"pointer"}} onClick={(e)=>{
                                         dispatch({type:"remove-from-cart",payload:el});
                                         dispatch({type:"add-to-cart-DB"});
                                     }}>REMOVE</button>
