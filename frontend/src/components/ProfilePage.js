@@ -16,6 +16,7 @@ import Wishlist from "./Wishlist";
 import { ProfileContext } from "./GlobalContext";
 import { ChangePassModal } from "./modals/ChangepassModal";
 import Footer from "./Footer";
+import SaveSpinner from "./loading-spinners/SaveSpinner";
 
 const ProfilePage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
@@ -46,6 +47,7 @@ const ProfilePage=(props)=>{
     const [addAddressBttn, setAddAddressBttn]=useState(true);
     const [newAddress,setNewAddress]=useState("");
     const [showModal,setShowModal]=useState(false);
+    const [isLoading,setIsLoading]=useState(false);
     const body=document.querySelector("body");
 
     useLayoutEffect(()=>{
@@ -61,6 +63,9 @@ const ProfilePage=(props)=>{
         }
         func1();
     },[])
+    useLayoutEffect(()=>{
+
+    },[isLoading])
     
     useEffect(()=>{
         //console.log(profileDetails);
@@ -209,6 +214,7 @@ const ProfilePage=(props)=>{
                                 })} placeholder="Last name..."/>
                                 {profileDetails.profile_edit?<div onClick={
                                     async e=>{
+                                        setIsLoading(true);
                                         const user=await axios.patch("http://localhost:4001/api/v1/users/update-name",{
                                             name:profileDetails.profile_val_fname+" "+profileDetails.profile_val_lname,
                                             gender:profileDetails.gender_val
@@ -219,9 +225,10 @@ const ProfilePage=(props)=>{
                                             ...profileDetails,
                                             profile_edit:!profileDetails.profile_edit,
                                         });
-                                        window.location.reload(true);
+                                        setIsLoading(false);
+                                        //window.location.reload(true);
                                     }
-                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>SAVE</div>:""}
+                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>{!isLoading?"SAVE":<SaveSpinner/>}</div>:""}
                             </div>
                             <div style={{display:"flex", flexDirection:"column",marginTop:"3%"}}>
                                 <p>Your Gender</p>
@@ -279,6 +286,8 @@ const ProfilePage=(props)=>{
                                 } type="text" disabled={profileDetails.email_edit?false:true} placeholder="Email address..."/>
                                 {profileDetails.email_edit?<div onClick={
                                     async e=>{
+                                        try{
+                                        setIsLoading(true);
                                         const user=await axios.patch("http://localhost:4001/api/v1/users/update-email",{
                                             email:profileDetails.profile_val_email
                                         },{ withCredentials:true});
@@ -287,9 +296,18 @@ const ProfilePage=(props)=>{
                                             ...profileDetails,
                                             email_edit:!profileDetails.email_edit,
                                         });
-                                        window.location.reload(true);
+                                        setIsLoading(false);
+                                        //window.location.reload(true);
+                                        }catch(err){
+                                            setProfileDetails({
+                                                ...profileDetails,
+                                                email_edit:!profileDetails.email_edit,
+                                            });
+                                            setIsLoading(false);
+                                            console.log(err.message);
+                                        }
                                     }
-                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>SAVE</div>:""}
+                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>{!isLoading?"SAVE":<SaveSpinner/>}</div>:""}
                             </div>
                         </div>
                         <div className="form-mobile">
@@ -313,6 +331,7 @@ const ProfilePage=(props)=>{
                                 } defaultValue={profileDetails.profile_val_mobile} type="text" placeholder="Mobile Number..." disabled={profileDetails.mobile_edit?false:true} />
                                 {profileDetails.mobile_edit?<div onClick={
                                     async e=>{
+                                        setIsLoading(true);
                                         const user=await axios.patch("http://localhost:4001/api/v1/users/update-mobile",{
                                             mobile:profileDetails.profile_val_mobile
                                         },{ withCredentials:true});
@@ -321,9 +340,10 @@ const ProfilePage=(props)=>{
                                             ...profileDetails,
                                             mobile_edit:!profileDetails.mobile_edit,
                                         });
-                                        window.location.reload(true);
+                                        setIsLoading(false);
+                                        //window.location.reload(true);
                                     }
-                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>SAVE</div>:""}
+                                } style={{width:"100px",display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:"#2874f0",color:"white",borderRadius:"3px",cursor:"pointer"}}>{!isLoading?"SAVE":<SaveSpinner/>}</div>:""}
                             </div>
                         </div>
                         <div style={{width:"",display:"flex",flexDirection:"column",}}>
