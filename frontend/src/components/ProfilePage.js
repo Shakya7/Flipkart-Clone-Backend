@@ -17,11 +17,13 @@ import { ProfileContext } from "./GlobalContext";
 import { ChangePassModal } from "./modals/ChangepassModal";
 import Footer from "./Footer";
 import SaveSpinner from "./loading-spinners/SaveSpinner";
+import LoadingSpinner from "./loading-spinners/LoadingSpinner";
 
 const ProfilePage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
     const [accountPage,setAccountPage]=useContext(ProfileContext)
     const location=useLocation();
+    const navigation=useNavigate();
     //console.log("URL",location.pathname);
     let email=state.userProfile?state.userProfile.email:"";
     let mobile=state.userProfile?state.userProfile.mobile:"";
@@ -32,6 +34,20 @@ const ProfilePage=(props)=>{
             withCredentials:true
         });
         return user;
+    }
+    const checkLoggedIn=async()=>{
+        try{
+            setIsLoading(true)
+            const user=await axios.get("http://localhost:4001/api/v1/users/authenticate",{
+            withCredentials:true
+            });
+            console.log("Checking Cookie present",user.data.message);
+            setIsLoading(false);
+        }catch(err){
+            setIsLoading(false);
+            console.log(err.message);
+            navigation("/login");
+        } 
     }
 
     const [profileDetails,setProfileDetails]=useState({
@@ -51,6 +67,9 @@ const ProfilePage=(props)=>{
     const body=document.querySelector("body");
 
     useLayoutEffect(()=>{
+        checkLoggedIn();
+    },[])
+    useLayoutEffect(()=>{
         const func1=async()=>{
             const val=await getProfileDetails()
             setProfileDetails({
@@ -66,6 +85,7 @@ const ProfilePage=(props)=>{
     useLayoutEffect(()=>{
 
     },[isLoading])
+
     
     useEffect(()=>{
         //console.log(profileDetails);
@@ -79,7 +99,6 @@ const ProfilePage=(props)=>{
             body.style.overflow="auto";
         }    
     },[profileDetails,accountPage,newAddress,state.addresses,showModal])
-    const navigation=useNavigate();
 
     /*const addAddress=async ()=>{
         try{
@@ -427,6 +446,7 @@ const ProfilePage=(props)=>{
             </div>
             <Footer/>
             {showModal && <ChangePassModal closeModal={setShowModal}/>}
+            {isLoading?<LoadingSpinner/>:""}
         </div>
     )
 }
