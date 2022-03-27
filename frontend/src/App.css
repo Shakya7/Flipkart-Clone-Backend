@@ -399,3 +399,24 @@ input[type="password"]:focus{
   }
 }
 
+
+.alert{
+  position: fixed;
+  bottom:0;
+  left:50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  font-size: 1.4rem;
+  text-align: center;
+  padding:1.6rem;
+  color:white;
+  border-radius:10px;
+  margin-bottom: 20px;
+}
+
+.alert--success{
+  background-color: #20bf6b;
+}
+.alert--failure{
+  background-color: #eb4d4b;
+}

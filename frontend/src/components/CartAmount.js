@@ -1,6 +1,7 @@
 import { useContext, useEffect} from "react"
 import { GlobalContext } from "./GlobalContext";
 import { useNavigate } from "react-router-dom";
+import { showAlert } from "./utils/showAlert";
 
 export default function CartAmount(props){
     const {state,dispatch}=useContext(GlobalContext);
@@ -36,8 +37,10 @@ export default function CartAmount(props){
             <br/>
             <br/>
             <div onClick={e=>{
-                props.handleP(((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?100:state.cart<=5?50:0)).toFixed(2));
-            
+                if(state.addresses.length===0)
+                    showAlert("failure","ERROR: Please select an address first!");
+                else
+                    props.handleP(((state.cartProducts.reduce((acc,el)=>Number(el.price)*Number(el.quantity)+acc,0))+(state.cart<=2?100:state.cart<=5?50:0)).toFixed(2));
             }} style={{width:"70%",padding:"20px",backgroundColor:"#FFEEAD",alignSelf:"center",textAlign:"center",borderRadius:"5px",cursor:"pointer"}}>
                 PLACE ORDER
             </div>

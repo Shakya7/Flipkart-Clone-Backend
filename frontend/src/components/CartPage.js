@@ -5,6 +5,7 @@ import { GlobalContext } from "./GlobalContext";
 import axios from "axios";
 import PaymentDoneModal from "./modals/PaymentDoneModal";
 import Footer from "./Footer";
+import { showAlert } from "./utils/showAlert";
  
 const CartPage=(props)=>{
     const {state,dispatch}=useContext(GlobalContext);
@@ -71,6 +72,7 @@ const CartPage=(props)=>{
 			//console.log("First console",data);
 			initPayment(data.data);
 		} catch (error) {
+			showAlert("failure","ERROR: Payment denied by Payment gateway!!!");
 			console.log(error);
       		console.log("Lets see if here the error is coming from --> handlePayment func of App.js")
 		}
