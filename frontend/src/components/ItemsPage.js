@@ -118,7 +118,7 @@ const ItemsPage=()=>{
                     })
                 }
                 {
-                    state.results.length===0?"Oops! No products found...":""
+                    state.results && state.results.length===0?"Oops! No products found...":""
                 }
                 </div> 
             </div>
