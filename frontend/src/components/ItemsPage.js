@@ -117,6 +117,9 @@ const ItemsPage=()=>{
                         return <Card key={el.id} element={el}/>
                     })
                 }
+                {
+                    state.results.length===0?"Oops! No products found...":""
+                }
                 </div> 
             </div>
             <Footer/>
