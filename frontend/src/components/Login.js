@@ -6,6 +6,7 @@ import axios from "axios";
 import { ForgotPassModal } from "./modals/ForgotPassModal";
 import Footer from "./Footer";
 import SaveSpinner from "./loading-spinners/SaveSpinner";
+import { showAlert } from "./utils/showAlert";
 
 
 //	https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png
@@ -96,10 +97,12 @@ function Login(props){
                                         console.log("Coming from LOGIN ->",user.user);
                                         dispatch({type:"connect-to-db"});
                                         dispatch({type:"login",payload:user.user});
+                                        showAlert("success","Logged in successfully");
                                         setIsLoading(false);
                                         navigation("/");
                                         window.location.reload(true);
                                         }catch(err){
+                                            showAlert("failure","Login failed")
                                             setIsLoading(false);
                                             setFailure(true)
                                             console.log(err.message);
