@@ -53,7 +53,7 @@ exports.paymentSuccess=async (req,res)=>{
 	try{
 		const user=res.user;
 		const updatedUser=await User.findByIdAndUpdate(user._id,{
-			orders:[...user.orders,{orders:req.body.orders,address:req.body.address,price:req.body.price,paymentDate:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`}],
+			orders:[{orders:req.body.orders,address:req.body.address,price:req.body.price,paymentDate:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`},...user.orders],
 			cart:[]
 		},{new:true,runValidators:true});
 		res.status(200).json({
