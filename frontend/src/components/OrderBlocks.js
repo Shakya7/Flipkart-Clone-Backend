@@ -4,7 +4,6 @@ import { useContext,useEffect } from "react";
 function OrderBlocks(props){
 
     const {state,dispatch}=useContext(GlobalContext);
-    console.log("OrderBlocks console.log -->",props.item);
     return(
         <div className="order-block" style={{width:"100%",height:"auto", backgroundColor:"white",display:"flex",justifyContent:"space-around",alignItems:"center",padding:"2%",boxShadow:"2px 2px 5px grey",borderRadius:"4px"}}>
                 <div style={{width:"10vmax",height:"auto"}}>
