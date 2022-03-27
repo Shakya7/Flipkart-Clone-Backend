@@ -1,13 +1,38 @@
 import Categories from "./Categories";
 import { GlobalContext } from "./GlobalContext";
-import { useContext,useEffect } from "react";
+import { useContext,useEffect, useState, useLayoutEffect } from "react";
 import search_icon from "../images/search_icon.png";
 import OrderBlocks from "./OrderBlocks";
 import Footer from "./Footer";
+import LoadingSpinner from "./loading-spinners/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function OrdersPage(){
     const {state,dispatch}=useContext(GlobalContext);
+    const [isLoading,setIsLoading]=useState(false);
+    const navigation=useNavigate();
 
+    const checkLoggedIn=async()=>{
+        try{
+            setIsLoading(true)
+            const user=await axios.get("http://localhost:4001/api/v1/users/authenticate",{
+            withCredentials:true
+            });
+            console.log("Checking Cookie present",user.data.message);
+            setIsLoading(false);
+        }catch(err){
+            setIsLoading(false);
+            console.log(err.message);
+            navigation("/login");
+        } 
+    }
+    useLayoutEffect(()=>{
+        checkLoggedIn();
+    },[])
+    useLayoutEffect(()=>{
+
+    },[isLoading])
     useEffect(()=>{
         console.log("Changed");
     },[state.userProfile])
@@ -36,6 +61,7 @@ function OrdersPage(){
                 </div>
             </div>
             <Footer/>
+            {isLoading?<LoadingSpinner/>:""}
         </div>
     )
 }
