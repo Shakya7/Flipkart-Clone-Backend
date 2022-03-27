@@ -1,9 +1,10 @@
-import { useContext, useState,useEffect} from "react";
+import { useContext, useState,useEffect, useLayoutEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import Categories from "./Categories";
 import axios from "axios";
 import Footer from "./Footer";
+import SaveSpinner from "./loading-spinners/SaveSpinner";
 
 
 function SignUp(props){
@@ -15,6 +16,12 @@ function SignUp(props){
         confirmPassword:""
 
     });
+    const [failure,setFailure]=useState(false);
+    const [isLoading,setIsLoading]=useState(false);
+
+    useLayoutEffect(()=>{
+
+    },[failure,isLoading])
     useEffect(()=>{
         console.log(inputState);
     },[inputState]);
@@ -50,34 +57,75 @@ function SignUp(props){
                     </div>
                     <div style={{width:"30vmax",height:"35vmax",backgroundColor:"white",padding:"25px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
                         <form style={{display:"flex",flexDirection:"column"}}>
-                            <input placeholder="Enter your email address" value={inputState.email} onChange={(e)=>{
+                            <input onFocus={e=>{
+                                if(failure)
+                                {
+                                     return setFailure(false)
+                                }
+                                else
+                                    setFailure(false);
+                            }} placeholder="Enter your email address" value={inputState.email} onChange={(e)=>{
                                 setInputState({...inputState,email:e.target.value});
                             }} className="login-input" style={{borderTop:"none",borderLeft:"none",borderRight:"none",padding:"20px"}} type="text"/>
 
-                            <input placeholder="Enter your name" value={inputState.name} onChange={(e)=>{
+                            <input onFocus={e=>{
+                                if(failure)
+                                {
+                                     return setFailure(false)
+                                }
+                                else
+                                    setFailure(false);
+                            }} placeholder="Enter your name" value={inputState.name} onChange={(e)=>{
                                 setInputState({...inputState,name:e.target.value})
                             }} className="login-input" style={{borderTop:"none",borderLeft:"none",borderRight:"none",padding:"20px"}} type="text"/>
 
-                            <input placeholder="Enter your password" value={inputState.password} onChange={(e)=>{
+                            <input onFocus={e=>{
+                                if(failure)
+                                {
+                                     return setFailure(false)
+                                }
+                                else
+                                    setFailure(false);
+                            }} placeholder="Enter your password" value={inputState.password} onChange={(e)=>{
                                 setInputState({...inputState,password:e.target.value})
                             }} className="login-input" style={{borderTop:"none",borderLeft:"none",borderRight:"none",padding:"20px"}} type="password"/>
 
-                            <input placeholder="Enter your password again" value={inputState.confirmPassword} onChange={(e)=>{
+                            <input onFocus={e=>{
+                                if(failure)
+                                {
+                                     return setFailure(false)
+                                }
+                                else
+                                    setFailure(false);
+                            }} placeholder="Enter your password again" value={inputState.confirmPassword} onChange={(e)=>{
                                 setInputState({...inputState,confirmPassword:e.target.value})
                             }} className="login-input" style={{borderTop:"none",borderLeft:"none",borderRight:"none",padding:"20px"}} type="password"/>
 
                             <div style={{display:"flex",flexDirection:"column",marginTop:"5%"}}>
-                                <p>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>
+                                {failure?<p style={{color:"red",textAlign:"center"}}>Signup failed. Make sure you are entering all fields correctly</p>:<p>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>}
                                 <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}}>
                                     <button onClick={async (e)=>{
+                                        try{
                                         e.preventDefault();
+                                        setIsLoading(true);
                                         const user=await signupFunction();
                                         console.log(user.user);
                                         await dispatch({type:"signup",payload:user.user});
                                         await dispatch({type:"connect-to-db"});
+                                        setIsLoading(false);
                                         navigation("/");
                                         window.location.reload(true);
-                                    }} style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer",border:"none"}}>Sign Up</button>
+                                        }catch(err){
+                                            setIsLoading(false);
+                                            setFailure(true)
+                                            console.log(err.message);
+                                        }
+                                    }} style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer",border:"none"}}>{!isLoading?"Sign Up":
+                                    <div style={{display:"flex",gap:"20px",justifyContent:"center",alignItems:"center"}}>
+                                        <p>Signing up...</p>
+                                        <SaveSpinner/>
+                                    </div>
+                                    }</button>
                                 </div>
                             </div>
                             <div onClick={

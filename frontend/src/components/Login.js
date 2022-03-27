@@ -1,10 +1,11 @@
-import { useContext, useState,useEffect} from "react";
+import { useContext, useState,useEffect, useLayoutEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import Categories from "./Categories";
 import axios from "axios";
 import { ForgotPassModal } from "./modals/ForgotPassModal";
 import Footer from "./Footer";
+import SaveSpinner from "./loading-spinners/SaveSpinner";
 
 
 //	https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png
@@ -16,6 +17,11 @@ function Login(props){
     });
     const [forgotPModal,setForgotPModal]=useState(false);
     const body=document.querySelector("body");
+    const [failure,setFailure]=useState(false);
+    const [isLoading,setIsLoading]=useState(false);
+    useLayoutEffect(()=>{
+
+    },[failure,isLoading])
     
     useEffect(()=>{
         if(forgotPModal)
@@ -54,30 +60,58 @@ function Login(props){
                     </div>
                     <div style={{width:"30vmax",height:"35vmax",backgroundColor:"white",padding:"25px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
                         <form style={{display:"flex",flexDirection:"column"}}>
-                            <input value={inputState.email} onChange={e=>setInputState({
+                            <input onFocus={e=>{
+                                if(failure)
+                                {
+                                     return setFailure(false)
+                                }
+                                else
+                                    setFailure(false);
+                            }} value={inputState.email} onChange={e=>setInputState({
                                 ...inputState,
                                 email:e.target.value
                             })} placeholder="Enter email/ phone number" className="login-input" style={{borderTop:"none",borderLeft:"none",borderRight:"none",padding:"20px"}} type="text"/>
                             <br/>
-                            <input value={inputState.password} onChange={e=>setInputState({
+                            <input onFocus={e=>{
+                                if(failure)
+                                {
+                                     return setFailure(false)
+                                }
+                                else
+                                    setFailure(false);
+                            }} value={inputState.password} onChange={e=>setInputState({
                                 ...inputState,
                                 password:e.target.value
                             })} placeholder="Enter password" className="login-input" style={{borderTop:"none",borderLeft:"none",borderRight:"none",padding:"20px"}} type="password"/>
                             <br/>
-                            <br/>
+                            {failure?<p style={{color:"red",textAlign:"center"}}>Login failed. Make sure you are entering correct email address and password</p>:""}
+                            
                             <div style={{display:"flex",flexDirection:"column",marginTop:"5%"}}>
                                 <p>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>
                                 <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}} onClick={
                                     async e=>{
+                                        try{
+                                        setIsLoading(true);
                                         const user=await loginFunction();
                                         console.log("Coming from LOGIN ->",user.user);
                                         dispatch({type:"connect-to-db"});
                                         dispatch({type:"login",payload:user.user});
+                                        setIsLoading(false);
                                         navigation("/");
                                         window.location.reload(true);
+                                        }catch(err){
+                                            setIsLoading(false);
+                                            setFailure(true)
+                                            console.log(err.message);
+                                        }
                                     }
                                 }>
-                                    <div style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer"}}>Login</div>
+                                    <div style={{width:"60%",backgroundColor:"#fb641b",padding:"20px",textAlign:"center",color:"white",cursor:"pointer"}}>{!isLoading?"Login":
+                        <div style={{display:"flex",gap:"20px",justifyContent:"center",alignItems:"center"}}>
+                            <p>Logging in...</p>
+                            <SaveSpinner/>
+                        </div>
+                        }</div>
                                 </div>
                                 <p onClick={e=>setForgotPModal(true)} style={{textAlign:"center",cursor:"pointer",color:"#2874f0"}}>Forgot your password?</p>
                             </div>
