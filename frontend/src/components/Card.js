@@ -16,10 +16,10 @@ export const Card=(props)=>{
                 <img style={{width:"16vmax",height:"30vh"}}src={props.element.image}/>
             </div>
             <div>{props.element.title}</div>
-            <div style={{width:"15vmax", color:"white",backgroundColor:"green",borderRadius:"5px",display:"flex",justifyContent:"space-evenly",alignItems:"center"}}>
+            <div style={{width:"auto", color:"white",backgroundColor:"green",borderRadius:"5px",display:"flex",justifyContent:"space-evenly",alignItems:"center",padding:"2%"}}>
                 <div>{props.element.rating.rate}</div>
                 <div style={{alignSelf:"center"}}>
-                    <Rating defaultValue={props.element.rating.rate} precision={0.5} readOnly/>
+                    <Rating style={{fontSize:"1em"}} defaultValue={props.element.rating.rate} precision={0.5} readOnly/>
                 </div>
                 
             </div>
