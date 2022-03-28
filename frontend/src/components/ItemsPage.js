@@ -107,11 +107,11 @@ const ItemsPage=()=>{
         <div style={{display:"flex",flexDirection:"column",width:"100%",backgroundColor:"#EEEEEE"}}>
             <Categories/>
             <div style={{width:"100%", height:"2vh",backgroundColor:"#CDE8F6"}}/>
-            <div className="main-sec">
-                <div style={{width:"20%",height:"auto",backgroundColor:"#21325E",alignSelf:"flex-start",marginLeft:"3%", marginTop:"10px", borderRadius:"4px", boxShadow:"5px 5px 8px #476072"}}>
+            <div className="main-sec-itemspage">
+                <div className="filter-sec-itemspage">
                     <FilterBar/>
                 </div>
-                <div style={{display:"grid", gridTemplateColumns:"1fr 1fr 1fr",gridGap:"15px", marginRight:"3%", marginTop:"10px"}}>
+                <div className="grid-sec-products">
                 {   state.results &&
                     state.results.map((el)=>{
                         return <Card key={el.id} element={el}/>

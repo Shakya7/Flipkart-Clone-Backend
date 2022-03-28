@@ -24,13 +24,6 @@ export const Card=(props)=>{
                 
             </div>
             <div>₹{props.element.price}</div>
-            
-            {/*<button onClick={(e)=>{
-                console.log("helllo");
-                dispatch({type:"add-to-cart",payload:props.element});
-
-                }} style={{color:"white",backgroundColor:"#0033C7" ,border:"none", padding:"10px",fontWeight:"bolder", borderRadius:"5px"}}>Add to Cart</button>
-            */}
         </div>
     )
 }

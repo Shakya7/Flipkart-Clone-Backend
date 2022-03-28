@@ -50,7 +50,7 @@ function Login(props){
             <Categories/>
             <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"auto",backgroundColor:"#EEEEEE",padding:"50px"}}>
                 <div style={{display:"flex",boxShadow:"4px 4px 6px grey",width:"53vmax",height:"auto"}}>
-                    <div style={{width:"23vmax",height:"35vmax",backgroundColor:"#2874f0",padding:"20px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
+                    <div style={{width:"23vmax",height:"auto",backgroundColor:"#2874f0",padding:"20px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
                         <div style={{fontSize:"1.8rem",color:"white"}}>Login</div>
                         <br/>
                         <br/>
@@ -59,7 +59,7 @@ function Login(props){
                             <img style={{width:"auto"}} src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png"/>
                         </div>
                     </div>
-                    <div style={{width:"30vmax",height:"35vmax",backgroundColor:"white",padding:"25px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
+                    <div style={{width:"30vmax",height:"auto",backgroundColor:"white",padding:"25px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
                         <form style={{display:"flex",flexDirection:"column"}}>
                             <input onFocus={e=>{
                                 if(failure)
@@ -120,7 +120,7 @@ function Login(props){
                             </div>
                             <div onClick={
                                 e=>navigation("/signup")
-                            } style={{display:"flex",justifyContent:"center",alignItems:"center", color:"#2874f0",marginTop:"50px",cursor:"pointer"}}>
+                            } style={{display:"flex",justifyContent:"center",alignItems:"center", color:"#2874f0",marginTop:"50px",cursor:"pointer", textAlign:"center"}}>
                                 New to Flipkart? Create an account
                             </div>
                         </form>

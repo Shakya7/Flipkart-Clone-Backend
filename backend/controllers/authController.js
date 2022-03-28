@@ -2,6 +2,7 @@ const User=require("../models/userModel");
 const jwt=require("jsonwebtoken");
 const emailSend=require("../utils/email");
 const crypto=require("crypto");
+const bcrypt=require("bcryptjs");
 
 exports.signup=async(req,res)=>{
     try{
@@ -148,7 +149,7 @@ exports.forgotPass=async(req,res,next)=>{
         return next("Email is not registered. Please enter valid registered email");
     const resetToken=await user.getResetToken();
     await user.save({validateBeforeSave:false});
-    const resetURL=`${req.protocol}://${req.get("host")}/resetPassword/${resetToken}`;
+    const resetURL=`${req.protocol}://${"localhost:3000" || req.get("host")}/resetPassword/${resetToken}`;
     const message=`Forgot your password? Go to ${resetURL} and change the password`;
     try{
         await emailSend({
@@ -182,13 +183,23 @@ exports.resetPassword=async(req,res,next)=>{
     //console.log(user);
     if(!user)
         return next("Token expired or invalid token provided");
-    user.password=req.body.password;
-    user.confirmPassword=req.body.confirmPassword;
+    if(req.body.password!==req.body.confirmPassword)
+        return next("Password not matched");
     user.passwordResetToken=undefined;
     user.passwordResetTokenExpiry=undefined;
-    await user.save(); 
+    const updatedUser=await User.findByIdAndUpdate(user._id,{
+        password:await bcrypt.hash(req.body.password,12),
+        confirmPassword:undefined,
+        passwordChangedAt:Date.now()-1000,
+    },{new:true});
+    //user.password=req.body.password;
+    //user.confirmPassword=req.body.confirmPassword;
+    //user.passwordResetToken=undefined;
+    //user.passwordResetTokenExpiry=undefined;
+    //await user.save(); 
+    await updatedUser.clearResetToken();
     
-    const token= jwt.sign({id:user._id,name:user.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});     
+    const token= jwt.sign({id:updatedUser._id,name:updatedUser.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});     
     res.status(200).json({
         status:"success",
         token,
@@ -201,19 +212,27 @@ exports.resetPassword=async(req,res,next)=>{
         });
     }
 }
+
 exports.updatePassword=async(req,res,next)=>{
     try{
     const user=await User.findById(res.user._id).select("+password");
     if(!await user.compareNormalPwithHashedP(req.body.currentPassword,user.password))
         return next("Invalid password");
-    user.password=req.body.password;
-    user.confirmPassword=req.body.confirmPassword;  
-    await user.save();
-    const token= jwt.sign({id:user._id,name:user.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});
+    if(req.body.password!==req.body.confirmPassword)
+        return next("Password not matched");
+    const updatedUser=await User.findByIdAndUpdate(user._id,{
+        password:await bcrypt.hash(req.body.password,12),
+        confirmPassword:undefined,
+        passwordChangedAt:Date.now()-1000
+    },{new:true});
+    //user.password=req.body.password;
+    //user.confirmPassword=req.body.confirmPassword;  
+    //await user.save();
+    const token= jwt.sign({id:updatedUser._id,name:updatedUser.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});
     res.status(200).json({
         status:"success",
         message:"password has been updated",
-        user,
+        user:updatedUser,
         token
     });
     }catch(err){

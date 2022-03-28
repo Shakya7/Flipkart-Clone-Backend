@@ -100,13 +100,19 @@ userSchema.methods.getResetToken=async function(){
     this.passwordResetTokenExpiry=Date.now()+10*60*1000;
     return resetToken;
 }
-
+userSchema.methods.clearResetToken=function(){
+    this.passwordResetToken=undefined;
+    this.passwordResetTokenExpiry=undefined;
+    console.log("Removed, lets see");
+}
 
 //PRE-MIDDLEWARES
 
 //pre-middleware for encrypting the password with bcrypt
 userSchema.pre("save",async function(next){
-    if(!this.isModified("password") || !this.isNew)     //if password is not changed, simply return
+    if(!this.isNew)     //if password is not changed, simply return
+        return next();
+    else if(!this.isModified("password"))
         return next();
     this.password=await bcrypt.hash(this.password,12);
     this.confirmPassword=undefined;
