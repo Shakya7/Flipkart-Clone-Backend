@@ -46,7 +46,7 @@ function SignUp(props){
             <Categories/>
             <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%",height:"auto",backgroundColor:"#EEEEEE",padding:"50px"}}>
                 <div style={{display:"flex",boxShadow:"4px 4px 6px grey",width:"53vmax",height:"auto"}}>
-                    <div style={{width:"23vmax",height:"35vmax",backgroundColor:"#2874f0",padding:"20px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
+                    <div style={{width:"23vmax",height:"auto",backgroundColor:"#2874f0",padding:"20px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
                         <div style={{fontSize:"1.8rem",color:"white"}}>Looks like you are new here!</div>
                         <br/>
                         <br/>
@@ -55,7 +55,7 @@ function SignUp(props){
                             <img style={{width:"auto"}} src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/login_img_c4a81e.png"/>
                         </div>
                     </div>
-                    <div style={{width:"30vmax",height:"35vmax",backgroundColor:"white",padding:"25px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
+                    <div style={{width:"30vmax",height:"auto",backgroundColor:"white",padding:"25px",paddingTop:"30px",paddingLeft:"15px",display:"flex",flexDirection:"column"}}>
                         <form style={{display:"flex",flexDirection:"column"}}>
                             <input onFocus={e=>{
                                 if(failure)
@@ -102,7 +102,7 @@ function SignUp(props){
                             }} className="login-input" style={{borderTop:"none",borderLeft:"none",borderRight:"none",padding:"20px"}} type="password"/>
 
                             <div style={{display:"flex",flexDirection:"column",marginTop:"5%"}}>
-                                {failure?<p style={{color:"red",textAlign:"center"}}>Signup failed. Make sure you are entering all fields correctly</p>:<p>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>}
+                                {failure?<p style={{color:"red",textAlign:"center"}}>Signup failed. Make sure you are entering all fields correctly</p>:<p style={{textAlign:"center"}}>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>}
                                 <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}}>
                                     <button onClick={async (e)=>{
                                         try{
@@ -132,7 +132,7 @@ function SignUp(props){
                                 e=>{
                                     navigation("/login");
                                 }    
-                            } style={{display:"flex",justifyContent:"center",alignItems:"center", color:"#2874f0",marginTop:"10px", cursor:"pointer"}}>
+                            } style={{display:"flex",justifyContent:"center",alignItems:"center", color:"#2874f0",marginTop:"10px", cursor:"pointer",textAlign:"center"}}>
                                 <div>Already have an account? Login here</div>
                             </div>
                         </form>

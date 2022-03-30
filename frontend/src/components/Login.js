@@ -88,7 +88,7 @@ function Login(props){
                             {failure?<p style={{color:"red",textAlign:"center"}}>Login failed. Make sure you are entering correct email address and password</p>:""}
                             
                             <div style={{display:"flex",flexDirection:"column",marginTop:"5%"}}>
-                                <p>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>
+                                <p style={{textAlign:"center"}}>By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>
                                 <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"10%"}} onClick={
                                     async e=>{
                                         try{
