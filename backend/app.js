@@ -7,6 +7,7 @@ const cookieParser=require("cookie-parser");
 const paymentRouter=require("./routes/paymentRouter");
 const userController=require("./controllers/userController");
 const authController=require("./controllers/authController");
+const compression = require("compression");
 
 
 dotenv.config({path:"./config.env"});
@@ -17,6 +18,7 @@ const corsOptions={
 }
 
 //MIDDLEWARE
+app.use(compression());
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
