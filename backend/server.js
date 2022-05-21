@@ -12,7 +12,7 @@ function connectToDB(){
 }
 
 
-app.listen(4001,()=>{
+app.listen(process.env.PORT || 4001,()=>{
     connectToDB();
     console.log("Listening to requests");
 })
