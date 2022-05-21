@@ -13,7 +13,7 @@ const compression = require("compression");
 dotenv.config({path:"./config.env"});
 
 const corsOptions={
-    origin:"http://localhost:3000",
+    origin:"https://astonishing-heliotrope-3abda3.netlify.app",
     credentials:true
 }
 
