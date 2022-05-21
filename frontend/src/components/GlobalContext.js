@@ -42,6 +42,11 @@ const reducerF=(currState, action)=>{
                 addresses:action.payload.addresses,
                 wishlist:action.payload.wishlist
             }
+        case "load-user-data":
+            return{
+                ...currState,
+                userProfile:action.payload
+            }
         case "load-data-initial":
             return{
                 ...currState,
@@ -372,6 +377,30 @@ const reducerF=(currState, action)=>{
                 ...currState,
                 results:action.payload
             }
+        case "search-order-by-address":
+            const updatedProfile=action.payload;
+            if(action.term!=="")
+                updatedProfile.orders=action.payload.orders.filter((el)=>el.address.toLowerCase().includes(action.term.toLowerCase()));
+            return{
+                ...currState,
+                userProfile: updatedProfile
+            }
+        case "search-order-by-price":
+            const updatedPr=action.payload;
+            console.log(updatedPr);
+            console.log(action.price)
+            updatedPr.orders=action.payload.orders.filter((el)=>Number(el.price)<Number(action.price));
+            return{
+                ...currState,
+                userProfile: updatedPr
+            }
+        
+        case "search-products-by-price":
+            return{
+                ...currState,
+                results:[...action.payload.filter(el=>el.price<=action.price)]
+            }
+            
     }
 }
 

@@ -2,13 +2,16 @@ import { useState,useContext } from "react";
 import { GlobalContext } from "./GlobalContext";
 import axios from "axios";
 
+
 function FilterBar(){
     const {state,dispatch}=useContext(GlobalContext);
+    const [priceFilter,setPriceFilter]=useState(500);
     return(
         <div style={{display:"flex",flexDirection:"column"}}>
             <div className="filter-header">
                 <p>Filters</p>
                 <div onClick={async e=>{
+                    setPriceFilter(500);
                     dispatch({type:"no-star"});
                     dispatch({type:"null-category"});
                     if(state.filterCat===""){
@@ -55,8 +58,20 @@ function FilterBar(){
                         </div>
                     </div>
                 </div>
-                <div style={{marginTop:"10px"}}>
-                    <input type="range"/>
+                <div stype={{display:"flex"}}>
+                    <div style={{display:"flex"}}>
+                        <input min="0" value={priceFilter} onChange={(e)=>{
+                            setPriceFilter(e.target.value);
+                        }} step="10" max="1000" type={"range"}/>
+                        <button style={{cursor:"pointer"}}onClick={async e=>{
+                            const results=await axios.get("https://fakestoreapi.com/products");
+                            dispatch({type:"search-products-by-price",payload:results.data,price:priceFilter});
+                        }}>Search</button>
+                    </div>
+                    <div>
+                        <label>Price: ₹</label>
+                        <input value={priceFilter} onChange={e=>setPriceFilter(e.target.value)} type="number" style={{width:"5vw",textAlign:"center"}}/>
+                    </div>
                 </div>
             </div>
             <div className="hr-line"/>

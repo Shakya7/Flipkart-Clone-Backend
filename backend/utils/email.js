@@ -2,15 +2,17 @@ const nodemailer=require("nodemailer");
 
 const emailSend=async options=>{
     const transporter1=nodemailer.createTransport({
-        host: "smtp.mailtrap.io",
-        port: 2525,
+        service: "gmail",
+        //host: "smtp.mailtrap.io",            //Use the commented cred when in dev
+        //port: 2525,
         auth: {
-            user: "7c496ecc378596",
-            pass: "4b871f172181e0"
+            user: process.env.EMAIL_USER, //"7c496ecc378596",
+            pass: process.env.EMAIL_PASS //"4b871f172181e0"
         }
     });
+
     const mailOptions={
-        from: "<admin@flipkart.com>",
+        from: process.env.EMAIL_USER,
         to:options.email,
         subject:options.subject,
         text:options.message
