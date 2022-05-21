@@ -5,6 +5,7 @@ const getFirstAddressController=require("../controllers/client-side-utils/getfir
 
 const router=express.Router();
 
+router.route("/test-DB-deployed").get(userController.getAllUsers);
 router.route("/test").post(userController.testFunct);
 router.route("/").get(authController.protectRouteWithJWT, userController.getAllUsers);
 router.route("/getUserByEmail").get(userController.getUser);
