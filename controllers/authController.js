@@ -149,7 +149,8 @@ exports.forgotPass=async(req,res,next)=>{
         return next("Email is not registered. Please enter valid registered email");
     const resetToken=await user.getResetToken();
     await user.save({validateBeforeSave:false});
-    const resetURL=`${req.protocol}://${"localhost:3000" || req.get("host")}/resetPassword/${resetToken}`;
+    //`${req.protocol}://${"localhost:3000" || req.get("host")}/resetPassword/${resetToken}`
+    const resetURL=`https://astonishing-heliotrope-3abda3.netlify.app/resetPassword/${resetToken}`;
     const message=`Forgot your password? Go to ${resetURL} and change the password`;
     try{
         await emailSend({
