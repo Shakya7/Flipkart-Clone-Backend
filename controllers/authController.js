@@ -10,7 +10,8 @@ exports.signup=async(req,res)=>{
     const token=jwt.sign({id:newUser._id,email:newUser.email},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});
     const cookieOptions={
         expires:new Date(Date.now()+process.env.COOKIE_EXPIRES*24*60*60*1000),
-        httpOnly:true
+        httpOnly:true,
+        secure:true
     }
     res.cookie("jwt",token,cookieOptions);
     res.status(201).json({
@@ -43,7 +44,8 @@ exports.login=async(req,res)=>{
         const token= jwt.sign({id:user._id,name:user.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES}); 
         const cookieOptions={
             expires:new Date(Date.now()+process.env.COOKIE_EXPIRES*24*60*60*1000),
-            httpOnly:true
+            httpOnly:true,
+            secure:true
         }
         res.cookie("jwt",token,cookieOptions);
         res.status(200).json({
@@ -67,8 +69,9 @@ exports.logout=async(req,res)=>{
         const cookieOptions={
             expires: new Date(Date.now()-10*1000),
             httpOnly:true,
-            domain:"localhost",
-            path: '/',
+            secure:true,
+            //domain:"localhost",
+            //path: '/',
         };
         console.log("Logging out");
         //res.clearCookie('jwt');
