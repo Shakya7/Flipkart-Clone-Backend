@@ -12,15 +12,26 @@ const compression = require("compression");
 
 dotenv.config({path:"./config.env"});
 
+const allowedOrigins = [
+    "http://localhost:3000"
+]
+
 const corsOptions={
-    origin:"https://astonishing-heliotrope-3abda3.netlify.app",
-    credentials:true
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200
 }
 
 //MIDDLEWARE
+app.use(cors(corsOptions));
 app.use(compression());
 app.use(express.json());
-app.use(cors(corsOptions));
 app.use(cookieParser());
 
 

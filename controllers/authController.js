@@ -11,7 +11,8 @@ exports.signup=async(req,res)=>{
     const cookieOptions={
         expires:new Date(Date.now()+process.env.COOKIE_EXPIRES*24*60*60*1000),
         httpOnly:true,
-        secure:true
+        secure:true,
+        sameSite:"none"
     }
     res.cookie("jwt",token,cookieOptions);
     res.status(201).json({
@@ -41,11 +42,12 @@ exports.login=async(req,res)=>{
         if(!correct) 
             throw `Please provide valid email or password`;   
         console.log(user);
-        const token= jwt.sign({id:user._id,name:user.name},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES}); 
+        const token= jwt.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES}); 
         const cookieOptions={
             expires:new Date(Date.now()+process.env.COOKIE_EXPIRES*24*60*60*1000),
             httpOnly:true,
-            secure:true
+            secure:true,
+            sameSite:"none"
         }
         res.cookie("jwt",token,cookieOptions);
         res.status(200).json({
@@ -70,13 +72,12 @@ exports.logout=async(req,res)=>{
             expires: new Date(Date.now()-10*1000),
             httpOnly:true,
             secure:true,
-            //domain:"localhost",
-            //path: '/',
+            sameSite:"none"
         };
         console.log("Logging out");
-        //res.clearCookie('jwt');
         res.cookie("jwt","null",cookieOptions);
-        console.log("Deleted");
+        res.clearCookie('jwt');
+        
         res.status(200).json({
             status:"success",
             message:"Cookie has been deleted"
@@ -98,6 +99,7 @@ exports.protectRouteWithJWT=async(req,res,next)=>{
     if(!token)
         return next("Authentication failed...please try again");
     const decoded=jwt.verify(token,process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRES});
+    console.log(decoded);
     const user=await User.findById({_id:decoded.id});
     if(!user)
         return next("No user found! Please signup first...");
@@ -153,14 +155,17 @@ exports.forgotPass=async(req,res,next)=>{
     const resetToken=await user.getResetToken();
     await user.save({validateBeforeSave:false});
     //`${req.protocol}://${"localhost:3000" || req.get("host")}/resetPassword/${resetToken}`
-    const resetURL=`https://astonishing-heliotrope-3abda3.netlify.app/resetPassword/${resetToken}`;
+    const resetURL=`${process.env.REACT_URL}/resetPassword/${resetToken}`;
     const message=`Forgot your password? Go to ${resetURL} and change the password`;
+    console.log("Hello")
     try{
+        console.log("LEts see if we are going here")
         await emailSend({
             email:user.email,
             subject:"Your Reset Token",
             message
         });
+        
         res.status(200).json({
             status:"success",
             message:"Token sent to email, please check..."
