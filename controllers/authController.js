@@ -157,9 +157,7 @@ exports.forgotPass=async(req,res,next)=>{
     //`${req.protocol}://${"localhost:3000" || req.get("host")}/resetPassword/${resetToken}`
     const resetURL=`${process.env.REACT_URL}/resetPassword/${resetToken}`;
     const message=`Forgot your password? Go to ${resetURL} and change the password`;
-    console.log("Hello")
     try{
-        console.log("LEts see if we are going here")
         await emailSend({
             email:user.email,
             subject:"Your Reset Token",
