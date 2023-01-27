@@ -2,22 +2,14 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Flipkart MERN clone",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "start" :"node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Shakya7/Flipkart_Clone_MERN.git"
-  },
   "author": "Shakya Sarkar",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Shakya7/Flipkart_Clone_MERN/issues"
-  },
-  "homepage": "https://github.com/Shakya7/Flipkart_Clone_MERN#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
