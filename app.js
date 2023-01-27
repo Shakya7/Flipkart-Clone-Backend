@@ -11,6 +11,7 @@ const compression = require("compression");
 
 dotenv.config({path:".env"});
 
+
 const allowedOrigins = [
     "http://localhost:3000"
 ]
