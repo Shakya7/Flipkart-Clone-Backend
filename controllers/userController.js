@@ -55,6 +55,7 @@ exports.getUser=async(req,res)=>{
 }
 exports.addToCart=async(req, res)=>{
     try{
+        
         //console.log("FGDFG",req.cookies);
         //console.log(req.cookies.jwt);
         const id=res.user._id;
