@@ -13,8 +13,8 @@ dotenv.config({path:".env"});
 
 
 const allowedOrigins = [
-    //"https://flipkart-mern-clone.netlify.app"
-    "http://localhost:3000"
+    "https://flipkart-mern-clone.netlify.app"
+    //"http://localhost:3000"
 ]
 
 const corsOptions={
