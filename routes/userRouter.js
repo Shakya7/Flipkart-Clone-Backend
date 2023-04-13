@@ -19,6 +19,8 @@ router.route("/update-name").patch(authController.protectRouteWithJWT, userContr
 router.route("/update-email").patch(authController.protectRouteWithJWT, userController.changeEmail);
 router.route("/update-mobile").patch(authController.protectRouteWithJWT, userController.changeMobile);
 router.route("/add-address").patch(authController.protectRouteWithJWT,userController.addAddress);
+router.route("/delete-address").patch(authController.protectRouteWithJWT,userController.deleteAddress);
+router.route("/update-address").patch(authController.protectRouteWithJWT,userController.updateAddress);
 router.route("/add-wishlist").patch(authController.protectRouteWithJWT,userController.addWishlist);
 router.route("/forgotPassword").post(authController.forgotPass);
 router.route("/resetPassword/:token").patch(authController.resetPassword);

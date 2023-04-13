@@ -196,9 +196,12 @@ exports.changeMobile=async(req,res)=>{
 exports.addAddress=async (req,res)=>{
     try{
         const user=res.user;
+        console.log(req.body.address);
         const addressUpdatedUser=await User.findByIdAndUpdate(user._id,{
-            addresses:req.body.addresses
-        },{new:true,runValidators:true});
+            $push:{
+                addresses:req.body.address
+            }
+        },{new:true});
         res.status(200).json({
             status:"success",
             data:{
@@ -213,6 +216,52 @@ exports.addAddress=async (req,res)=>{
         })
     }
 }
+
+exports.deleteAddress=async(req,res)=>{
+    try{
+        const user=res.user;
+        console.log(req.body.id);
+        const addressUpdatedUser=await User.findByIdAndUpdate(user._id,{
+            $pull:{
+                addresses:{id:req.body.id}
+            }
+        },{new:true});
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:addressUpdatedUser
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}
+
+exports.updateAddress=async(req,res)=>{
+    try{
+        const user=res.user;
+        const addressUpdatedUser=await User.updateOne({_id:user._id,"addresses.id":req.body.id},{
+            $set:{"addresses.$.newAddress":req.body.updatedAddress}
+        },{new:true});
+        res.status(200).json({
+            status:"success",
+            data:{
+                user:addressUpdatedUser
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(400).json({
+            status:"failed",
+            message:err.message
+        })
+    }
+}
+
 exports.addWishlist=async (req,res)=>{
     try{
         const user=res.user;

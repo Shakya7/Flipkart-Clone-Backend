@@ -4,7 +4,8 @@ exports.getFirstAddress=async (req,res)=>{
     try{
         const user=res.user;
         const addresses=await User.findById(user._id).select("-_id addresses");
-        console.log(addresses.addresses[0]);
+        console.log("let see here ",addresses.addresses[0]);
+        //console.log()
         res.status(200).json({
             status:"success",
             data:{
